@@ -2,8 +2,11 @@ const {equal, deepEqual} = require('assert');
 const { 
   classifyDetails,
   extractNLines,
-  extractNCharacters
+  extractNCharacters,
+  readFile
 } = require('../src/lib.js'); 
+
+let returnConstant = function(constant){ return constant; }; 
 
 describe('classifyDetails categories the input according to characteristics', () => {
   it('should return empty object for no input', () => {
@@ -56,5 +59,12 @@ describe('extractNCharacters returns characters of given text as per the given i
   it('should return number of characters as per the given length', () => {
     deepEqual(extractNCharacters(2,'first line\nsecond line'),'fi');
     deepEqual(extractNCharacters(5,'first\nline\nsecond\nline'),'first');
+  });
+});
+
+describe('readFile returns the result as per the mapper function', () => {
+  it('should return same output as per the input', () => {
+    deepEqual(readFile(returnConstant,[0,0,0]),[0,0,0]);
+    deepEqual(readFile(returnConstant,['a','a','a']),['a','a','a']);
   });
 });

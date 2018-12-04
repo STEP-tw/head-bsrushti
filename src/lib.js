@@ -15,8 +15,13 @@ const extractNCharacters = function(length, contents) {
   return contents.split("").splice(0,length).join("");
 };
 
+const readFile = function(readFileSync, files) { 
+  return files.map((file) => readFileSync(file,'utf8'));
+};
+
 module.exports = { 
   classifyDetails, 
   extractNLines,
-  extractNCharacters
+  extractNCharacters,
+  readFile
 };
