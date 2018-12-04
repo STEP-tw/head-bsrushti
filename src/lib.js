@@ -19,9 +19,14 @@ const readFile = function(readFileSync, files) {
   return files.map((file) => readFileSync(file,'utf8'));
 };
 
+const makeHeader = function(heading) { 
+  return "==> " + heading + " <==";
+};
+
 module.exports = { 
   classifyDetails, 
   extractNLines,
   extractNCharacters,
-  readFile
+  readFile,
+  makeHeader
 };

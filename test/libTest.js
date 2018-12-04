@@ -3,7 +3,8 @@ const {
   classifyDetails,
   extractNLines,
   extractNCharacters,
-  readFile
+  readFile,
+  makeHeader
 } = require('../src/lib.js'); 
 
 let returnConstant = function(constant){ return constant; }; 
@@ -66,5 +67,16 @@ describe('readFile returns the result as per the mapper function', () => {
   it('should return same output as per the input', () => {
     deepEqual(readFile(returnConstant,[0,0,0]),[0,0,0]);
     deepEqual(readFile(returnConstant,['a','a','a']),['a','a','a']);
+  });
+});
+
+describe('makeHeading gives header along with title', () => {
+  it('should return heading with two spaces if empty title(empty string) is given', () => {
+    equal(makeHeader(''),"==>  <==");
+  });
+
+  it('should return heading to given title', () => {
+    equal(makeHeader('abc'),"==> abc <==");
+    equal(makeHeader('file1'),"==> file1 <==");
   });
 });
