@@ -2,23 +2,30 @@ const {
   classifyDetails, 
   extractNLines,
   extractNCharacters,
-  readFile
+  readFile,
+  makeHeader
 } = require('./src/lib.js'); 
+
+const printStructuredData = function(functionRef, files, contents, length) { 
+  for(file in files) {
+    console.log(makeHeader(files[file]));
+    console.log(functionRef(length, contents[file]));
+  };
+};
 
 const { readFileSync } = require('fs'); 
 
 const main = function() { 
   let details = process.argv;
   let {option, length, files} = classifyDetails(details.slice(2));
-  let contents = readFile(readFileSync, files).join("\n");
-  let result;
+  let contents = readFile(readFileSync, files);
 
   if(option == '-n') {
-    console.log(extractNLines(length, contents));
+    printStructuredData(extractNLines, files, contents, length);
   };
 
   if(option == '-c') {
-    console.log(extractNCharacters(length, contents));
+    printStructuredData(extractNCharacters, files, contents, length);
   };
 
 };
