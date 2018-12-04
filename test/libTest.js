@@ -1,7 +1,8 @@
 const {equal, deepEqual} = require('assert');
 const { 
   classifyDetails,
-  extractNLines    
+  extractNLines,
+  extractNCharacters
 } = require('../src/lib.js'); 
 
 describe('classifyDetails categories the input according to characteristics', () => {
@@ -36,5 +37,24 @@ describe('extractNLines returns lines of given text as per the given input', () 
   it('should return number of lines as per the given length', () => {
     deepEqual(extractNLines(2,'first line\nsecond line'),'first line\nsecond line');
     deepEqual(extractNLines(4,'first\nline\nsecond\nline'),'first\nline\nsecond\nline');
+  });
+});
+
+describe('extractNCharacters returns characters of given text as per the given input length', () => {
+  it('should return empty string for 0 length input', () => {
+    deepEqual(extractNCharacters(0,'first line\nsecond line'),'');
+  });
+
+  it('should return one character for length as input 1', () => {
+    deepEqual(extractNCharacters(1,'first line\nsecond line'),'f');
+  });
+
+  it('should return empty character for invalid length(negative)', () => {
+    deepEqual(extractNCharacters(-1,'first line\nsecond line'),'');
+  });
+
+  it('should return number of characters as per the given length', () => {
+    deepEqual(extractNCharacters(2,'first line\nsecond line'),'fi');
+    deepEqual(extractNCharacters(5,'first\nline\nsecond\nline'),'first');
   });
 });
