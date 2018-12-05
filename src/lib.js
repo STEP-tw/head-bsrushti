@@ -46,7 +46,7 @@ const extractLength = function(details) {
 };
 
 const extractFiles = function(details) { 
-  if(!(details[0].startsWith('-')) || (details.length == 1)) {  
+  if(!(details[0].startsWith('-'))) {  
     return details.splice(0);
   };
   if(details[0].match(/^-/) && !(details[1].match(/^[0-9]/))) {
