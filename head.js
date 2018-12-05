@@ -3,17 +3,11 @@ const {
   extractNLines,
   extractNCharacters,
   readFile,
-  makeHeader
+  makeHeader,
+  printStructuredData
 } = require('./src/lib.js'); 
 
 const { readFileSync } = require('fs'); 
-
-const printStructuredData = function(functionRef, files, contents, length) { 
-  for(file in files) {
-    files.length > 1 && console.log(makeHeader(files[file]));
-    console.log(functionRef(length, contents[file]));
-  };
-};
 
 const main = function() { 
   let details = process.argv;
