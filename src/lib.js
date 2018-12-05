@@ -62,7 +62,7 @@ const extractFiles = function(details) {
 const printStructuredData = function(functionRef, files, contents, length) {
   for(file in files) {
     files.length > 1 && console.log(makeHeader(files[file]));
-    console.log(functionRef(length, contents[file]));
+    console.log(functionRef(length, contents[file])+"\n");
   };
 };
 
@@ -70,7 +70,10 @@ const getResult = function(files, option, contents, length) {
   if(option == '-c') {
     printStructuredData(extractNCharacters, files, contents, length);
   };
-  printStructuredData(extractNLines, files, contents, length);
+
+  if(option == '-n') {
+    printStructuredData(extractNLines, files, contents, length);
+  };
 };
 
 module.exports = { 
