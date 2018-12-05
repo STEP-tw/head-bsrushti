@@ -3,7 +3,7 @@ const classifyDetails = function(details) {
   return {
     option : extractOption(details), 
     length : extractLength(details.slice(0,2)),
-    files : details.splice(2)
+    files : extractFiles(details)
   };
 };
 
@@ -33,19 +33,28 @@ const mapper = function(detail) {
   if(length) { return length[0]; }
 };
 
-const checkHyphen = function(option) { 
-  if(option.startsWith('-')) {
-    return option;
+const extractLength = function(details) {
+  extractFiles(details);
+  let list = details.join('');
+  let index = 0;
+  while(!parseInt(list) && index < details.join('').length){
+    list = details.join('');
+    index++;
+    list = list.slice(index);
   };
+  return Math.abs(parseInt(list)) || 10;
 };
 
-const extractLength = function(details) {
-  let option = checkHyphen(details[0]);
-  let lengths = option.match(/[0-9]/);
-  if(lengths) { return +lengths[0]};
-  lengths = details[1].match(/[0-9]/);
-  if(lengths) { return +lengths[0]; }
-  return 10;
+const extractFiles = function(details) { 
+  if(!(details[0].startsWith('-')) || (details.length == 1)) {  
+    return details.splice(0);
+  };
+  if(details[0].match(/^-/) && !(details[1].match(/^[0-9]/))) {
+    return details.splice(1);
+  };
+  if(details[1].match(/^[0-9]/)) {
+    return details.splice(2);
+  };
 };
 
 module.exports = { 
@@ -56,5 +65,6 @@ module.exports = {
   makeHeader,
   extractOption,
   extractLength,
-  checkHyphen
+  extractFiles
 };
+

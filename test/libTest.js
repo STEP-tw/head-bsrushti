@@ -7,7 +7,7 @@ const {
   makeHeader,
   extractOption,
   extractLength,
-  checkHyphen
+  extractFiles
 } = require('../src/lib.js'); 
 
 let returnConstant = function(constant){ return constant; }; 
@@ -117,18 +117,16 @@ describe('extractLength returns the first occurrence of number from string input
   });
 });
 
-describe('checkHyphen checks - in string', () => {
-  it('should return input back if inputString startsWith -', () => {
-    equal(checkHyphen('-a'),'-a');
-    equal(checkHyphen('-abc'),'-abc');
-    equal(checkHyphen('-2'),'-2');
+describe('extractFiles function extract the files from given details', () => {
+  it('should return file names given in input details', () => {
+    deepEqual(extractFiles(['-n1','file1','file2']),['file1','file2']);
   });
 
-  it('should return undefined if inputString not startsWith -', () => {
-    equal(checkHyphen('a'),undefined);
-    equal(checkHyphen('a-'),undefined);
-    equal(checkHyphen('a-a'),undefined);
-    equal(checkHyphen(''),undefined);
+  it('should return file names given in input details(options are not given in input)', () => {
+    deepEqual(extractFiles(['-n1','file1','file2']),['file1','file2']);
   });
 
+  it('should return file name if only argument is padding as an input', () => {
+    deepEqual(extractFiles(['file']),['file']);
+  });
 });
