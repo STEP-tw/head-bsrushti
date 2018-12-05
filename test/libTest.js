@@ -5,7 +5,8 @@ const {
   extractNCharacters,
   readFile,
   makeHeader,
-  extractOption
+  extractOption,
+  extractLength
 } = require('../src/lib.js'); 
 
 let returnConstant = function(constant){ return constant; }; 
@@ -96,5 +97,21 @@ describe('extractOption returns the matched option mentioned in input', () => {
   it('should return -c if -c option is  mentioned in input', () => {
     equal(extractOption(['-c', 'file1', 'file2']),'-c');
     equal(extractOption(['-c5', 'file1', 'file2']),'-c');
+  });
+});
+
+describe('extractLength returns the first occurrence of number from string input', () => {
+  it('should return default 10 if no length is provided', () => {
+    equal(extractLength(['-n','file']),10);
+  });
+
+  it('should return length if length is provided with option', () => {
+    equal(extractLength(['-n1','file']),1);
+    equal(extractLength(['-c1','file']),1);
+  });
+
+  it('should return length if length is provided with no option', () => {
+    equal(extractLength(['-1','file']),1);
+    equal(extractLength(['-5','file']),5);
   });
 });

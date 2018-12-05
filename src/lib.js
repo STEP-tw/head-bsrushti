@@ -2,7 +2,7 @@ const classifyDetails = function(details) {
   if(!details) {return {};};
   return {
     option : extractOption(details), 
-    length : +details[1],
+    length : extractLength(details.slice(0,2)),
     files : details.splice(2)
   };
 };
@@ -28,11 +28,24 @@ const extractOption = function(details) {
   return '-n';
 };
 
+const mapper = function(detail) { 
+  let length = detail.match(/[0-9]/);
+  if(length) { return length[0]; }
+};
+
+const extractLength = function(details) {
+  let lengths = details.map(mapper);
+  lengths = lengths.filter((x) => x != undefined)
+  if(lengths.length) { return +lengths[0]};
+  return 10;
+};
+
 module.exports = { 
   classifyDetails, 
   extractNLines,
   extractNCharacters,
   readFile,
   makeHeader,
-  extractOption
+  extractOption,
+  extractLength
 };
