@@ -1,7 +1,7 @@
 const classifyDetails = function(details) { 
   if(!details) {return {};};
   return {
-    option : details[0],
+    option : extractOption(details), 
     length : +details[1],
     files : details.splice(2)
   };
@@ -23,10 +23,16 @@ const makeHeader = function(heading) {
   return "==> " + heading + " <==";
 };
 
+const extractOption = function(details) { 
+  if(details.some((option) => option.match(/-c/))) { return '-c'; };
+  return '-n';
+};
+
 module.exports = { 
   classifyDetails, 
   extractNLines,
   extractNCharacters,
   readFile,
-  makeHeader
+  makeHeader,
+  extractOption
 };
