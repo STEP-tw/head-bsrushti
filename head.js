@@ -6,14 +6,14 @@ const {
   makeHeader
 } = require('./src/lib.js'); 
 
+const { readFileSync } = require('fs'); 
+
 const printStructuredData = function(functionRef, files, contents, length) { 
   for(file in files) {
-    console.log(makeHeader(files[file]));
+    files.length > 1 && console.log(makeHeader(files[file]));
     console.log(functionRef(length, contents[file]));
   };
 };
-
-const { readFileSync } = require('fs'); 
 
 const main = function() { 
   let details = process.argv;
@@ -29,6 +29,7 @@ const main = function() {
   };
 
 };
+
 main();
 
 /* 
