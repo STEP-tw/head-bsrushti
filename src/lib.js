@@ -29,14 +29,22 @@ const extractOption = function(details) {
 };
 
 const mapper = function(detail) { 
-  let length = detail.match(/[0-9]/);
+  let length = option.match(/[0-9]/);
   if(length) { return length[0]; }
 };
 
+const checkHyphen = function(option) { 
+  if(option.startsWith('-')) {
+    return option;
+  };
+};
+
 const extractLength = function(details) {
-  let lengths = details.map(mapper);
-  lengths = lengths.filter((x) => x != undefined)
-  if(lengths.length) { return +lengths[0]};
+  let option = checkHyphen(details[0]);
+  let lengths = option.match(/[0-9]/);
+  if(lengths) { return +lengths[0]};
+  lengths = details[1].match(/[0-9]/);
+  if(lengths) { return +lengths[0]; }
   return 10;
 };
 
@@ -47,5 +55,6 @@ module.exports = {
   readFile,
   makeHeader,
   extractOption,
-  extractLength
+  extractLength,
+  checkHyphen
 };

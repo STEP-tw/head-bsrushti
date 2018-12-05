@@ -6,7 +6,8 @@ const {
   readFile,
   makeHeader,
   extractOption,
-  extractLength
+  extractLength,
+  checkHyphen
 } = require('../src/lib.js'); 
 
 let returnConstant = function(constant){ return constant; }; 
@@ -114,4 +115,20 @@ describe('extractLength returns the first occurrence of number from string input
     equal(extractLength(['-1','file']),1);
     equal(extractLength(['-5','file']),5);
   });
+});
+
+describe('checkHyphen checks - in string', () => {
+  it('should return input back if inputString startsWith -', () => {
+    equal(checkHyphen('-a'),'-a');
+    equal(checkHyphen('-abc'),'-abc');
+    equal(checkHyphen('-2'),'-2');
+  });
+
+  it('should return undefined if inputString not startsWith -', () => {
+    equal(checkHyphen('a'),undefined);
+    equal(checkHyphen('a-'),undefined);
+    equal(checkHyphen('a-a'),undefined);
+    equal(checkHyphen(''),undefined);
+  });
+
 });
