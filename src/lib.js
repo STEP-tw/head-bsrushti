@@ -66,6 +66,13 @@ const printStructuredData = function(functionRef, files, contents, length) {
   };
 };
 
+const getResult = function(files, option, contents, length) {
+  if(option == '-c') {
+    printStructuredData(extractNCharacters, files, contents, length);
+  };
+  printStructuredData(extractNLines, files, contents, length);
+};
+
 module.exports = { 
   classifyDetails, 
   extractNLines,
@@ -75,6 +82,7 @@ module.exports = {
   extractOption,
   extractLength,
   extractFiles,
-  printStructuredData
+  printStructuredData,
+  getResult
 };
 
