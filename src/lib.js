@@ -49,9 +49,7 @@ const extractFiles = function(details) {
     return details.splice(1);
   };
 
-  if(details[1].match(/^[0-9]/)) {
-    return details.splice(2);
-  };
+  return details.splice(2);
 };
 
 const printStructuredData = function(functionRef, files, contents, length) {
@@ -63,11 +61,10 @@ const printStructuredData = function(functionRef, files, contents, length) {
   };
 };
 
-const getResult = function(option) {
-  if(option == '-c') {
-    return extractNCharacters;
-  };
-  return extractNLines;
+const getOptionFuncRef = function(option) {
+  let funcRef;
+  (option == '-c')? funcRef = extractNCharacters : funcRef = extractNLines;
+  return funcRef;
 }
 
 module.exports = { 
@@ -80,6 +77,6 @@ module.exports = {
   extractLength,
   extractFiles,
   printStructuredData,
-  getResult
+  getOptionFuncRef
 };
 

@@ -1,7 +1,7 @@
 const {
   classifyDetails, 
   apply,
-  getResult,
+  getOptionFuncRef,
   printStructuredData
 } = require('./src/lib.js'); 
 
@@ -11,7 +11,7 @@ const main = function() {
   let details = process.argv;
   let {option, length, files} = classifyDetails(details.slice(2));
   let contents = apply(readFileSync, files);
-  printStructuredData(getResult(option),files,contents,length); 
+  printStructuredData(getOptionFuncRef(option),files,contents,length); 
 };
 
 main();
