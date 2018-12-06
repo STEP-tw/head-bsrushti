@@ -31,17 +31,17 @@ const extractOption = function(details) {
 
 const extractLength = function(details) {
   extractFiles(details);
-  let list = details.join('');
-  if(list.match(/^-/) && !(list.match(/[0-9]/))){
+  let option = details.join('');
+  if(option.match(/^-/) && !(option.match(/[0-9]/))){
     return illegalCount;
   };
   let index = 0;
-  while(!parseInt(list) && index < details.join('').length){
-    list = details.join('');
+  while(!parseInt(option) && index < details.join('').length){
+    option = details.join('');
     index++;
-    list = list.slice(index);
+    option = option.slice(index);
   };
-  return Math.abs(parseInt(list)) || 10;
+  return Math.abs(parseInt(option)) || 10;
 };
 
 const extractFiles = function(details) { 
