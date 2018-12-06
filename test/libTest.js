@@ -10,7 +10,9 @@ const {
   extractFiles,
   getErrors,
   printStructuredData,
-  getOptionFuncRef
+  getOptionFuncRef,
+  isCountAboveZero,
+  invalidCountError
 } = require('../src/lib.js'); 
 
 let returnConstant = function(constant){ return constant; }; 
@@ -106,7 +108,7 @@ describe('extractOption returns the matched option mentioned in input', () => {
 
 describe('extractLength returns the first occurrence of number from string input', () => {
   it('should return itself if no length is provided', () => {
-    equal(extractLength(['-n','file']),'-n');
+    equal(extractLength(['-n','file']),'file');
   });
 
   it('should return length if length is provided with option', () => {
@@ -117,6 +119,11 @@ describe('extractLength returns the first occurrence of number from string input
   it('should return length if length is provided with no option', () => {
     equal(extractLength(['-1','file']),1);
     equal(extractLength(['-5','file']),5);
+  });
+
+  it('should return invalid length if invalid length is provided with option', () => {
+    equal(extractLength(['-n3e','file']),'3e');
+    equal(extractLength(['-c3e','file']),'3e');
   });
 });
 
@@ -136,19 +143,19 @@ describe('extractFiles function extract the files from given details', () => {
 
 describe('getErrors', () => {
   it('should return error message if type is -c and invalid length is provided', () => {
-    deepEqual(getErrors(['-c1s','file1'],['file1']),'head: illegal byte count -- 1s');     
+    deepEqual(getErrors(['-c1s','file1'],'1s'),'head: illegal byte count -- 1s');     
   });
 
   it('should return error message if type is -n and length invalid is provided', () => {
-    deepEqual(getErrors(['-n1s','file1'],['file1']),'head: illegal line count -- 1s');     
+    deepEqual(getErrors(['-n1s','file1'],'1s'),'head: illegal line count -- 1s');     
   });
 
   it('should return error message if type is -n and length is not provided', () => {
-    deepEqual(getErrors(['-n','file1'],['file1']),'head: illegal line count -- file1');     
+    deepEqual(getErrors(['-n','file1'],'file1'),'head: illegal line count -- file1');     
   });
 
   it('should return error message if type is -c and length is not provided', () => {
-    deepEqual(getErrors(['-c','file1'],['file1']),'head: illegal byte count -- file1');     
+    deepEqual(getErrors(['-c','file1'],'file1'),'head: illegal byte count -- file1');     
   });
 });
 
@@ -209,5 +216,29 @@ describe('getOptionFuncRef', () => {
 
   it('should return function reference for extractNLines if -n option is provided', () => {
     deepEqual(getOptionFuncRef('-n'), extractNLines);
+  });
+});
+
+describe('isCountAboveZero', () => {
+  it('should return true if given input is greater than zero', () => {
+    deepEqual(isCountAboveZero(3),true);
+    deepEqual(isCountAboveZero(1),true);
+  });
+
+  it('should return false if given input is lesser than zero', () => {
+    deepEqual(isCountAboveZero(-3),false);
+    deepEqual(isCountAboveZero(-1),false);
+  });
+});
+
+describe('invalidCountError', () => {
+  it('should return error message if invalid length provided with option -c', () => {
+    equal(invalidCountError('-c','1q'),'head: illegal byte count -- 1q');
+    equal(invalidCountError('-c','aaa'),'head: illegal byte count -- aaa');
+  });
+  
+  it('should return error message if invalid length provided with option -n', () => {
+    equal(invalidCountError('-n','1q'),'head: illegal line count -- 1q');
+    equal(invalidCountError('-n','aaa'),'head: illegal line count -- aaa');
   });
 });

@@ -32,10 +32,14 @@ const extractOption = function(details) {
 };
 
 const extractLength = function(details) {
-  extractFiles(details);
+  let files = extractFiles(details);
   let option = details.join('');
-  if((option.length == 2 && !Math.abs(option)) || isNaN(option.slice(2))) { 
-    return option;
+  if(isNaN(option.slice(2))) {
+    return option.slice(2);
+  };
+
+  if(option.length == 2 && !Math.abs(option)) {
+    return files[0];
   };
   let index = 0;
   while(!parseInt(option) && index < details.join('').length){
@@ -62,8 +66,8 @@ const printStructuredData = function(functionRef, contents, details) {
   let {option, length, files} = classifyDetails(details);
   let fileData = [];
   let delimiter = '';
-  if(isNaN(length) && getErrors(details, files)) { 
-    fileData.push(getErrors(details, files));
+  if(!isCountAboveZero(length)) {
+    fileData.push(getErrors(details, length))
     return fileData;
   };
   for(file in files) {
@@ -80,21 +84,21 @@ const getOptionFuncRef = function(option) {
   return funcRef;
 };
 
-const getErrors = function(details, files) { 
+const isCountAboveZero = function(count) {
+  return !(count < 1 || isNaN(count));
+};
+
+const invalidCountError = function(type, count) {
+  let typeName = 'line';
+  if(type == '-c'){
+    typeName = 'byte';
+  }
+  return 'head: illegal ' + typeName + ' count -- ' + count;
+};
+
+const getErrors = function(details, length) { 
   const type = extractOption(details);
-  if(type == '-c' && isNaN(details[0].slice(2))) {
-    return illegalByteCount + details[0].slice(2);
-  };
-
-  if(type == '-n' && isNaN(details[0].slice(2))) {
-    return illegalCount + details[0].slice(2);
-  };
-
-  if(type === '-c') {
-    return illegalByteCount + files[0];
-  };
-
-  return illegalCount + files[0];
+  return invalidCountError(type, length);
 };
 
 module.exports = { 
@@ -108,6 +112,8 @@ module.exports = {
   extractFiles,
   printStructuredData,
   getErrors,
-  getOptionFuncRef
+  getOptionFuncRef,
+  isCountAboveZero,
+  invalidCountError
 };
 
