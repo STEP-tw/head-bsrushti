@@ -23,6 +23,7 @@ const makeHeader = function(heading) {
   return "==> " + heading + " <==";
 };
 
+let illegalCount = 'head: illegal line count --';
 const extractOption = function(details) { 
   if(details.some((option) => option.match(/-c/))) { return '-c'; };
   return '-n';
@@ -31,6 +32,9 @@ const extractOption = function(details) {
 const extractLength = function(details) {
   extractFiles(details);
   let list = details.join('');
+  if(list.match(/^-/) && !(list.match(/[0-9]/))){
+    return illegalCount;
+  };
   let index = 0;
   while(!parseInt(list) && index < details.join('').length){
     list = details.join('');
@@ -53,6 +57,7 @@ const extractFiles = function(details) {
 };
 
 const printStructuredData = function(functionRef, files, contents, length) {
+  if(isNaN(length)){ return console.log(length +" "+ files[0]); }
   let delimiter = '';
   for(file in files) {
     files.length > 1 && console.log(delimiter + makeHeader(files[file]));
