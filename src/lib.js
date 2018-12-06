@@ -15,7 +15,7 @@ const extractNCharacters = function(length, contents) {
   return contents.split("").splice(0,length).join("");
 };
 
-const readFile = function(readFileSync, files) { 
+const apply = function(readFileSync, files) { 
   return files.map((file) => readFileSync(file,'utf8'));
 };
 
@@ -26,11 +26,6 @@ const makeHeader = function(heading) {
 const extractOption = function(details) { 
   if(details.some((option) => option.match(/-c/))) { return '-c'; };
   return '-n';
-};
-
-const mapper = function(detail) { 
-  let length = option.match(/[0-9]/);
-  if(length) { return length[0]; }
 };
 
 const extractLength = function(details) {
@@ -79,7 +74,7 @@ module.exports = {
   classifyDetails, 
   extractNLines,
   extractNCharacters,
-  readFile,
+  apply,
   makeHeader,
   extractOption,
   extractLength,

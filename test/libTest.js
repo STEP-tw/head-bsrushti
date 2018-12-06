@@ -3,7 +3,7 @@ const {
   classifyDetails,
   extractNLines,
   extractNCharacters,
-  readFile,
+  apply,
   makeHeader,
   extractOption,
   extractLength,
@@ -66,10 +66,10 @@ describe('extractNCharacters returns characters of given text as per the given i
   });
 });
 
-describe('readFile returns the result as per the mapper function', () => {
+describe('apply returns the result as per the mapper function', () => {
   it('should return same output as per the input', () => {
-    deepEqual(readFile(returnConstant,[0,0,0]),[0,0,0]);
-    deepEqual(readFile(returnConstant,['a','a','a']),['a','a','a']);
+    deepEqual(apply(returnConstant,[0,0,0]),[0,0,0]);
+    deepEqual(apply(returnConstant,['a','a','a']),['a','a','a']);
   });
 });
 

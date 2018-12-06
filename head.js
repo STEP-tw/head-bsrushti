@@ -1,6 +1,6 @@
 const {
   classifyDetails, 
-  readFile,
+  apply,
   getResult,
   printStructuredData
 } = require('./src/lib.js'); 
@@ -10,7 +10,7 @@ const { readFileSync } = require('fs');
 const main = function() { 
   let details = process.argv;
   let {option, length, files} = classifyDetails(details.slice(2));
-  let contents = readFile(readFileSync, files);
+  let contents = apply(readFileSync, files);
   printStructuredData(getResult(option),files,contents,length); 
 };
 
