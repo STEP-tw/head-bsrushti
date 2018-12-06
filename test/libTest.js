@@ -7,7 +7,10 @@ const {
   makeHeader,
   extractOption,
   extractLength,
-  extractFiles
+  extractFiles,
+  getErrors,
+  printStructuredData,
+  getOptionFuncRef
 } = require('../src/lib.js'); 
 
 let returnConstant = function(constant){ return constant; }; 
@@ -128,5 +131,83 @@ describe('extractFiles function extract the files from given details', () => {
 
   it('should return file name if only argument is passing as an input', () => {
     deepEqual(extractFiles(['file']),['file']);
+  });
+});
+
+describe('getErrors', () => {
+  it('should return error message if type is -c and invalid length is provided', () => {
+    deepEqual(getErrors(['-c1s','file1'],['file1']),'head: illegal byte count -- 1s');     
+  });
+
+  it('should return error message if type is -n and length invalid is provided', () => {
+    deepEqual(getErrors(['-n1s','file1'],['file1']),'head: illegal line count -- 1s');     
+  });
+
+  it('should return error message if type is -n and length is not provided', () => {
+    deepEqual(getErrors(['-n','file1'],['file1']),'head: illegal line count -- file1');     
+  });
+
+  it('should return error message if type is -c and length is not provided', () => {
+    deepEqual(getErrors(['-c','file1'],['file1']),'head: illegal byte count -- file1');     
+  });
+});
+
+describe('printStructuredData', () => {
+  it('should return the file data if -c input is given with length and files', () => {
+    let input = printStructuredData(extractNCharacters,['first line\nsecond line'],['-c3','file1']);
+    let expectedOutput = ['fir']; 
+    deepEqual(input, expectedOutput);
+  });
+
+  it('should return the file data if -n input is given with length and files', () => {
+    let input = printStructuredData(extractNLines,['first line\nsecond line'],['-n2','file1']);
+    let expectedOutput = ['first line\nsecond line']; 
+    deepEqual(input, expectedOutput);
+  });
+
+  it('should return the file content in default case of length 10', () => {
+    let input = printStructuredData(extractNLines,['first line\nsecond line'],['file1']);
+    let expectedOutput = ['first line\nsecond line']; 
+    deepEqual(input, expectedOutput);
+  });
+
+  it('should return error message if type is -c and length is not provided', () => {
+    let input = printStructuredData(extractNCharacters,['first line\nsecond line'],['-n','file1']);
+    let expectedOutput = ['head: illegal line count -- file1']; 
+    deepEqual(input, expectedOutput);
+  });
+
+  it('should return file content with header if more than two files are provided', () => {
+    let input = printStructuredData(
+      extractNCharacters,
+      ['1st file\nfirst line\nsecond line',
+       '2nd file\nfirst line\nsecond line'],
+      ['-c3','file1','file2']
+    );
+    let expectedOutput = [ '==> file1 <==', '1st', '\n==> file2 <==', '2nd' ];
+    deepEqual(input, expectedOutput);
+
+    input = printStructuredData(
+      extractNLines,
+      ['1st file\nfirst line\nsecond line',
+       '2nd file\nfirst line\nsecond line'],
+      ['-n3','file1','file2']
+    );
+    expectedOutput = [ '==> file1 <==',
+                       '1st file\nfirst line\nsecond line',
+                       '\n==> file2 <==',
+                       '2nd file\nfirst line\nsecond line' ];
+    deepEqual(input, expectedOutput);
+
+  });
+});
+
+describe('getOptionFuncRef', () => {
+  it('should return function reference for extractNCharacters if -c option is provided', () => {
+    deepEqual(getOptionFuncRef('-c'), extractNCharacters);
+  });
+
+  it('should return function reference for extractNLines if -n option is provided', () => {
+    deepEqual(getOptionFuncRef('-n'), extractNLines);
   });
 });

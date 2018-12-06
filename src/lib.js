@@ -1,5 +1,6 @@
 let illegalCount = 'head: illegal line count -- ';
 let illegalByteCount = 'head: illegal byte count -- ';
+
 const classifyDetails = function(details) { 
   if(!details) {return {};};
   return {
@@ -61,8 +62,8 @@ const printStructuredData = function(functionRef, contents, details) {
   let {option, length, files} = classifyDetails(details);
   let fileData = [];
   let delimiter = '';
-  if(errors(details,files) && isNaN(length)) { 
-    fileData.push(errors(details, files));
+  if(isNaN(length) && getErrors(details, files)) { 
+    fileData.push(getErrors(details, files));
     return fileData;
   };
   for(file in files) {
@@ -77,9 +78,9 @@ const getOptionFuncRef = function(option) {
   let funcRef;
   (option == '-c')? funcRef = extractNCharacters : funcRef = extractNLines;
   return funcRef;
-}
+};
 
-const errors = function(details, files) { 
+const getErrors = function(details, files) { 
   const type = extractOption(details);
   if(type == '-c' && isNaN(details[0].slice(2))) {
     return illegalByteCount + details[0].slice(2);
@@ -106,6 +107,7 @@ module.exports = {
   extractLength,
   extractFiles,
   printStructuredData,
+  getErrors,
   getOptionFuncRef
 };
 
