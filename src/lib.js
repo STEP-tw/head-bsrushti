@@ -1,3 +1,5 @@
+let illegalCount = 'head: illegal line count -- ';
+let illegalByteCount = 'head: illegal byte count -- ';
 const classifyDetails = function(details) { 
   if(!details) {return {};};
   return {
@@ -23,7 +25,6 @@ const makeHeader = function(heading) {
   return "==> " + heading + " <==";
 };
 
-let illegalCount = 'head: illegal line count --';
 const extractOption = function(details) { 
   if(details.some((option) => option.match(/-c/))) { return '-c'; };
   return '-n';
@@ -32,8 +33,8 @@ const extractOption = function(details) {
 const extractLength = function(details) {
   extractFiles(details);
   let option = details.join('');
-  if(option.match(/^-/) && !(option.match(/[0-9]/))){
-    return illegalCount;
+  if((option.length == 2 && !Math.abs(option)) || isNaN(option.slice(2))) { 
+    return option;
   };
   let index = 0;
   while(!parseInt(option) && index < details.join('').length){
@@ -56,14 +57,20 @@ const extractFiles = function(details) {
   return details.splice(2);
 };
 
-const printStructuredData = function(functionRef, files, contents, length) {
-  if(isNaN(length)){ return console.log(length +" "+ files[0]); }
+const printStructuredData = function(functionRef, contents, details) {
+  let {option, length, files} = classifyDetails(details);
+  let fileData = [];
   let delimiter = '';
-  for(file in files) {
-    files.length > 1 && console.log(delimiter + makeHeader(files[file]));
-    delimiter = '\n';
-    console.log(functionRef(length, contents[file]));
+  if(errors(details,files) && isNaN(length)) { 
+    fileData.push(errors(details, files));
+    return fileData;
   };
+  for(file in files) {
+    files.length > 1 && fileData.push(delimiter + makeHeader(files[file]));
+    delimiter = '\n';
+    fileData.push(functionRef(length, contents[file]));
+  };
+  return fileData;
 };
 
 const getOptionFuncRef = function(option) {
@@ -71,6 +78,23 @@ const getOptionFuncRef = function(option) {
   (option == '-c')? funcRef = extractNCharacters : funcRef = extractNLines;
   return funcRef;
 }
+
+const errors = function(details, files) { 
+  const type = extractOption(details);
+  if(type == '-c' && isNaN(details[0].slice(2))) {
+    return illegalByteCount + details[0].slice(2);
+  };
+
+  if(type == '-n' && isNaN(details[0].slice(2))) {
+    return illegalCount + details[0].slice(2);
+  };
+
+  if(type === '-c') {
+    return illegalByteCount + files[0];
+  };
+
+  return illegalCount + files[0];
+};
 
 module.exports = { 
   classifyDetails, 

@@ -11,7 +11,7 @@ const main = function() {
   let details = process.argv;
   let {option, length, files} = classifyDetails(details.slice(2));
   let contents = apply(readFileSync, files);
-  printStructuredData(getOptionFuncRef(option),files,contents,length); 
+  console.log(printStructuredData(getOptionFuncRef(option),contents,details.slice(2)).join("\n")); 
 };
 
 main();
