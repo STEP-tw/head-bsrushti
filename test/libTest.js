@@ -102,7 +102,7 @@ describe('extractOption returns the matched option mentioned in input', () => {
 });
 
 describe('extractLength returns the first occurrence of number from string input', () => {
-  it('should return default 10 if no length is provided', () => {
+  it('should return error message if no length is provided', () => {
     equal(extractLength(['-n','file']),'head: illegal line count --');
   });
 
