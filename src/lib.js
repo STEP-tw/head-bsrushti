@@ -34,7 +34,7 @@ const extractOption = function(details) {
 const extractLength = function(details) {
   let files = extractFiles(details);
   let option = details.join('');
-  if(isNaN(option.slice(2))) {
+  if(isNaN(option.slice(2)) || option.slice(2).includes(0)) {
     return option.slice(2);
   };
 
