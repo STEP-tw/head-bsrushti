@@ -60,21 +60,20 @@ const extractFiles = function(details) {
 };
 
 const printStructuredData = function(functionRef, files, contents, length) {
+  let delimiter = '';
   for(file in files) {
-    files.length > 1 && console.log(makeHeader(files[file]));
-    console.log(functionRef(length, contents[file])+"\n");
+    files.length > 1 && console.log(delimiter + makeHeader(files[file]));
+    delimiter = '\n';
+    console.log(functionRef(length, contents[file]));
   };
 };
 
-const getResult = function(files, option, contents, length) {
+const getResult = function(option) {
   if(option == '-c') {
-    printStructuredData(extractNCharacters, files, contents, length);
+    return extractNCharacters;
   };
-
-  if(option == '-n') {
-    printStructuredData(extractNLines, files, contents, length);
-  };
-};
+  return extractNLines;
+}
 
 module.exports = { 
   classifyDetails, 

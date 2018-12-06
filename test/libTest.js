@@ -126,7 +126,7 @@ describe('extractFiles function extract the files from given details', () => {
     deepEqual(extractFiles(['-n1','file1','file2']),['file1','file2']);
   });
 
-  it('should return file name if only argument is padding as an input', () => {
+  it('should return file name if only argument is passing as an input', () => {
     deepEqual(extractFiles(['file']),['file']);
   });
 });
