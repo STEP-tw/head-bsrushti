@@ -5,13 +5,13 @@ const {
   printStructuredData
 } = require('./src/lib.js'); 
 
-const { readFileSync } = require('fs'); 
+const fs = require('fs'); 
 
 const main = function() { 
   let details = process.argv;
   let {option, length, files} = classifyDetails(details.slice(2));
-  let contents = apply(readFileSync, files);
-  console.log(printStructuredData(getOptionFuncRef(option),contents,details.slice(2)).join("\n")); 
+  console.log(printStructuredData(getOptionFuncRef(option),details.slice(2),fs).join("\n")
+  ); 
 };
 
 main();

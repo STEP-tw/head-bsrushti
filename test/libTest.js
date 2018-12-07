@@ -12,11 +12,19 @@ const {
   printStructuredData,
   getOptionFuncRef,
   isCountAboveZero,
-  invalidCountError
+  invalidCountError,
+  fileNotFoundError,
+  isFileExists
 } = require('../src/lib.js'); 
 
 let returnConstant = function(constant){ return constant; }; 
-
+let fs = {
+  existsSync : (file) => true ,
+  readFileSync : (file) => 'first line\nsecond line' ,
+};
+const existsSync = function(file) { 
+  return true
+};
 describe('classifyDetails categories the input according to characteristics', () => {
   it('should return empty object for no input', () => {
     deepEqual(classifyDetails(),{});
@@ -72,9 +80,8 @@ describe('extractNCharacters returns characters of given text as per the given i
 });
 
 describe('apply returns the result as per the mapper function', () => {
-  it('should return same output as per the input', () => {
-    deepEqual(apply(returnConstant,[0,0,0]),[0,0,0]);
-    deepEqual(apply(returnConstant,['a','a','a']),['a','a','a']);
+  it('should return file content as per the input', () => {
+    deepEqual(apply(fs,'file1'),'first line\nsecond line');
   });
 });
 
@@ -160,26 +167,26 @@ describe('getErrors', () => {
 });
 
 describe('printStructuredData', () => {
-  it('should return the file data if -c input is given with length and files', () => {
-    let input = printStructuredData(extractNCharacters,['first line\nsecond line'],['-c3','file1']);
+  it('should return the file data if -n input is given with length and files', () => {
+    let input = printStructuredData(extractNCharacters,['-n3','file1'],fs);
     let expectedOutput = ['fir']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return the file data if -n input is given with length and files', () => {
-    let input = printStructuredData(extractNLines,['first line\nsecond line'],['-n2','file1']);
+    let input = printStructuredData(extractNLines,['-n2','file1'],fs);
     let expectedOutput = ['first line\nsecond line']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return the file content in default case of length 10', () => {
-    let input = printStructuredData(extractNLines,['first line\nsecond line'],['file1']);
+    let input = printStructuredData(extractNLines,['file1'],fs);
     let expectedOutput = ['first line\nsecond line']; 
     deepEqual(input, expectedOutput);
   });
 
-  it('should return error message if type is -c and length is not provided', () => {
-    let input = printStructuredData(extractNCharacters,['first line\nsecond line'],['-n','file1']);
+  it('should return error message if type is -n and length is not provided', () => {
+    let input = printStructuredData(extractNLines,['-n','file1'],fs);
     let expectedOutput = ['head: illegal line count -- file1']; 
     deepEqual(input, expectedOutput);
   });
@@ -187,23 +194,21 @@ describe('printStructuredData', () => {
   it('should return file content with header if more than two files are provided', () => {
     let input = printStructuredData(
       extractNCharacters,
-      ['1st file\nfirst line\nsecond line',
-       '2nd file\nfirst line\nsecond line'],
-      ['-c3','file1','file2']
+      ['-n3','file1','file2'],
+      fs
     );
-    let expectedOutput = [ '==> file1 <==', '1st', '\n==> file2 <==', '2nd' ];
+    let expectedOutput = [ '==> file1 <==', 'fir', '\n==> file2 <==', 'fir' ];
     deepEqual(input, expectedOutput);
 
     input = printStructuredData(
       extractNLines,
-      ['1st file\nfirst line\nsecond line',
-       '2nd file\nfirst line\nsecond line'],
-      ['-n3','file1','file2']
+      ['-n3','file1','file2'],
+      fs
     );
     expectedOutput = [ '==> file1 <==',
-                       '1st file\nfirst line\nsecond line',
+                       'first line\nsecond line',
                        '\n==> file2 <==',
-                       '2nd file\nfirst line\nsecond line' ];
+                       'first line\nsecond line' ];
     deepEqual(input, expectedOutput);
 
   });
@@ -240,5 +245,17 @@ describe('invalidCountError', () => {
   it('should return error message if invalid length provided with option -n', () => {
     equal(invalidCountError('-n','1q'),'head: illegal line count -- 1q');
     equal(invalidCountError('-n','aaa'),'head: illegal line count -- aaa');
+  });
+});
+
+describe('isFileExists', () => {
+  it('should return true if it finds the file', () => {
+    equal(isFileExists(existsSync,file),true);
+  });
+});
+
+describe('fileNotFoundError', () => {
+  it('should return error message if it not finds the file', () => {
+    equal(fileNotFoundError('file'),'head: file: No such file or directory');
   });
 });

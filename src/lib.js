@@ -18,8 +18,11 @@ const extractNCharacters = function(length, contents) {
   return contents.split("").splice(0,length).join("");
 };
 
-const apply = function(readFileSync, files) { 
-  return files.map((file) => readFileSync(file,'utf8'));
+const apply = function(fs, file) { 
+  if(!fs.existsSync(file)) {
+    return fileNotFoundError(file);
+  };
+  return fs.readFileSync(file,'utf8');
 };
 
 const makeHeader = function(heading) { 
@@ -62,7 +65,7 @@ const extractFiles = function(details) {
   return details.splice(2);
 };
 
-const printStructuredData = function(functionRef, contents, details) {
+const printStructuredData = function(functionRef, details, fs) {
   let {option, length, files} = classifyDetails(details);
   let fileData = [];
   let delimiter = '';
@@ -70,10 +73,18 @@ const printStructuredData = function(functionRef, contents, details) {
     fileData.push(getErrors(details, length))
     return fileData;
   };
+
   for(file in files) {
+    fileData.push()
     files.length > 1 && fileData.push(delimiter + makeHeader(files[file]));
     delimiter = '\n';
-    fileData.push(functionRef(length, contents[file]));
+    let content = apply(fs, files[file]);
+    if(option == '-c') {
+      fileData.push(content);
+    };
+    if(option == '-n') {
+      fileData.push(functionRef(length,content));
+    };
   };
   return fileData;
 };
@@ -101,6 +112,14 @@ const getErrors = function(details, length) {
   return invalidCountError(type, length);
 };
 
+const fileNotFoundError = function(file) {
+  return 'head: ' + file + ': No such file or directory';
+};
+
+const isFileExists = function(existsSync, file) {
+  return existsSync(file);
+};
+
 module.exports = { 
   classifyDetails, 
   extractNLines,
@@ -114,6 +133,8 @@ module.exports = {
   getErrors,
   getOptionFuncRef,
   isCountAboveZero,
-  invalidCountError
+  invalidCountError,
+  fileNotFoundError,
+  isFileExists
 };
 
