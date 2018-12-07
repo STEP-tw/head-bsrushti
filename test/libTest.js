@@ -16,13 +16,10 @@ const {
   fileNotFoundError,
   isFileExists
 } = require('../src/lib.js'); 
-let returnConstant = function(constant){ return constant; }; 
+
 let fs = {
   existsSync : (file) => true ,
   readFileSync : (file) => 'first line\nsecond line' ,
-};
-const existsSync = function(file) { 
-  return true
 };
 describe('classifyDetails categories the input according to characteristics', () => {
   it('should return object of assigned details of file 1', () => {
@@ -246,7 +243,7 @@ describe('invalidCountError', () => {
 
 describe('isFileExists', () => {
   it('should return true if it finds the file', () => {
-    equal(isFileExists(existsSync,file),true);
+    equal(isFileExists(fs.existsSync,file),true);
   });
 });
 
