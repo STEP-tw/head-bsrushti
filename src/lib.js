@@ -40,10 +40,14 @@ const isValidLength = function(option) {
   return !(option.length == 2 && !Math.abs(option)); 
 };
 
+const isIncludesZero = function(option) { 
+  return option.includes(0);
+};
+
 const extractLength = function(details) {
   let files = extractFiles(details);
   let option = details.join('');
-  if(isNaN(option.slice(2)) || option.slice(2).includes(0)) {
+  if(isNaN(option.slice(2)) || isIncludesZero(option.slice(2))) {
     return option.slice(2);
   };
 
@@ -135,6 +139,7 @@ module.exports = {
   invalidCountError,
   fileNotFoundError,
   isFileExists,
-  isValidLength
+  isValidLength,
+  isIncludesZero
 };
 

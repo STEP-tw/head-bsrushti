@@ -15,7 +15,8 @@ const {
   invalidCountError,
   fileNotFoundError,
   isFileExists,
-  isValidLength
+  isValidLength,
+  isIncludesZero
 } = require('../src/lib.js'); 
 
 let fs = {
@@ -261,5 +262,15 @@ describe('isValidLength function return false if illegal line count is provided'
 
   it('should return true if valid line count is provided', () => {
     deepEqual(isValidLength('-n2'),true);
+  });
+});
+
+describe('isIncludesZero', () => {
+  it('should return true if given input have zero included', () => {
+    deepEqual(isIncludesZero('-n0'),true);
+  });
+
+  it('should return false if given input have zero included', () => {
+    deepEqual(isIncludesZero('-n47'),false);
   });
 });
