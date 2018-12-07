@@ -9,14 +9,14 @@ const classifyDetails = function(details) {
   };
 };
 
-const extractNLines = function(length, contents) {
+const extractLines = function(length, contents) {
   return contents
     .split("\n")
     .splice(0, length)
     .join("\n");
 };
 
-const extractNCharacters = function(length, contents) {
+const extractCharacters = function(length, contents) {
   return contents
     .split("")
     .splice(0, length)
@@ -106,7 +106,7 @@ const printStructuredData = function(functionRef, details, fs) {
 
 const getOptionFuncRef = function(option) {
   let funcRef;
-  option == "-c" ? (funcRef = extractNCharacters) : (funcRef = extractNLines);
+  option == "-c" ? (funcRef = extractCharacters) : (funcRef = extractLines);
   return funcRef;
 };
 
@@ -137,8 +137,8 @@ const isFileExists = function(existsSync, file) {
 
 module.exports = {
   classifyDetails,
-  extractNLines,
-  extractNCharacters,
+  extractLines,
+  extractCharacters,
   apply,
   makeHeader,
   extractOption,
