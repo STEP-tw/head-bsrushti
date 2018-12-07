@@ -14,7 +14,8 @@ const {
   isCountAboveZero,
   invalidCountError,
   fileNotFoundError,
-  isFileExists
+  isFileExists,
+  isValidLength
 } = require('../src/lib.js'); 
 
 let fs = {
@@ -250,5 +251,15 @@ describe('isFileExists', () => {
 describe('fileNotFoundError', () => {
   it('should return error message if it not finds the file', () => {
     equal(fileNotFoundError('file'),'head: file: No such file or directory');
+  });
+});
+
+describe('isValidLength function return false if illegal line count is provided', () => {
+  it('should return false if invalid line count is provided', () => {
+    deepEqual(isValidLength('-n'),false);
+  });
+
+  it('should return true if valid line count is provided', () => {
+    deepEqual(isValidLength('-n2'),true);
   });
 });

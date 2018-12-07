@@ -36,6 +36,10 @@ const extractOption = function(details) {
   return '-n';
 };
 
+const isValidLength = function(option) { 
+  return !(option.length == 2 && !Math.abs(option)); 
+};
+
 const extractLength = function(details) {
   let files = extractFiles(details);
   let option = details.join('');
@@ -43,7 +47,7 @@ const extractLength = function(details) {
     return option.slice(2);
   };
 
-  if(option.length == 2 && !Math.abs(option)) {
+  if(!isValidLength(option)) {
     return files[0];
   };
   let index = 0;
@@ -130,6 +134,7 @@ module.exports = {
   isCountAboveZero,
   invalidCountError,
   fileNotFoundError,
-  isFileExists
+  isFileExists,
+  isValidLength
 };
 
