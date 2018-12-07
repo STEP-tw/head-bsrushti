@@ -6,7 +6,7 @@ const {
   apply,
   makeHeader,
   extractOption,
-  extractLength,
+  extractCount,
   extractFiles,
   getErrors,
   printStructuredData,
@@ -110,24 +110,24 @@ describe('extractOption returns the matched option mentioned in input', () => {
   });
 });
 
-describe('extractLength returns the first occurrence of number from string input', () => {
+describe('extractCount returns the first occurrence of number from string input', () => {
   it('should return itself if no length is provided', () => {
-    equal(extractLength(['-n','file']),'file');
+    equal(extractCount(['-n','file']),'file');
   });
 
   it('should return length if length is provided with option', () => {
-    equal(extractLength(['-n1','file']),1);
-    equal(extractLength(['-c1','file']),1);
+    equal(extractCount(['-n1','file']),1);
+    equal(extractCount(['-c1','file']),1);
   });
 
   it('should return length if length is provided with no option', () => {
-    equal(extractLength(['-1','file']),1);
-    equal(extractLength(['-5','file']),5);
+    equal(extractCount(['-1','file']),1);
+    equal(extractCount(['-5','file']),5);
   });
 
   it('should return invalid length if invalid length is provided with option', () => {
-    equal(extractLength(['-n3e','file']),'3e');
-    equal(extractLength(['-c3e','file']),'3e');
+    equal(extractCount(['-n3e','file']),'3e');
+    equal(extractCount(['-c3e','file']),'3e');
   });
 });
 

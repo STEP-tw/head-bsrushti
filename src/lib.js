@@ -4,7 +4,7 @@ let illegalByteCount = "head: illegal byte count -- ";
 const classifyDetails = function(details) {
   return {
     option: extractOption(details),
-    length: extractLength(details.slice(0, 2)),
+    length: extractCount(details.slice(0, 2)),
     files: extractFiles(details)
   };
 };
@@ -56,7 +56,7 @@ const isIncludesZero = function(option) {
   return option.includes(0);
 };
 
-const extractLength = function(details) {
+const extractCount = function(details) {
   let files = extractFiles(details);
   let option = details.join("");
   if (isNaN(option.slice(2)) || isIncludesZero(option.slice(2))) {
@@ -142,7 +142,7 @@ module.exports = {
   apply,
   makeHeader,
   extractOption,
-  extractLength,
+  extractCount,
   extractFiles,
   printStructuredData,
   getErrors,
