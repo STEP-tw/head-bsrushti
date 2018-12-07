@@ -9,7 +9,7 @@ const fs = require('fs');
 
 const main = function() { 
   let details = process.argv;
-  let {option, length, files} = classifyDetails(details.slice(2));
+  let option = classifyDetails(details.slice(2)).option
   console.log(printStructuredData(getOptionFuncRef(option),details.slice(2),fs).join("\n")
   ); 
 };
