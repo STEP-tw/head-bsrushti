@@ -18,11 +18,14 @@ const extractNCharacters = function(length, contents) {
   return contents.split("").splice(0,length).join("");
 };
 
-const apply = function(fs, file) { 
+const apply = function(fs, file, fileLength, functionRef, length) { 
   if(!fs.existsSync(file)) {
     return fileNotFoundError(file);
   };
-  return fs.readFileSync(file,'utf8');
+  if(fs.existsSync(file) && fileLength > 1) {
+    return makeHeader(file) + "\n" + functionRef(length, fs.readFileSync(file,'utf8'));
+  };
+  return functionRef(length,fs.readFileSync(file,'utf8'));
 };
 
 const makeHeader = function(heading) { 
@@ -75,19 +78,13 @@ const printStructuredData = function(functionRef, details, fs) {
   };
 
   for(file in files) {
-    fileData.push()
-    files.length > 1 && fileData.push(delimiter + makeHeader(files[file]));
-    delimiter = '\n';
-    let content = apply(fs, files[file]);
-    if(option == '-c') {
-      fileData.push(content);
-    };
-    if(option == '-n') {
-      fileData.push(functionRef(length,content));
-    };
+    let getContent = apply.bind(null,fs, files[file]);
+    let content = getContent(files.length, functionRef, length);
+    fileData.push(content);
   };
   return fileData;
 };
+
 
 const getOptionFuncRef = function(option) {
   let funcRef;

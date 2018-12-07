@@ -16,7 +16,6 @@ const {
   fileNotFoundError,
   isFileExists
 } = require('../src/lib.js'); 
-
 let returnConstant = function(constant){ return constant; }; 
 let fs = {
   existsSync : (file) => true ,
@@ -80,8 +79,11 @@ describe('extractNCharacters returns characters of given text as per the given i
 });
 
 describe('apply returns the result as per the mapper function', () => {
+  it("should return file content with header if more than two files are given", () => {
+    deepEqual(apply(fs, 'file', 2, extractNCharacters,3),'==> file <==\nfir');
+  });
   it('should return file content as per the input', () => {
-    deepEqual(apply(fs,'file1'),'first line\nsecond line');
+    deepEqual(apply(fs,'file1', 1,extractNLines,1),'first line');
   });
 });
 
@@ -194,10 +196,10 @@ describe('printStructuredData', () => {
   it('should return file content with header if more than two files are provided', () => {
     let input = printStructuredData(
       extractNCharacters,
-      ['-n3','file1','file2'],
+      ['-c3','file1','file2'],
       fs
     );
-    let expectedOutput = [ '==> file1 <==', 'fir', '\n==> file2 <==', 'fir' ];
+    let expectedOutput = [ '==> file1 <==\nfir', '==> file2 <==\nfir' ];
     deepEqual(input, expectedOutput);
 
     input = printStructuredData(
@@ -205,10 +207,8 @@ describe('printStructuredData', () => {
       ['-n3','file1','file2'],
       fs
     );
-    expectedOutput = [ '==> file1 <==',
-                       'first line\nsecond line',
-                       '\n==> file2 <==',
-                       'first line\nsecond line' ];
+    expectedOutput = [ '==> file1 <==\nfirst line\nsecond line',
+                       '==> file2 <==\nfirst line\nsecond line' ];
     deepEqual(input, expectedOutput);
 
   });
