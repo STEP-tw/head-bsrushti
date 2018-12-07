@@ -2,7 +2,6 @@ let illegalCount = 'head: illegal line count -- ';
 let illegalByteCount = 'head: illegal byte count -- ';
 
 const classifyDetails = function(details) { 
-  if(!details) {return {};};
   return {
     option : extractOption(details), 
     length : extractLength(details.slice(0,2)),
