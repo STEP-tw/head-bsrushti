@@ -70,7 +70,6 @@ const extractFiles = function(details) {
 const printStructuredData = function(functionRef, details, fs) {
   let {option, length, files} = classifyDetails(details);
   let fileData = [];
-  let delimiter = '';
   if(!isCountAboveZero(length)) {
     fileData.push(getErrors(details, length))
     return fileData;

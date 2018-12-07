@@ -1,6 +1,5 @@
 const {
   classifyDetails, 
-  apply,
   getOptionFuncRef,
   printStructuredData
 } = require('./src/lib.js'); 
