@@ -32,7 +32,7 @@ const makeHeader = function(heading) {
 };
 
 const extractOption = function(details) { 
-  if(details.some((option) => option.match(/-c/))) { return '-c'; };
+  if(details[0].match(/-c/)) { return '-c'; };
   return '-n';
 };
 
