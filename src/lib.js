@@ -1,6 +1,3 @@
-let illegalCount = "head: illegal line count -- ";
-let illegalByteCount = "head: illegal byte count -- ";
-
 const classifyDetails = function(details) {
   return {
     option: extractOption(details),
@@ -9,18 +6,16 @@ const classifyDetails = function(details) {
   };
 };
 
+const extractContents = function(length, contents, delimiter) { 
+  return contents.split(delimiter).splice(0, length).join(delimiter);
+};
+
 const extractLines = function(length, contents) {
-  return contents
-    .split("\n")
-    .splice(0, length)
-    .join("\n");
+  return extractContents(length, contents, "\n");
 };
 
 const extractCharacters = function(length, contents) {
-  return contents
-    .split("")
-    .splice(0, length)
-    .join("");
+  return extractContents(length, contents, "");
 };
 
 const apply = function(fs, file, fileLength, functionRef, length) {
@@ -152,5 +147,6 @@ module.exports = {
   fileNotFoundError,
   isFileExists,
   isValidLength,
-  isIncludesZero
+  isIncludesZero,
+  extractContents
 };

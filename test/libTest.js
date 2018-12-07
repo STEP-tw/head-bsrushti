@@ -16,7 +16,8 @@ const {
   fileNotFoundError,
   isFileExists,
   isValidLength,
-  isIncludesZero
+  isIncludesZero,
+  extractContents
 } = require('../src/lib.js'); 
 
 let fs = {
@@ -272,5 +273,15 @@ describe('isIncludesZero', () => {
 
   it('should return false if given input have zero included', () => {
     deepEqual(isIncludesZero('-n47'),false);
+  });
+});
+
+describe('extractContents returns contents as per the delimiter it has passed', () => {
+  it('should return contents separated by \n', () => {
+    deepEqual(extractContents(2,'first line\nsecond line',"\n"),'first line\nsecond line');
+  });
+
+  it('should return contents separated by character', () => {
+    deepEqual(extractContents(5,'first line\nsecond line',""),'first');
   });
 });
