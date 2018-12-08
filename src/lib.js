@@ -1,9 +1,9 @@
-const classifyDetails = function(details) {
-  details = details.slice(0);
+const classifyDetails = function(params) {
+  params = params.slice(0);
   return {
-    option: extractOption(details),
-    length: extractCount(details.slice(0, 2)),
-    files: extractFiles(details)
+    option: extractOption(params),
+    length: extractCount(params.slice(0, 2)),
+    files: extractFiles(params)
   };
 };
 
@@ -35,8 +35,8 @@ const makeHeader = function(heading) {
   return "==> " + heading + " <==";
 };
 
-const extractOption = function(details) {
-  if (details[0].match(/-c/)) {
+const extractOption = function(params) {
+  if (params[0].match(/-c/)) {
     return "-c";
   };
   return "-n";
@@ -50,9 +50,9 @@ const isIncludesZero = function(option) {
   return option.includes(0);
 };
 
-const extractCount = function(details) {
-  let files = extractFiles(details);
-  let option = details.join("");
+const extractCount = function(params) {
+  let files = extractFiles(params);
+  let option = params.join("");
   if (isNaN(option.slice(2)) || isIncludesZero(option.slice(2))) {
     return option.slice(2);
   };
@@ -61,37 +61,37 @@ const extractCount = function(details) {
     return files[0];
   };
 
-  return getCountFromOption(option, details);
+  return getCountFromOption(option, params);
 };
 
-const getCountFromOption = function(option, details) { 
+const getCountFromOption = function(option, params) { 
   let index = 0;
-  while (!parseInt(option) && index < details.join("").length) {
-    option = details.join("");
+  while (!parseInt(option) && index < params.join("").length) {
+    option = params.join("");
     index++;
     option = option.slice(index);
   };
   return Math.abs(parseInt(option)) || 10;
 };
 
-const isDetailsStartsWithHyphen = function(details) { 
-  return details[0].startsWith('-');
+const isDetailsStartsWithHyphen = function(params) { 
+  return params[0].startsWith('-');
 };
 
-const extractFiles = function(details) {
-  if (!isDetailsStartsWithHyphen(details)) {
-    return details.splice(0);
+const extractFiles = function(params) {
+  if (!isDetailsStartsWithHyphen(params)) {
+    return params.splice(0);
   };
 
-  if (isDetailsStartsWithHyphen(details) && !details[1].match(/^[0-9]/)) {
-    return details.splice(1);
+  if (isDetailsStartsWithHyphen(params) && !params[1].match(/^[0-9]/)) {
+    return params.splice(1);
   };
 
-  return details.splice(2);
+  return params.splice(2);
 };
 
-const head = function(functionRef, details, fs) {
-  let { option, length, files } = classifyDetails(details);
+const head = function(functionRef, params, fs) {
+  let { option, length, files } = classifyDetails(params);
   let fileData = [];
   if (!isCountAboveZero(length)) {
     fileData.push(invalidCountError(option, length));
