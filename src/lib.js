@@ -1,4 +1,5 @@
 const classifyDetails = function(details) {
+  details = details.slice(0);
   return {
     option: extractOption(details),
     length: extractCount(details.slice(0, 2)),
