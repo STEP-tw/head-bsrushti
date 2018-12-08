@@ -85,13 +85,13 @@ const extractFiles = function(details) {
   return details.splice(2);
 };
 
-const printStructuredData = function(functionRef, details, fs) {
+const head = function(functionRef, details, fs) {
   let { option, length, files } = classifyDetails(details);
   let fileData = [];
   if (!isCountAboveZero(length)) {
     fileData.push(getErrors(details, length));
     return fileData;
-  }
+  };
 
   for (file in files) {
     let getContent = apply.bind(null, fs, files[file]);
@@ -140,7 +140,7 @@ module.exports = {
   extractOption,
   extractCount,
   extractFiles,
-  printStructuredData,
+  head,
   getErrors,
   getOptionFuncRef,
   isCountAboveZero,

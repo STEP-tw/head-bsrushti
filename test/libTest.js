@@ -9,7 +9,7 @@ const {
   extractCount,
   extractFiles,
   getErrors,
-  printStructuredData,
+  head,
   getOptionFuncRef,
   isCountAboveZero,
   invalidCountError,
@@ -166,33 +166,33 @@ describe('getErrors', () => {
   });
 });
 
-describe('printStructuredData', () => {
+describe('head', () => {
   it('should return the file data if -n input is given with length and files', () => {
-    let input = printStructuredData(extractCharacters,['-n3','file1'],fs);
+    let input = head(extractCharacters,['-n3','file1'],fs);
     let expectedOutput = ['fir']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return the file data if -n input is given with length and files', () => {
-    let input = printStructuredData(extractLines,['-n2','file1'],fs);
+    let input = head(extractLines,['-n2','file1'],fs);
     let expectedOutput = ['first line\nsecond line']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return the file content in default case of length 10', () => {
-    let input = printStructuredData(extractLines,['file1'],fs);
+    let input = head(extractLines,['file1'],fs);
     let expectedOutput = ['first line\nsecond line']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return error message if type is -n and length is not provided', () => {
-    let input = printStructuredData(extractLines,['-n','file1'],fs);
+    let input = head(extractLines,['-n','file1'],fs);
     let expectedOutput = ['head: illegal line count -- file1']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return file content with header if more than two files are provided', () => {
-    let input = printStructuredData(
+    let input = head(
       extractCharacters,
       ['-c3','file1','file2'],
       fs
@@ -200,7 +200,7 @@ describe('printStructuredData', () => {
     let expectedOutput = [ '==> file1 <==\nfir', '==> file2 <==\nfir' ];
     deepEqual(input, expectedOutput);
 
-    input = printStructuredData(
+    input = head(
       extractLines,
       ['-n3','file1','file2'],
       fs
