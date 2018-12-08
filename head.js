@@ -7,9 +7,9 @@ const {
 const fs = require('fs'); 
 
 const main = function() { 
-  let details = process.argv;
-  let option = classifyDetails(details.slice(2)).option;
-  console.log(head(getOptionFuncRef(option),details.slice(2),fs).join("\n")); 
+  let params = process.argv;
+  let option = classifyDetails(params.slice(2)).option;
+  console.log(head(getOptionFuncRef(option),params.slice(2),fs).join("\n")); 
 };
 
 main();
