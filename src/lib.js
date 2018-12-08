@@ -89,7 +89,7 @@ const head = function(functionRef, details, fs) {
   let { option, length, files } = classifyDetails(details);
   let fileData = [];
   if (!isCountAboveZero(length)) {
-    fileData.push(getErrors(details, length));
+    fileData.push(invalidCountError(option, length));
     return fileData;
   };
 
@@ -97,7 +97,7 @@ const head = function(functionRef, details, fs) {
     let getContent = apply.bind(null, fs, files[file]);
     let content = getContent(files.length, functionRef, length);
     fileData.push(content);
-  }
+  };
   return fileData;
 };
 
@@ -115,12 +115,8 @@ const invalidCountError = function(type, count) {
   let typeName = "line";
   if (type == "-c") {
     typeName = "byte";
-  }
+  };
   return "head: illegal " + typeName + " count -- " + count;
-};
-
-const getErrors = function(details, length) {
-  return invalidCountError(extractOption(details), length);
 };
 
 const fileNotFoundError = function(file) {
@@ -141,7 +137,6 @@ module.exports = {
   extractCount,
   extractFiles,
   head,
-  getErrors,
   getOptionFuncRef,
   isCountAboveZero,
   invalidCountError,

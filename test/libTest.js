@@ -8,7 +8,6 @@ const {
   extractOption,
   extractCount,
   extractFiles,
-  getErrors,
   head,
   getOptionFuncRef,
   isCountAboveZero,
@@ -145,24 +144,6 @@ describe('extractFiles function extract the files from given details', () => {
 
   it('should return file name if only argument is passing as an input', () => {
     deepEqual(extractFiles(['file']),['file']);
-  });
-});
-
-describe('getErrors', () => {
-  it('should return error message if type is -c and invalid length is provided', () => {
-    deepEqual(getErrors(['-c1s','file1'],'1s'),'head: illegal byte count -- 1s');     
-  });
-
-  it('should return error message if type is -n and length invalid is provided', () => {
-    deepEqual(getErrors(['-n1s','file1'],'1s'),'head: illegal line count -- 1s');     
-  });
-
-  it('should return error message if type is -n and length is not provided', () => {
-    deepEqual(getErrors(['-n','file1'],'file1'),'head: illegal line count -- file1');     
-  });
-
-  it('should return error message if type is -c and length is not provided', () => {
-    deepEqual(getErrors(['-c','file1'],'file1'),'head: illegal byte count -- file1');     
   });
 });
 
