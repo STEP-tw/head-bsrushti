@@ -17,7 +17,8 @@ const {
   isValidCount,
   isIncludesZero,
   extractContents,
-  getCountFromOption
+  getCountFromOption,
+  isDetailsStartsWithHyphen
 } = require('../src/lib.js'); 
 
 let fs = {
@@ -173,19 +174,11 @@ describe('head', () => {
   });
 
   it('should return file content with header if more than two files are provided', () => {
-    let input = head(
-      extractCharacters,
-      ['-c3','file1','file2'],
-      fs
-    );
+    let input = head(extractCharacters, ['-c3','file1','file2'], fs);
     let expectedOutput = [ '==> file1 <==\nfir', '==> file2 <==\nfir' ];
     deepEqual(input, expectedOutput);
 
-    input = head(
-      extractLines,
-      ['-n3','file1','file2'],
-      fs
-    );
+    input = head(extractLines, ['-n3','file1','file2'], fs);
     expectedOutput = [ '==> file1 <==\nfirst line\nsecond line',
                        '==> file2 <==\nfirst line\nsecond line' ];
     deepEqual(input, expectedOutput);
@@ -292,5 +285,17 @@ describe('getCountFromOption returns count from given valid option', () => {
   it('should returns positive count when length preceded by - with option with space between in it', () => {
     equal(getCountFromOption('-n5',['-n','5']), 5);
     equal(getCountFromOption('-n2',['-n','2']), 2);
+  });
+});
+
+describe('isDetailsStartsWithHyphen', () => {
+  it('should returns true if given input starts with hyphen', () => {
+    equal(isDetailsStartsWithHyphen(['-abc']),true);
+    equal(isDetailsStartsWithHyphen(['-a-b-c']),true);
+  });
+
+  it('should returns false if given input not starts with hyphen', () => {
+    equal(isDetailsStartsWithHyphen(['abc-']),false);
+    equal(isDetailsStartsWithHyphen(['a-b-c']),false);
   });
 });

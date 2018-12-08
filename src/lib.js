@@ -73,14 +73,18 @@ const getCountFromOption = function(option, details) {
   return Math.abs(parseInt(option)) || 10;
 };
 
-const extractFiles = function(details) {
-  if (!details[0].startsWith("-")) {
-    return details.splice(0);
-  }
+const isDetailsStartsWithHyphen = function(details) { 
+  return details[0].startsWith('-');
+};
 
-  if (details[0].match(/^-/) && !details[1].match(/^[0-9]/)) {
+const extractFiles = function(details) {
+  if (!isDetailsStartsWithHyphen(details)) {
+    return details.splice(0);
+  };
+
+  if (isDetailsStartsWithHyphen(details) && !details[1].match(/^[0-9]/)) {
     return details.splice(1);
-  }
+  };
 
   return details.splice(2);
 };
@@ -145,5 +149,6 @@ module.exports = {
   isValidCount,
   isIncludesZero,
   extractContents,
-  getCountFromOption
+  getCountFromOption,
+  isDetailsStartsWithHyphen
 };
