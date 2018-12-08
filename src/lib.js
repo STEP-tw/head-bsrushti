@@ -21,14 +21,12 @@ const extractCharacters = function(length, contents) {
 const apply = function(fs, file, fileLength, functionRef, length) {
   if (!fs.existsSync(file)) {
     return fileNotFoundError(file);
-  }
+  };
+
   if (fs.existsSync(file) && fileLength > 1) {
-    return (
-      makeHeader(file) +
-      "\n" +
-      functionRef(length, fs.readFileSync(file, "utf8"))
-    );
-  }
+    return ( makeHeader(file) + "\n" + functionRef(length, fs.readFileSync(file, "utf8")));
+  };
+
   return functionRef(length, fs.readFileSync(file, "utf8"));
 };
 
@@ -39,11 +37,11 @@ const makeHeader = function(heading) {
 const extractOption = function(details) {
   if (details[0].match(/-c/)) {
     return "-c";
-  }
+  };
   return "-n";
 };
 
-const isValidLength = function(option) {
+const isValidCount = function(option) {
   return !(option.length == 2 && !Math.abs(option));
 };
 
@@ -56,18 +54,22 @@ const extractCount = function(details) {
   let option = details.join("");
   if (isNaN(option.slice(2)) || isIncludesZero(option.slice(2))) {
     return option.slice(2);
-  }
+  };
 
-  if (!isValidLength(option)) {
+  if (!isValidCount(option)) {
     return files[0];
-  }
+  };
 
+  return getCountFromOption(option, details);
+};
+
+const getCountFromOption = function(option, details) { 
   let index = 0;
   while (!parseInt(option) && index < details.join("").length) {
     option = details.join("");
     index++;
     option = option.slice(index);
-  }
+  };
   return Math.abs(parseInt(option)) || 10;
 };
 
@@ -118,8 +120,7 @@ const invalidCountError = function(type, count) {
 };
 
 const getErrors = function(details, length) {
-  const type = extractOption(details);
-  return invalidCountError(type, length);
+  return invalidCountError(extractOption(details), length);
 };
 
 const fileNotFoundError = function(file) {
@@ -146,7 +147,8 @@ module.exports = {
   invalidCountError,
   fileNotFoundError,
   isFileExists,
-  isValidLength,
+  isValidCount,
   isIncludesZero,
-  extractContents
+  extractContents,
+  getCountFromOption
 };

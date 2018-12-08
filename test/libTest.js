@@ -15,22 +15,24 @@ const {
   invalidCountError,
   fileNotFoundError,
   isFileExists,
-  isValidLength,
+  isValidCount,
   isIncludesZero,
-  extractContents
+  extractContents,
+  getCountFromOption
 } = require('../src/lib.js'); 
 
 let fs = {
   existsSync : (file) => true ,
   readFileSync : (file) => 'first line\nsecond line' ,
 };
-describe('classifyDetails categories the input according to characteristics', () => {
-  it('should return object of assigned details of file 1', () => {
+
+describe('classifyDetails categorizes the input according to its characteristics', () => {
+  it('should return object of assigned details of one file', () => {
     let expectedOutput = { option : '-n', length : 1, files : ['file1'] }
     deepEqual(classifyDetails(['-n','1','file1']),expectedOutput);
   });
 
-  it('should return object of assigned details with more than one file', () => {
+  it('should return object of assigned details for more than one file', () => {
     let expectedOutput = { option : '-n', length : 1, files : ['file1','file2','file3'] }
     deepEqual(classifyDetails(['-n','1','file1','file2','file3']),expectedOutput);
   });
@@ -75,11 +77,11 @@ describe('extractCharacters returns characters of given text as per the given in
 });
 
 describe('apply returns the result as per the mapper function', () => {
-  it("should return file content with header if more than two files are given", () => {
+  it("should return file content with header if more than one files are given", () => {
     deepEqual(apply(fs, 'file', 2, extractCharacters,3),'==> file <==\nfir');
   });
   it('should return file content as per the input', () => {
-    deepEqual(apply(fs,'file1', 1,extractLines,1),'first line');
+    deepEqual(apply(fs,'file1', 1, extractLines,1),'first line');
   });
 });
 
@@ -95,7 +97,7 @@ describe('makeHeading gives header along with title', () => {
 });
 
 describe('extractOption returns the matched option mentioned in input', () => {
-  it('should return -n default if option is not mentioned in input', () => {
+  it('should return -n as default if option is not mentioned in input', () => {
     equal(extractOption(['file1', 'file2']),'-n');
     equal(extractOption(['-', 'file1', 'file2']),'-n');
   });
@@ -256,13 +258,13 @@ describe('fileNotFoundError', () => {
   });
 });
 
-describe('isValidLength function return false if illegal line count is provided', () => {
+describe('isValidCount function return false if illegal line count is provided', () => {
   it('should return false if invalid line count is provided', () => {
-    deepEqual(isValidLength('-n'),false);
+    deepEqual(isValidCount('-n'),false);
   });
 
   it('should return true if valid line count is provided', () => {
-    deepEqual(isValidLength('-n2'),true);
+    deepEqual(isValidCount('-n2'),true);
   });
 });
 
@@ -283,5 +285,31 @@ describe('extractContents returns contents as per the delimiter it has passed', 
 
   it('should return contents separated by character', () => {
     deepEqual(extractContents(5,'first line\nsecond line',""),'first');
+  });
+});
+
+describe('getCountFromOption returns count from given valid option', () => {
+  it('should returns 10 when no option is provided', () => {
+    equal(getCountFromOption('',[]), 10);
+  });
+
+  it('should returns positive count when length preceded by -', () => {
+    equal(getCountFromOption('-5',['-5']), 5);
+    equal(getCountFromOption('-2',['-2']), 2);
+  });
+
+  it('should returns positive count when length preceded by - with space between in it', () => {
+    equal(getCountFromOption('-5',['-','5']), 5);
+    equal(getCountFromOption('-2',['-','2']), 2);
+  });
+
+  it('should returns positive count when length preceded by - with option', () => {
+    equal(getCountFromOption('-n5',['-n5']), 5);
+    equal(getCountFromOption('-n2',['-n2']), 2);
+  });
+
+  it('should returns positive count when length preceded by - with option with space between in it', () => {
+    equal(getCountFromOption('-n5',['-n','5']), 5);
+    equal(getCountFromOption('-n2',['-n','2']), 2);
   });
 });
