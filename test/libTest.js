@@ -2,7 +2,7 @@ const {equal, deepEqual} = require('assert');
 const { 
   classifyDetails,
   extractHeadLines,
-  extractCharacters,
+  extractHeadCharacters,
   apply,
   makeHeader,
   extractOption,
@@ -57,28 +57,28 @@ describe('extractHeadLines returns lines of given text as per the given input', 
   });
 });
 
-describe('extractCharacters returns characters of given text as per the given input length', () => {
+describe('extractHeadCharacters returns characters of given text as per the given input length', () => {
   it('should return empty string for 0 length input', () => {
-    deepEqual(extractCharacters(0,'first line\nsecond line'),'');
+    deepEqual(extractHeadCharacters(0,'first line\nsecond line'),'');
   });
 
   it('should return one character for length as input 1', () => {
-    deepEqual(extractCharacters(1,'first line\nsecond line'),'f');
+    deepEqual(extractHeadCharacters(1,'first line\nsecond line'),'f');
   });
 
   it('should return empty character for invalid length(negative)', () => {
-    deepEqual(extractCharacters(-1,'first line\nsecond line'),'');
+    deepEqual(extractHeadCharacters(-1,'first line\nsecond line'),'');
   });
 
   it('should return number of characters as per the given length', () => {
-    deepEqual(extractCharacters(2,'first line\nsecond line'),'fi');
-    deepEqual(extractCharacters(5,'first\nline\nsecond\nline'),'first');
+    deepEqual(extractHeadCharacters(2,'first line\nsecond line'),'fi');
+    deepEqual(extractHeadCharacters(5,'first\nline\nsecond\nline'),'first');
   });
 });
 
 describe('apply returns the result as per the mapper function', () => {
   it("should return file content with header if more than one files are given", () => {
-    deepEqual(apply(fs, 'file', 2, extractCharacters,3),'==> file <==\nfir');
+    deepEqual(apply(fs, 'file', 2, extractHeadCharacters,3),'==> file <==\nfir');
   });
   it('should return file content as per the input', () => {
     deepEqual(apply(fs,'file1', 1, extractHeadLines,1),'first line');
@@ -150,7 +150,7 @@ describe('extractFiles function extract the files from given details', () => {
 
 describe('head', () => {
   it('should return the file data if -n input is given with length and files', () => {
-    let input = head(extractCharacters,['-n3','file1'],fs);
+    let input = head(extractHeadCharacters,['-n3','file1'],fs);
     let expectedOutput = ['fir']; 
     deepEqual(input, expectedOutput);
   });
@@ -174,7 +174,7 @@ describe('head', () => {
   });
 
   it('should return file content with header if more than two files are provided', () => {
-    let input = head(extractCharacters, ['-c3','file1','file2'], fs);
+    let input = head(extractHeadCharacters, ['-c3','file1','file2'], fs);
     let expectedOutput = [ '==> file1 <==\nfir', '==> file2 <==\nfir' ];
     deepEqual(input, expectedOutput);
 
@@ -187,8 +187,8 @@ describe('head', () => {
 });
 
 describe('getOptionFuncRef', () => {
-  it('should return function reference for extractCharacters if -c option is provided', () => {
-    deepEqual(getOptionFuncRef('-c'), extractCharacters);
+  it('should return function reference for extractHeadCharacters if -c option is provided', () => {
+    deepEqual(getOptionFuncRef('-c'), extractHeadCharacters);
   });
 
   it('should return function reference for extractHeadLines if -n option is provided', () => {

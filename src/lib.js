@@ -15,7 +15,7 @@ const extractHeadLines = function(length, contents) {
   return extractContentsFromTop(length, contents, "\n");
 };
 
-const extractCharacters = function(length, contents) {
+const extractHeadCharacters = function(length, contents) {
   return extractContentsFromTop(length, contents, "");
 };
 
@@ -108,7 +108,7 @@ const head = function(functionRef, params, fs) {
 
 const getOptionFuncRef = function(option) {
   let funcRef;
-  option == "-c" ? (funcRef = extractCharacters) : (funcRef = extractHeadLines);
+  option == "-c" ? (funcRef = extractHeadCharacters) : (funcRef = extractHeadLines);
   return funcRef;
 };
 
@@ -135,7 +135,7 @@ const isFileExists = function(existsSync, file) {
 module.exports = {
   classifyDetails,
   extractHeadLines,
-  extractCharacters,
+  extractHeadCharacters,
   apply,
   makeHeader,
   extractOption,
