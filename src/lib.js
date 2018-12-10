@@ -7,16 +7,16 @@ const classifyDetails = function(params) {
   };
 };
 
-const extractContents = function(length, contents, delimiter) { 
-  return contents.split(delimiter).splice(0, length).join(delimiter);
+const extractContents = function(length, contents, delimiter, initial) { 
+  return contents.split(delimiter).splice(initial, length).join(delimiter);
 };
 
 const extractHeadLines = function(length, contents) {
-  return extractContents(length, contents, "\n");
+  return extractContents(length, contents, "\n", 0);
 };
 
 const extractHeadCharacters = function(length, contents) {
-  return extractContents(length, contents, "");
+  return extractContents(length, contents, "", 0);
 };
 
 const apply = function(fs, file, fileLength, functionRef, length) {

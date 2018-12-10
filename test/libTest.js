@@ -253,12 +253,12 @@ describe('isIncludesZero', () => {
 });
 
 describe('extractContents returns contents as per the delimiter it has passed', () => {
-  it('should return contents separated by \n', () => {
-    deepEqual(extractContents(2,'first line\nsecond line',"\n"),'first line\nsecond line');
+  it('should return contents separated by \n for head', () => {
+    deepEqual(extractContents(2,'first line\nsecond line',"\n", 0),'first line\nsecond line');
   });
 
-  it('should return contents separated by character', () => {
-    deepEqual(extractContents(5,'first line\nsecond line',""),'first');
+  it('should return contents separated by character for head', () => {
+    deepEqual(extractContents(5,'first line\nsecond line',"", 0),'first');
   });
 });
 
