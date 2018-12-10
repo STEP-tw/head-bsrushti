@@ -98,8 +98,9 @@ const extractFiles = function(params) {
   return params.splice(2);
 };
 
-const head = function(functionRef, params, fs) {
+const head = function(params, fs) {
   let { option, count, files } = classifyDetails(params);
+  let functionRef = getOptionFuncRef(option);
   let fileData = [];
   if (!isCountAboveZero(count)) {
     fileData.push(invalidCountError(option, count));

@@ -152,35 +152,35 @@ describe('extractFiles function extract the files from given details', () => {
 
 describe('head', () => {
   it('should return the file data if -n input is given with length and files', () => {
-    let input = head(extractHeadCharacters,['-n3','file1'],fs);
+    let input = head(['-c3','file1'],fs);
     let expectedOutput = ['fir']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return the file data if -n input is given with length and files', () => {
-    let input = head(extractHeadLines,['-n2','file1'],fs);
+    let input = head(['-n2','file1'],fs);
     let expectedOutput = ['first line\nsecond line']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return the file content in default case of length 10', () => {
-    let input = head(extractHeadLines,['file1'],fs);
+    let input = head(['file1'],fs);
     let expectedOutput = ['first line\nsecond line']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return error message if type is -n and length is not provided', () => {
-    let input = head(extractHeadLines,['-n','file1'],fs);
+    let input = head(['-n','file1'],fs);
     let expectedOutput = ['head: illegal line count -- file1']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return file content with header if more than two files are provided', () => {
-    let input = head(extractHeadCharacters, ['-c3','file1','file2'], fs);
+    let input = head(['-c3','file1','file2'], fs);
     let expectedOutput = [ '==> file1 <==\nfir', '==> file2 <==\nfir' ];
     deepEqual(input, expectedOutput);
 
-    input = head(extractHeadLines, ['-n3','file1','file2'], fs);
+    input = head(['-n3','file1','file2'], fs);
     expectedOutput = [ '==> file1 <==\nfirst line\nsecond line',
                        '==> file2 <==\nfirst line\nsecond line' ];
     deepEqual(input, expectedOutput);
