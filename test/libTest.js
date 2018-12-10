@@ -1,7 +1,7 @@
 const {equal, deepEqual} = require('assert');
 const { 
   classifyDetails,
-  extractLines,
+  extractHeadLines,
   extractCharacters,
   apply,
   makeHeader,
@@ -38,22 +38,22 @@ describe('classifyDetails categorizes the input according to its characteristics
   });
 });
 
-describe('extractLines returns lines of given text as per the given input', () => {
+describe('extractHeadLines returns lines of given text as per the given input', () => {
   it('should return empty string for 0 length input', () => {
-    deepEqual(extractLines(0,'first line\nsecond line'),'');
+    deepEqual(extractHeadLines(0,'first line\nsecond line'),'');
   });
 
   it('should return one line for length as input 1', () => {
-    deepEqual(extractLines(1,'first line\nsecond line'),'first line');
+    deepEqual(extractHeadLines(1,'first line\nsecond line'),'first line');
   });
 
   it('should return empty line for invalid length(negative)', () => {
-    deepEqual(extractLines(-1,'first line\nsecond line'),'');
+    deepEqual(extractHeadLines(-1,'first line\nsecond line'),'');
   });
 
   it('should return number of lines as per the given length', () => {
-    deepEqual(extractLines(2,'first line\nsecond line'),'first line\nsecond line');
-    deepEqual(extractLines(4,'first\nline\nsecond\nline'),'first\nline\nsecond\nline');
+    deepEqual(extractHeadLines(2,'first line\nsecond line'),'first line\nsecond line');
+    deepEqual(extractHeadLines(4,'first\nline\nsecond\nline'),'first\nline\nsecond\nline');
   });
 });
 
@@ -81,7 +81,7 @@ describe('apply returns the result as per the mapper function', () => {
     deepEqual(apply(fs, 'file', 2, extractCharacters,3),'==> file <==\nfir');
   });
   it('should return file content as per the input', () => {
-    deepEqual(apply(fs,'file1', 1, extractLines,1),'first line');
+    deepEqual(apply(fs,'file1', 1, extractHeadLines,1),'first line');
   });
 });
 
@@ -156,19 +156,19 @@ describe('head', () => {
   });
 
   it('should return the file data if -n input is given with length and files', () => {
-    let input = head(extractLines,['-n2','file1'],fs);
+    let input = head(extractHeadLines,['-n2','file1'],fs);
     let expectedOutput = ['first line\nsecond line']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return the file content in default case of length 10', () => {
-    let input = head(extractLines,['file1'],fs);
+    let input = head(extractHeadLines,['file1'],fs);
     let expectedOutput = ['first line\nsecond line']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return error message if type is -n and length is not provided', () => {
-    let input = head(extractLines,['-n','file1'],fs);
+    let input = head(extractHeadLines,['-n','file1'],fs);
     let expectedOutput = ['head: illegal line count -- file1']; 
     deepEqual(input, expectedOutput);
   });
@@ -178,7 +178,7 @@ describe('head', () => {
     let expectedOutput = [ '==> file1 <==\nfir', '==> file2 <==\nfir' ];
     deepEqual(input, expectedOutput);
 
-    input = head(extractLines, ['-n3','file1','file2'], fs);
+    input = head(extractHeadLines, ['-n3','file1','file2'], fs);
     expectedOutput = [ '==> file1 <==\nfirst line\nsecond line',
                        '==> file2 <==\nfirst line\nsecond line' ];
     deepEqual(input, expectedOutput);
@@ -191,8 +191,8 @@ describe('getOptionFuncRef', () => {
     deepEqual(getOptionFuncRef('-c'), extractCharacters);
   });
 
-  it('should return function reference for extractLines if -n option is provided', () => {
-    deepEqual(getOptionFuncRef('-n'), extractLines);
+  it('should return function reference for extractHeadLines if -n option is provided', () => {
+    deepEqual(getOptionFuncRef('-n'), extractHeadLines);
   });
 });
 
