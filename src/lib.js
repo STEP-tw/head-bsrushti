@@ -7,16 +7,16 @@ const classifyDetails = function(params) {
   };
 };
 
-const extractContents = function(length, contents, delimiter) { 
+const extractContentsFromTop = function(length, contents, delimiter) { 
   return contents.split(delimiter).splice(0, length).join(delimiter);
 };
 
 const extractLines = function(length, contents) {
-  return extractContents(length, contents, "\n");
+  return extractContentsFromTop(length, contents, "\n");
 };
 
 const extractCharacters = function(length, contents) {
-  return extractContents(length, contents, "");
+  return extractContentsFromTop(length, contents, "");
 };
 
 const apply = function(fs, file, fileLength, functionRef, length) {
@@ -149,7 +149,7 @@ module.exports = {
   isFileExists,
   isValidCount,
   isIncludesZero,
-  extractContents,
+  extractContentsFromTop,
   getCountFromOption,
   isDetailsStartsWithHyphen
 };
