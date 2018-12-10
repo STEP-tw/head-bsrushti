@@ -18,7 +18,8 @@ const {
   isIncludesZero,
   extractContents,
   getCountFromOption,
-  isDetailsStartsWithHyphen
+  isDetailsStartsWithHyphen,
+  extractTailLines
 } = require('../src/lib.js'); 
 
 let fs = {
@@ -297,5 +298,20 @@ describe('isDetailsStartsWithHyphen', () => {
   it('should returns false if given input not starts with hyphen', () => {
     equal(isDetailsStartsWithHyphen(['abc-']),false);
     equal(isDetailsStartsWithHyphen(['a-b-c']),false);
+  });
+});
+
+describe('extractTailLines returns lines of given text as per the given input', () => { 
+  it('should return whole content when 0 count is provided', () => {
+    deepEqual(extractTailLines(0,'first line\nsecond line'),'first line\nsecond line');
+  });
+
+  it('should return one line for count 1', () => {
+    deepEqual(extractTailLines(1,'first line\nsecond line'),'second line');
+  });
+
+  it('should return number of lines as per the given count', () => {
+    deepEqual(extractTailLines(2,'first line\nsecond line'),'first line\nsecond line');
+    deepEqual(extractTailLines(4,'first\nline\nsecond\nline'),'first\nline\nsecond\nline');
   });
 });
