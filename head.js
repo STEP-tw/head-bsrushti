@@ -1,6 +1,4 @@
 const {
-  classifyDetails, 
-  getOptionFuncRef,
   head
 } = require('./src/lib.js'); 
 
