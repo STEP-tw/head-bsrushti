@@ -19,7 +19,8 @@ const {
   extractContents,
   getCountFromOption,
   isDetailsStartsWithHyphen,
-  extractTailLines
+  extractTailLines,
+  extractTailCharacters
 } = require('../src/lib.js'); 
 
 let fs = {
@@ -313,5 +314,20 @@ describe('extractTailLines returns lines of given text as per the given input', 
   it('should return number of lines as per the given count', () => {
     deepEqual(extractTailLines(2,'first line\nsecond line'),'first line\nsecond line');
     deepEqual(extractTailLines(4,'first\nline\nsecond\nline'),'first\nline\nsecond\nline');
+  });
+});
+
+describe('extractTailCharacters returns characters of given text as per the given input length', () => {
+  it('should return whole string for 0 length input', () => {
+    deepEqual(extractTailCharacters(0,'first line\nsecond line'),'first line\nsecond line');
+  });
+
+  it('should return one character for length as input 1', () => {
+    deepEqual(extractTailCharacters(1,'first line\nsecond line'),'e');
+  });
+
+  it('should return number of characters as per the given length', () => {
+    deepEqual(extractTailCharacters(2,'first line\nsecond line'),'ne');
+    deepEqual(extractTailCharacters(5,'first\nline\nsecond\nline'),'\nline');
   });
 });

@@ -23,6 +23,10 @@ const extractTailLines = function(count, contents) {
   return extractContents(contents, "\n", 0-count, contents.length);
 };
 
+const extractTailCharacters = function(count, contents) {
+  return extractContents(contents, "", 0-count, contents.length);
+};
+
 const apply = function(fs, file, fileLength, functionRef, count) {
   if (!fs.existsSync(file)) {
     return fileNotFoundError(file);
@@ -156,5 +160,6 @@ module.exports = {
   extractContents,
   getCountFromOption,
   isDetailsStartsWithHyphen,
-  extractTailLines
+  extractTailLines,
+  extractTailCharacters
 };
