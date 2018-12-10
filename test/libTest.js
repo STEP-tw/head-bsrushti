@@ -21,7 +21,8 @@ const {
   isDetailsStartsWithHyphen,
   extractTailLines,
   extractTailCharacters,
-  getOptionFuncRefForTail
+  getOptionFuncRefForTail,
+  getOptionFuncRefForHead
 } = require('../src/lib.js'); 
 
 let fs = {
@@ -189,13 +190,13 @@ describe('head', () => {
   });
 });
 
-describe('getOptionFuncRef', () => {
+describe('getOptionFuncRefForHead', () => {
   it('should return function reference for extractHeadCharacters if -c option is provided', () => {
-    deepEqual(getOptionFuncRef('-c'), extractHeadCharacters);
+    deepEqual(getOptionFuncRefForHead('-c'), extractHeadCharacters);
   });
 
   it('should return function reference for extractHeadLines if -n option is provided', () => {
-    deepEqual(getOptionFuncRef('-n'), extractHeadLines);
+    deepEqual(getOptionFuncRefForHead('-n'), extractHeadLines);
   });
 });
 

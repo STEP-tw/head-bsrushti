@@ -100,7 +100,7 @@ const extractFiles = function(params) {
 
 const head = function(params, fs) {
   let { option, count, files } = classifyDetails(params);
-  let functionRef = getOptionFuncRef(option);
+  let functionRef = getOptionFuncRefForHead(option);
   let fileData = [];
   if (!isCountAboveZero(count)) {
     fileData.push(invalidCountError(option, count));
@@ -115,7 +115,7 @@ const head = function(params, fs) {
   return fileData;
 };
 
-const getOptionFuncRef = function(option) {
+const getOptionFuncRefForHead = function(option) {
   let funcRef;
   option == "-c" ? (funcRef = extractHeadCharacters) : (funcRef = extractHeadLines);
   return funcRef;
@@ -147,6 +147,7 @@ const isFileExists = function(existsSync, file) {
   return existsSync(file);
 };
 
+
 module.exports = {
   classifyDetails,
   extractHeadLines,
@@ -157,7 +158,7 @@ module.exports = {
   extractCount,
   extractFiles,
   head,
-  getOptionFuncRef,
+  getOptionFuncRefForHead,
   isCountAboveZero,
   invalidCountError,
   fileNotFoundError,
