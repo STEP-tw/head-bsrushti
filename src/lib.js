@@ -121,6 +121,12 @@ const getOptionFuncRef = function(option) {
   return funcRef;
 };
 
+const getOptionFuncRefForTail = function(option) {
+  let funcRef;
+  option == "-c" ? (funcRef = extractTailCharacters) : (funcRef = extractTailLines);
+  return funcRef;
+};
+
 const isCountAboveZero = function(count) {
   return !(count < 1 || isNaN(count));
 };
@@ -162,5 +168,6 @@ module.exports = {
   getCountFromOption,
   isDetailsStartsWithHyphen,
   extractTailLines,
-  extractTailCharacters
+  extractTailCharacters,
+  getOptionFuncRefForTail
 };

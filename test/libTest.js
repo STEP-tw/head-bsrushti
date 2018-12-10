@@ -20,7 +20,8 @@ const {
   getCountFromOption,
   isDetailsStartsWithHyphen,
   extractTailLines,
-  extractTailCharacters
+  extractTailCharacters,
+  getOptionFuncRefForTail
 } = require('../src/lib.js'); 
 
 let fs = {
@@ -329,5 +330,15 @@ describe('extractTailCharacters returns characters of given text as per the give
   it('should return number of characters as per the given length', () => {
     deepEqual(extractTailCharacters(2,'first line\nsecond line'),'ne');
     deepEqual(extractTailCharacters(5,'first\nline\nsecond\nline'),'\nline');
+  });
+});
+
+describe('getOptionFuncRefForTail', () => {
+  it('should return function reference for extractHeadCharacters if -c option is provided', () => {
+    deepEqual(getOptionFuncRefForTail('-c'), extractTailCharacters);
+  });
+
+  it('should return function reference for extractHeadLines if -n option is provided', () => {
+    deepEqual(getOptionFuncRefForTail('-n'), extractTailLines);
   });
 });
