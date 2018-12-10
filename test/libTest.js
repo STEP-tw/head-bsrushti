@@ -16,7 +16,7 @@ const {
   isFileExists,
   isValidCount,
   isIncludesZero,
-  extractContentsFromTop,
+  extractContents,
   getCountFromOption,
   isDetailsStartsWithHyphen
 } = require('../src/lib.js'); 
@@ -254,11 +254,11 @@ describe('isIncludesZero', () => {
 
 describe('extractContents returns contents as per the delimiter it has passed', () => {
   it('should return contents separated by \n', () => {
-    deepEqual(extractContentsFromTop(2,'first line\nsecond line',"\n"),'first line\nsecond line');
+    deepEqual(extractContents(2,'first line\nsecond line',"\n"),'first line\nsecond line');
   });
 
   it('should return contents separated by character', () => {
-    deepEqual(extractContentsFromTop(5,'first line\nsecond line',""),'first');
+    deepEqual(extractContents(5,'first line\nsecond line',""),'first');
   });
 });
 
