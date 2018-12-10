@@ -2,33 +2,33 @@ const classifyDetails = function(params) {
   params = params.slice(0);
   return {
     option: extractOption(params),
-    length: extractCount(params.slice(0, 2)),
+    count: extractCount(params.slice(0, 2)),
     files: extractFiles(params)
   };
 };
 
-const extractContents = function(length, contents, delimiter, initial) { 
-  return contents.split(delimiter).splice(initial, length).join(delimiter);
+const extractContents = function(count, contents, delimiter, initial) { 
+  return contents.split(delimiter).splice(initial, count).join(delimiter);
 };
 
-const extractHeadLines = function(length, contents) {
-  return extractContents(length, contents, "\n", 0);
+const extractHeadLines = function(count, contents) {
+  return extractContents(count, contents, "\n", 0);
 };
 
-const extractHeadCharacters = function(length, contents) {
-  return extractContents(length, contents, "", 0);
+const extractHeadCharacters = function(count, contents) {
+  return extractContents(count, contents, "", 0);
 };
 
-const apply = function(fs, file, fileLength, functionRef, length) {
+const apply = function(fs, file, fileLength, functionRef, count) {
   if (!fs.existsSync(file)) {
     return fileNotFoundError(file);
   };
 
   if (fs.existsSync(file) && fileLength > 1) {
-    return ( makeHeader(file) + "\n" + functionRef(length, fs.readFileSync(file, "utf8")));
+    return ( makeHeader(file) + "\n" + functionRef(count, fs.readFileSync(file, "utf8")));
   };
 
-  return functionRef(length, fs.readFileSync(file, "utf8"));
+  return functionRef(count, fs.readFileSync(file, "utf8"));
 };
 
 const makeHeader = function(heading) {
@@ -91,16 +91,16 @@ const extractFiles = function(params) {
 };
 
 const head = function(functionRef, params, fs) {
-  let { option, length, files } = classifyDetails(params);
+  let { option, count, files } = classifyDetails(params);
   let fileData = [];
-  if (!isCountAboveZero(length)) {
-    fileData.push(invalidCountError(option, length));
+  if (!isCountAboveZero(count)) {
+    fileData.push(invalidCountError(option, count));
     return fileData;
   };
 
   for (file in files) {
     let getContent = apply.bind(null, fs, files[file]);
-    let content = getContent(files.length, functionRef, length);
+    let content = getContent(files.length, functionRef, count);
     fileData.push(content);
   };
   return fileData;
