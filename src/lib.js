@@ -100,7 +100,8 @@ const extractFiles = function(params) {
 
 const getFileData = function(params, fs) {
   let { option, count, files } = classifyDetails(params);
-  let functionRef = getFuncRef(params[0].split('/').slice(-1).join(""), option);
+  let command = params[0].split('/').slice(-1).join("").substr(0,4); 
+  let functionRef = getFuncRef(command, option);
   let fileData = [];
   if (!isCountAboveZero(count)) {
     fileData.push(invalidCountError(option, count));
