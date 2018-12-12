@@ -1,9 +1,9 @@
 const classifyDetails = function(params) {
   params = params.slice(0);
   return {
-    option: extractOption(params),
-    count: extractCount(params.slice(0, 2)),
-    files: extractFiles(params)
+    option: extractOption(params[1]),
+    count: extractCount(params.slice(1, 3)),
+    files: extractFiles(params.slice(1))
   };
 };
 
@@ -43,8 +43,8 @@ const makeHeader = function(heading) {
   return "==> " + heading + " <==";
 };
 
-const extractOption = function(params) {
-  if (params[0].match(/-c/)) {
+const extractOption = function(param) {
+  if (param.match(/-c/)) {
     return "-c";
   };
   return "-n";

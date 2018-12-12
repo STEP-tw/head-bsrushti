@@ -33,12 +33,12 @@ let fs = {
 describe('classifyDetails categorizes the input according to its characteristics', () => {
   it('should return object of assigned details of one file', () => {
     let expectedOutput = { option : '-n', count : 1, files : ['file1'] }
-    deepEqual(classifyDetails(['-n','1','file1']),expectedOutput);
+    deepEqual(classifyDetails(['head.js','-n','1','file1']),expectedOutput);
   });
 
   it('should return object of assigned details for more than one file', () => {
     let expectedOutput = { option : '-n', count : 1, files : ['file1','file2','file3'] }
-    deepEqual(classifyDetails(['-n','1','file1','file2','file3']),expectedOutput);
+    deepEqual(classifyDetails(['head.js','-n','1','file1','file2','file3']),expectedOutput);
   });
 });
 
@@ -102,18 +102,18 @@ describe('makeHeading gives header along with title', () => {
 
 describe('extractOption returns the matched option mentioned in input', () => {
   it('should return -n as default if option is not mentioned in input', () => {
-    equal(extractOption(['file1', 'file2']),'-n');
-    equal(extractOption(['-', 'file1', 'file2']),'-n');
+    equal(extractOption('head'),'-n');
+    equal(extractOption('-'),'-n');
   });
 
   it('should return -n if -n option is  mentioned in input', () => {
-    equal(extractOption(['-n', 'file1', 'file2']),'-n');
-    equal(extractOption(['-n5', 'file1', 'file2']),'-n');
+    equal(extractOption('-n'),'-n');
+    equal(extractOption('-n5'),'-n');
   });
 
   it('should return -c if -c option is  mentioned in input', () => {
-    equal(extractOption(['-c', 'file1', 'file2']),'-c');
-    equal(extractOption(['-c5', 'file1', 'file2']),'-c');
+    equal(extractOption('-c'),'-c');
+    equal(extractOption('-c5'),'-c');
   });
 });
 
@@ -154,35 +154,35 @@ describe('extractFiles function extract the files from given details', () => {
 
 describe('head', () => {
   it('should return the file data if -n input is given with length and files', () => {
-    let input = head(['-c3','file1'],fs);
+    let input = head(['head.js','-c3','file1'],fs);
     let expectedOutput = ['fir']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return the file data if -n input is given with length and files', () => {
-    let input = head(['-n2','file1'],fs);
+    let input = head(['head.js','-n2','file1'],fs);
     let expectedOutput = ['first line\nsecond line']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return the file content in default case of length 10', () => {
-    let input = head(['file1'],fs);
+    let input = head(['head.js','file1'],fs);
     let expectedOutput = ['first line\nsecond line']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return error message if type is -n and length is not provided', () => {
-    let input = head(['-n','file1'],fs);
+    let input = head(['head.js','-n','file1'],fs);
     let expectedOutput = ['head: illegal line count -- file1']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return file content with header if more than two files are provided', () => {
-    let input = head(['-c3','file1','file2'], fs);
+    let input = head(['head.js','-c3','file1','file2'], fs);
     let expectedOutput = [ '==> file1 <==\nfir', '==> file2 <==\nfir' ];
     deepEqual(input, expectedOutput);
 
-    input = head(['-n3','file1','file2'], fs);
+    input = head(['head.js','-n3','file1','file2'], fs);
     expectedOutput = [ '==> file1 <==\nfirst line\nsecond line',
                        '==> file2 <==\nfirst line\nsecond line' ];
     deepEqual(input, expectedOutput);

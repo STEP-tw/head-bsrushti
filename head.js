@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const main = function() { 
   let params = process.argv;
-  console.log(head(params.slice(2),fs).join("\n")); 
+  console.log(head(params.slice(1),fs).join("\n")); 
 };
 
 main();
