@@ -147,6 +147,12 @@ const isFileExists = function(existsSync, file) {
   return existsSync(file);
 };
 
+const getFuncRef = function(param, option) {
+  if(param.match(/head.*/)) {
+    return getOptionFuncRefForHead(option);
+  };
+  return getOptionFuncRefForTail(option);
+};
 
 module.exports = {
   classifyDetails,
@@ -170,5 +176,6 @@ module.exports = {
   isDetailsStartsWithHyphen,
   extractTailLines,
   extractTailCharacters,
-  getOptionFuncRefForTail
+  getOptionFuncRefForTail,
+  getFuncRef
 };

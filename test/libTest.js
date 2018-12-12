@@ -22,7 +22,8 @@ const {
   extractTailLines,
   extractTailCharacters,
   getOptionFuncRefForTail,
-  getOptionFuncRefForHead
+  getOptionFuncRefForHead,
+  getFuncRef
 } = require('../src/lib.js'); 
 
 let fs = {
@@ -341,5 +342,23 @@ describe('getOptionFuncRefForTail', () => {
 
   it('should return function reference for extractHeadLines if -n option is provided', () => {
     deepEqual(getOptionFuncRefForTail('-n'), extractTailLines);
+  });
+});
+
+describe('getFuncRef', () => {
+  it('should return function reference for head command with option -n', () => {
+    deepEqual(getFuncRef('head.js','-n'),extractHeadLines);
+  });
+
+  it('should return function reference for head command with option -c', () => {
+    deepEqual(getFuncRef('head.js','-c'),extractHeadCharacters);
+  });
+
+  it('should return function reference for tail command with option -n', () => {
+    deepEqual(getFuncRef('tail.js','-n'),extractTailLines);
+  });
+
+  it('should return function reference for tail command with option -c', () => {
+    deepEqual(getFuncRef('tail.js','-c'),extractTailCharacters);
   });
 });
