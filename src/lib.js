@@ -98,7 +98,7 @@ const extractFiles = function(params) {
   return params.splice(2);
 };
 
-const head = function(params, fs) {
+const getFileData = function(params, fs) {
   let { option, count, files } = classifyDetails(params);
   let functionRef = getFuncRef(params[0].split('/').slice(-1).join(""), option);
   let fileData = [];
@@ -163,7 +163,7 @@ module.exports = {
   extractOption,
   extractCount,
   extractFiles,
-  head,
+  getFileData,
   getOptionFuncRefForHead,
   isCountAboveZero,
   invalidCountError,

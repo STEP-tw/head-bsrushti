@@ -8,7 +8,7 @@ const {
   extractOption,
   extractCount,
   extractFiles,
-  head,
+  getFileData,
   getOptionFuncRef,
   isCountAboveZero,
   invalidCountError,
@@ -153,37 +153,37 @@ describe('extractFiles function extract the files from given details', () => {
   });
 });
 
-describe('head', () => {
+describe('getFileData', () => {
   it('should return the file data if -n input is given with length and files', () => {
-    let input = head(['head.js','-c3','file1'],fs);
+    let input = getFileData(['head.js','-c3','file1'],fs);
     let expectedOutput = ['fir']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return the file data if -n input is given with length and files', () => {
-    let input = head(['head.js','-n2','file1'],fs);
+    let input = getFileData(['head.js','-n2','file1'],fs);
     let expectedOutput = ['first line\nsecond line']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return the file content in default case of length 10', () => {
-    let input = head(['head.js','file1'],fs);
+    let input = getFileData(['head.js','file1'],fs);
     let expectedOutput = ['first line\nsecond line']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return error message if type is -n and length is not provided', () => {
-    let input = head(['head.js','-n','file1'],fs);
+    let input = getFileData(['head.js','-n','file1'],fs);
     let expectedOutput = ['head: illegal line count -- file1']; 
     deepEqual(input, expectedOutput);
   });
 
   it('should return file content with header if more than two files are provided', () => {
-    let input = head(['head.js','-c3','file1','file2'], fs);
+    let input = getFileData(['head.js','-c3','file1','file2'], fs);
     let expectedOutput = [ '==> file1 <==\nfir', '==> file2 <==\nfir' ];
     deepEqual(input, expectedOutput);
 
-    input = head(['head.js','-n3','file1','file2'], fs);
+    input = getFileData(['head.js','-n3','file1','file2'], fs);
     expectedOutput = [ '==> file1 <==\nfirst line\nsecond line',
                        '==> file2 <==\nfirst line\nsecond line' ];
     deepEqual(input, expectedOutput);
