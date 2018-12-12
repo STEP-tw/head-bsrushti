@@ -103,6 +103,7 @@ const getFileData = function(params, fs) {
   let command = params[0].split('/').slice(-1).join("").substr(0,4); 
   let functionRef = getFuncRef(command, option);
   let fileData = [];
+  if(!isCountAboveZero(count) && command == 'tail') {return [];}
   if (!isCountAboveZero(count)) {
     fileData.push(invalidCountError(option, count, command));
     return fileData;
