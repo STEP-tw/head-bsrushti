@@ -1,18 +1,12 @@
-/* 
-  Usage:
-  node ./tail.js file1
-  node ./tail.js -n5 file1
-  node ./tail.js -n 5 file1
-  node ./tail.js -5 file1
-  node ./tail.js file1 file2
-  node ./tail.js -n 5 file1 file2
-  node ./tail.js -n5 file1 file2
-  node ./tail.js -5 file1 file2 
-  node ./tail.js -c5 file1
-  node ./tail.js -c 5 file1
-  node ./tail.js -c5 file1 file2
-  node ./tail.js -c 5 file1 file2
-*/
+const {
+  getFileData
+} = require('./src/lib.js'); 
 
+const fs = require('fs'); 
 
+const main = function() { 
+  let params = process.argv;
+  console.log(getFileData(params.slice(1),fs).join("\n")); 
+};
 
+main();
