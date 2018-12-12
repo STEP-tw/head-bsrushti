@@ -104,7 +104,7 @@ const getFileData = function(params, fs) {
   let functionRef = getFuncRef(command, option);
   let fileData = [];
   if (!isCountAboveZero(count)) {
-    fileData.push(invalidCountError(option, count));
+    fileData.push(invalidCountError(option, count, command));
     return fileData;
   };
 
@@ -132,12 +132,15 @@ const isCountAboveZero = function(count) {
   return !(count < 1 || isNaN(count));
 };
 
-const invalidCountError = function(type, count) {
-  let typeName = "line";
-  if (type == "-c") {
-    typeName = "byte";
+const invalidCountError = function(type, count, command) {
+  if(command == 'head') {
+    let typeName = "line";
+    if (type == "-c") {
+      typeName = "byte";
+    };
+    return "head: illegal " + typeName + " count -- " + count;
   };
-  return "head: illegal " + typeName + " count -- " + count;
+  return "tail: illegal offset -- " + count;
 };
 
 const fileNotFoundError = function(file, command) {
