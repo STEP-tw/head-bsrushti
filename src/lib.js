@@ -20,11 +20,11 @@ const extractHeadCharacters = function(count, contents) {
 };
 
 const extractTailLines = function(count, contents) {
-  return extractContents(contents, "\n", 0-count, contents.length);
+  return extractContents(contents, "\n", -count, contents.split("\n").length);
 };
 
 const extractTailCharacters = function(count, contents) {
-  return extractContents(contents, "", 0-count, contents.length);
+  return extractContents(contents, "", -count, contents.split("").length);
 };
 
 const apply = function(fs, file, fileLength, functionRef, count) {
