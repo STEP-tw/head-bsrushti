@@ -29,7 +29,7 @@ const extractTailCharacters = function(count, contents) {
 
 const apply = function(fs, file, fileLength, functionRef, count, command) {
   if (!fs.existsSync(file)) {
-    return fileNotFoundError(file);
+    return fileNotFoundError(file, command);
   };
 
   if (fs.existsSync(file) && fileLength > 1) {
@@ -140,8 +140,8 @@ const invalidCountError = function(type, count) {
   return "head: illegal " + typeName + " count -- " + count;
 };
 
-const fileNotFoundError = function(file) {
-  return "head: " + file + ": No such file or directory";
+const fileNotFoundError = function(file, command) {
+  return command+": " + file + ": No such file or directory";
 };
 
 const isFileExists = function(existsSync, file) {

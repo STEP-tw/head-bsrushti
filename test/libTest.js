@@ -233,7 +233,7 @@ describe('isFileExists', () => {
 
 describe('fileNotFoundError', () => {
   it('should return error message if it not finds the file', () => {
-    equal(fileNotFoundError('file'),'head: file: No such file or directory');
+    equal(fileNotFoundError('file','head'),'head: file: No such file or directory');
   });
 });
 
