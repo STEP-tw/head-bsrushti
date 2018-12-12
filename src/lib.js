@@ -27,7 +27,7 @@ const extractTailCharacters = function(count, contents) {
   return extractContents(contents, "", -count, contents.split("").length);
 };
 
-const apply = function(fs, file, fileLength, functionRef, count) {
+const apply = function(fs, file, fileLength, functionRef, count, command) {
   if (!fs.existsSync(file)) {
     return fileNotFoundError(file);
   };
@@ -110,7 +110,7 @@ const getFileData = function(params, fs) {
 
   for (file in files) {
     let getContent = apply.bind(null, fs, files[file]);
-    let content = getContent(files.length, functionRef, count);
+    let content = getContent(files.length, functionRef, count, command);
     fileData.push(content);
   };
   return fileData;

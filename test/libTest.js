@@ -83,10 +83,10 @@ describe('extractHeadCharacters returns characters of given text as per the give
 
 describe('apply returns the result as per the mapper function', () => {
   it("should return file content with header if more than one files are given", () => {
-    deepEqual(apply(fs, 'file', 2, extractHeadCharacters,3),'==> file <==\nfir');
+    deepEqual(apply(fs, 'file', 2, extractHeadCharacters,3,'head'),'==> file <==\nfir');
   });
   it('should return file content as per the input', () => {
-    deepEqual(apply(fs,'file1', 1, extractHeadLines,1),'first line');
+    deepEqual(apply(fs,'file1', 1, extractHeadLines,1,'tail'),'first line');
   });
 });
 
