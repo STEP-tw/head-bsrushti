@@ -33,12 +33,12 @@ let fs = {
 
 describe('classifyDetails categorizes the input according to its characteristics', () => {
   it('should return object of assigned details of one file', () => {
-    let expectedOutput = { option : '-n', count : 1, files : ['file1'] }
+    let expectedOutput = { option : '-n', count : 1, fileNames : ['file1'] }
     deepEqual(classifyDetails(['head.js','-n','1','file1']),expectedOutput);
   });
 
   it('should return object of assigned details for more than one file', () => {
-    let expectedOutput = { option : '-n', count : 1, files : ['file1','file2','file3'] }
+    let expectedOutput = { option : '-n', count : 1, fileNames : ['file1','file2','file3'] }
     deepEqual(classifyDetails(['head.js','-n','1','file1','file2','file3']),expectedOutput);
   });
 });

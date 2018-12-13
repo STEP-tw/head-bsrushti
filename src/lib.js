@@ -3,7 +3,7 @@ const classifyDetails = function(params) {
   return {
     option: extractOption(params[1]),
     count: extractCount(params.slice(1, 3)),
-    files: extractFiles(params.slice(1))
+    fileNames: extractFiles(params.slice(1))
   };
 };
 
@@ -59,14 +59,14 @@ const isIncludesZero = function(option) {
 };
 
 const extractCount = function(params) {
-  let files = extractFiles(params);
+  let fileNames = extractFiles(params);
   let option = params.join("");
   if (isNaN(option.slice(2)) || isIncludesZero(option.slice(2))) {
     return option.slice(2);
   };
 
   if (!isValidCount(option)) {
-    return files[0];
+    return fileNames[0];
   };
 
   return getCountFromOption(option, params);
@@ -99,7 +99,7 @@ const extractFiles = function(params) {
 };
 
 const getFileData = function(params, fs) {
-  let { option, count, files } = classifyDetails(params);
+  let { option, count, fileNames } = classifyDetails(params);
   let command = params[0].split('/').slice(-1).join("").substr(0,4); 
   let functionRef = getFuncRef(command, option);
   let fileData = [];
@@ -109,9 +109,9 @@ const getFileData = function(params, fs) {
     return fileData;
   };
 
-  for (file in files) {
-    let getContent = apply.bind(null, fs, files[file]);
-    let content = getContent(files.length, functionRef, count, command);
+  for (file in fileNames) {
+    let getContent = apply.bind(null, fs, fileNames[file]);
+    let content = getContent(fileNames.length, functionRef, count, command);
     fileData.push(content);
   };
   return fileData;
