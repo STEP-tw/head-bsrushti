@@ -5,13 +5,11 @@ const {
   getFilteredContent,
   makeHeader,
   getFileData,
-  getOptionFuncRef,
   isCountAboveZero,
   invalidCountError,
   fileNotFoundError,
   isFileExists,
   extractContents,
-  isDetailsStartsWithHyphen,
   extractTailLines,
   extractTailCharacters,
   getOptionFuncRefForTail,
@@ -83,7 +81,7 @@ describe('makeHeading gives header along with title', () => {
   });
 });
 
-describe('getFileData', () => {
+describe('getFileData for head', () => {
   it('should return the file data if -n input is given with length and files', () => {
     let input = getFileData(['-c3','file1'],fs,'head');
     let expectedOutput = ['fir']; 
@@ -114,6 +112,44 @@ describe('getFileData', () => {
     deepEqual(input, expectedOutput);
 
     input = getFileData(['-n3','file1','file2'], fs,'head');
+    expectedOutput = [ '==> file1 <==\nfirst line\nsecond line',
+                       '==> file2 <==\nfirst line\nsecond line' ];
+    deepEqual(input, expectedOutput);
+
+  });
+});
+
+describe('getFileData for tail', () => {
+  it('should return the file data if -n input is given with length and files', () => {
+    let input = getFileData(['-c3','file1'],fs,'tail');
+    let expectedOutput = ['ine']; 
+    deepEqual(input, expectedOutput);
+  });
+
+  it('should return the file data if -n input is given with length and files', () => {
+    let input = getFileData(['-n2','file1'],fs,'tail');
+    let expectedOutput = ['first line\nsecond line']; 
+    deepEqual(input, expectedOutput);
+  });
+
+  it('should return the file content in default case of length 10', () => {
+    let input = getFileData(['file1'],fs,'tail');
+    let expectedOutput = ['first line\nsecond line']; 
+    deepEqual(input, expectedOutput);
+  });
+
+  it('should return error message if type is -n and length is not provided', () => {
+    let input = getFileData(['-n','file1'],fs,'tail');
+    let expectedOutput = ['tail: illegal offset -- file1']; 
+    deepEqual(input, expectedOutput);
+  });
+
+  it('should return file content with header if more than two files are provided', () => {
+    let input = getFileData(['-c3','file1','file2'], fs,'tail');
+    let expectedOutput = [ '==> file1 <==\nine', '==> file2 <==\nine' ];
+    deepEqual(input, expectedOutput);
+
+    input = getFileData(['-n3','file1','file2'], fs,'tail');
     expectedOutput = [ '==> file1 <==\nfirst line\nsecond line',
                        '==> file2 <==\nfirst line\nsecond line' ];
     deepEqual(input, expectedOutput);
