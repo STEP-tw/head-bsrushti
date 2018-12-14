@@ -85,11 +85,6 @@ const isCountAboveZero = function(count) {
   return !(count < 1 || isNaN(count));
 };
 
-
-const fileNotFoundError = function(file, command) {
-  return command+": " + file + ": No such file or directory";
-};
-
 const isFileExists = function(existsSync, file) {
   return existsSync(file);
 };
@@ -110,8 +105,6 @@ module.exports = {
   getFileData,
   getOptionFuncRefForHead,
   isCountAboveZero,
-  invalidCountError,
-  fileNotFoundError,
   isFileExists,
   extractContents,
   isDetailsStartsWithHyphen,

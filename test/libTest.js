@@ -6,7 +6,6 @@ const {
   makeHeader,
   getFileData,
   isCountAboveZero,
-  fileNotFoundError,
   isFileExists,
   extractContents,
   extractTailLines,
@@ -181,12 +180,6 @@ describe('isCountAboveZero', () => {
 describe('isFileExists', () => {
   it('should return true if it finds the file', () => {
     equal(isFileExists(fs.existsSync,file),true);
-  });
-});
-
-describe('fileNotFoundError', () => {
-  it('should return error message if it not finds the file', () => {
-    equal(fileNotFoundError('file','head'),'head: file: No such file or directory');
   });
 });
 

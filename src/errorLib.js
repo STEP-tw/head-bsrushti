@@ -16,6 +16,11 @@ const countErrorForHead = {
     return countError[command][option] + count;
   };
 
+  const fileNotFoundError = function(file, command) {
+    return command+": " + file + ": No such file or directory";
+  };
+
   module.exports = {
-      invalidCountError
+      invalidCountError,
+      fileNotFoundError
   }

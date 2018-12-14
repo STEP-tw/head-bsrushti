@@ -1,5 +1,8 @@
 const {equal, deepEqual} = require('assert');
-const {invalidCountError} = require('../src/errorLib.js');
+const {
+    invalidCountError,
+    fileNotFoundError
+} = require('../src/errorLib.js');
 
 describe('invalidCountError', () => {
     it('should return error message if invalid length provided with option -c and command head', () => {
@@ -22,5 +25,11 @@ describe('invalidCountError', () => {
       equal(invalidCountError('-n','aaa','tail'),'tail: illegal offset -- aaa');
     });
   
+  });
+  
+  describe('fileNotFoundError', () => {
+    it('should return error message if it not finds the file', () => {
+      equal(fileNotFoundError('file','head'),'head: file: No such file or directory');
+    });
   });
   
