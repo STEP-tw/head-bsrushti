@@ -11,7 +11,6 @@ const {
   fileNotFoundError,
   isFileExists,
   extractContents,
-  getCountFromOption,
   isDetailsStartsWithHyphen,
   extractTailLines,
   extractTailCharacters,
@@ -188,32 +187,6 @@ describe('extractContents returns contents as per the delimiter it has passed', 
     deepEqual(extractContents('first line\nsecond line',"", 0, 5),'first');
   });
 });makeHeader
-
-describe('getCountFromOption returns count from given valid option', () => {
-  it('should returns 10 when no option is provided', () => {
-    equal(getCountFromOption('',[]), 10);
-  });
-
-  it('should returns positive count when length preceded by -', () => {
-    equal(getCountFromOption('-5',['-5']), 5);
-    equal(getCountFromOption('-2',['-2']), 2);
-  });
-
-  it('should returns positive count when length preceded by - with space between in it', () => {
-    equal(getCountFromOption('-5',['-','5']), 5);
-    equal(getCountFromOption('-2',['-','2']), 2);
-  });
-
-  it('should returns positive count when length preceded by - with option', () => {
-    equal(getCountFromOption('-n5',['-n5']), 5);
-    equal(getCountFromOption('-n2',['-n2']), 2);
-  });
-
-  it('should returns positive count when length preceded by - with option with space between in it', () => {
-    equal(getCountFromOption('-n5',['-n','5']), 5);
-    equal(getCountFromOption('-n2',['-n','2']), 2);
-  });
-});
 
 describe('extractTailLines returns lines of given text as per the given input', () => { 
   it('should return whole content when 0 count is provided', () => {

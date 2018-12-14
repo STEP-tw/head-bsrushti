@@ -43,16 +43,6 @@ const makeHeader = function(heading) {
   return "==> " + heading + " <==";
 };
 
-const getCountFromOption = function(option, params) { 
-  let index = 0;
-  while (!parseInt(option) && index < params.join("").length) {
-    option = params.join("");
-    index++;
-    option = option.slice(index);
-  };
-  return Math.abs(parseInt(option)) || 10;
-};
-
 const getFileData = function(params, fs, command) {
   let { option, count, fileNames } = parseInputs(params); 
   let functionRef = getFuncRef(command, option);
@@ -125,7 +115,6 @@ module.exports = {
   fileNotFoundError,
   isFileExists,
   extractContents,
-  getCountFromOption,
   isDetailsStartsWithHyphen,
   extractTailLines,
   extractTailCharacters,
