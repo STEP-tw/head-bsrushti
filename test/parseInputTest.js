@@ -1,5 +1,8 @@
 const {deepEqual} = require('assert');
-const { isDetailsStartsWithHyphen } = require('../src/parseInput.js');
+const { 
+    isDetailsStartsWithHyphen,
+    isNumberOption 
+} = require('../src/parseInput.js');
 
 describe('isDetailsStartsWithHyphen', () => {
     it('should returns true if given input starts with hyphen', () => {
@@ -10,5 +13,15 @@ describe('isDetailsStartsWithHyphen', () => {
     it('should returns false if given input not starts with hyphen', () => {
         deepEqual(isDetailsStartsWithHyphen(['abc-']), false);
         deepEqual(isDetailsStartsWithHyphen(['a-b-c']), false);
+    });
+});
+
+describe('isNumberOption', function() {
+    it('should return true if given argument has number after hyphen', function() {
+        deepEqual(isNumberOption('-5'),true);
+    });
+
+    it('should return false if given argument has not a number after hyphen', function() {
+        deepEqual(isNumberOption('-a'),false);
     });
 });
