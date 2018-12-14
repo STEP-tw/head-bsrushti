@@ -11,7 +11,6 @@ const {
   fileNotFoundError,
   isFileExists,
   isValidCount,
-  isIncludesZero,
   extractContents,
   getCountFromOption,
   isDetailsStartsWithHyphen,
@@ -188,16 +187,6 @@ describe('isValidCount function return false if illegal line count is provided',
 
   it('should return true if valid line count is provided', () => {
     deepEqual(isValidCount('-n2'),true);
-  });
-});
-
-describe('isIncludesZero', () => {
-  it('should return true if given input have zero included', () => {
-    deepEqual(isIncludesZero('-n0'),true);
-  });
-
-  it('should return false if given input have zero included', () => {
-    deepEqual(isIncludesZero('-n47'),false);
   });
 });
 

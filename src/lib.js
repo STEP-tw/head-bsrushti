@@ -47,10 +47,6 @@ const isValidCount = function(option) {
   return !(option.length == 2 && !Math.abs(option));
 };
 
-const isIncludesZero = function(option) {
-  return option.includes(0);
-};
-
 const getCountFromOption = function(option, params) { 
   let index = 0;
   while (!parseInt(option) && index < params.join("").length) {
@@ -133,7 +129,6 @@ module.exports = {
   fileNotFoundError,
   isFileExists,
   isValidCount,
-  isIncludesZero,
   extractContents,
   getCountFromOption,
   isDetailsStartsWithHyphen,
