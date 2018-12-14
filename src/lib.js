@@ -82,12 +82,12 @@ const isCountAboveZero = function(count) {
 };
 
 const invalidCountError = function(option, count, command) {
+  let countErrorForHead = { 
+    '-n' : "head: illegal line count -- ",
+    '-c' : "head: illegal byte count -- "
+  };
   if(command == 'head') {
-    let typeName = "line";
-    if (option == "-c") {
-      typeName = "byte";
-    };
-    return "head: illegal " + typeName + " count -- " + count;
+    return countErrorForHead[option] + count;
   };
   return "tail: illegal offset -- " + count;
 };
