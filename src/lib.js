@@ -62,9 +62,11 @@ const getFileData = function(params, fs, command) {
 };
 
 const getOptionFuncRefForHead = function(option) {
-  let funcRef;
-  option == "-c" ? (funcRef = extractHeadCharacters) : (funcRef = extractHeadLines);
-  return funcRef;
+  let funcRef = {
+    '-c' : extractHeadCharacters,
+    '-n' : extractHeadLines
+  };
+  return funcRef[option];
 };
 
 const getOptionFuncRefForTail = function(option) {
