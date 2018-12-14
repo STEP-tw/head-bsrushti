@@ -1,3 +1,4 @@
+const {isDetailsStartsWithHyphen } = require('./parseInput.js');
 const classifyDetails = function(params) {
   params = params.slice(0);
   return {
@@ -84,10 +85,6 @@ const getCountFromOption = function(option, params) {
     option = option.slice(index);
   };
   return Math.abs(parseInt(option)) || 10;
-};
-
-const isDetailsStartsWithHyphen = function(params) { 
-  return params[0].startsWith('-');
 };
 
 const extractFiles = function(params) {

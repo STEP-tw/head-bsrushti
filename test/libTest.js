@@ -305,18 +305,6 @@ describe('getCountFromOption returns count from given valid option', () => {
   });
 });
 
-describe('isDetailsStartsWithHyphen', () => {
-  it('should returns true if given input starts with hyphen', () => {
-    equal(isDetailsStartsWithHyphen(['-abc']),true);
-    equal(isDetailsStartsWithHyphen(['-a-b-c']),true);
-  });
-
-  it('should returns false if given input not starts with hyphen', () => {
-    equal(isDetailsStartsWithHyphen(['abc-']),false);
-    equal(isDetailsStartsWithHyphen(['a-b-c']),false);
-  });
-});
-
 describe('extractTailLines returns lines of given text as per the given input', () => { 
   it('should return whole content when 0 count is provided', () => {
     deepEqual(extractTailLines(0,'first line\nsecond line'),'first line\nsecond line');
