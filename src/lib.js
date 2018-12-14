@@ -47,7 +47,7 @@ const getFileData = function(params, fs, command) {
   let { option, count, fileNames } = parseInputs(params);
   let functionRef = getFuncRef(command, option);
   let fileData = [];
-  if (count==0 && command == 'tail') {return [];}
+  if (count == 0 && command == 'tail') {return [];}
   if (!isCountAboveZero(count)) {
     fileData.push(invalidCountError(option, count, command));
     return fileData;
@@ -77,10 +77,10 @@ const isCountAboveZero = function(count) {
   return !(count < 1 || isNaN(count));
 };
 
-const invalidCountError = function(type, count, command) {
+const invalidCountError = function(option, count, command) {
   if(command == 'head') {
     let typeName = "line";
-    if (type == "-c") {
+    if (option == "-c") {
       typeName = "byte";
     };
     return "head: illegal " + typeName + " count -- " + count;
