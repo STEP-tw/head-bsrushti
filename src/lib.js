@@ -44,7 +44,7 @@ const makeHeader = function(heading) {
 };
 
 const getFileData = function(params, fs, command) {
-  let { option, count, fileNames } = parseInputs(params); 
+  let { option, count, fileNames } = parseInputs(params);
   let functionRef = getFuncRef(command, option);
   let fileData = [];
   if (count==0 && command == 'tail') {return [];}
@@ -96,8 +96,8 @@ const isFileExists = function(existsSync, file) {
   return existsSync(file);
 };
 
-const getFuncRef = function(param, option) {
-  if(param.match(/head.*/)) {
+const getFuncRef = function(command, option) {
+  if(command == 'head') {
     return getOptionFuncRefForHead(option);
   };
   return getOptionFuncRefForTail(option);

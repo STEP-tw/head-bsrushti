@@ -230,19 +230,19 @@ describe('getOptionFuncRefForTail', () => {
 
 describe('getFuncRef', () => {
   it('should return function reference for head command with option -n', () => {
-    deepEqual(getFuncRef('head.js','-n'),extractHeadLines);
+    deepEqual(getFuncRef('head','-n'),extractHeadLines);
   });
 
   it('should return function reference for head command with option -c', () => {
-    deepEqual(getFuncRef('head.js','-c'),extractHeadCharacters);
+    deepEqual(getFuncRef('head','-c'),extractHeadCharacters);
   });
 
   it('should return function reference for tail command with option -n', () => {
-    deepEqual(getFuncRef('tail.js','-n'),extractTailLines);
+    deepEqual(getFuncRef('tail','-n'),extractTailLines);
   });
 
   it('should return function reference for tail command with option -c', () => {
-    deepEqual(getFuncRef('tail.js','-c'),extractTailCharacters);
+    deepEqual(getFuncRef('tail','-c'),extractTailCharacters);
   });
 });
 
