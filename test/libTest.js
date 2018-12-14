@@ -118,6 +118,18 @@ describe('getFileData for head', () => {
 });
 
 describe('getFileData for tail', () => {
+  it('should return empty array if 0 as a count is provided with option -c', () => {
+    let input = getFileData(['-c0','file1'],fs,'tail');
+    let expectedOutput = []; 
+    deepEqual(input, expectedOutput);
+  });
+
+  it('should return empty array if 0 as a count is provided with option -n', () => {
+    let input = getFileData(['-n0','file1'],fs,'tail');
+    let expectedOutput = []; 
+    deepEqual(input, expectedOutput);
+  });
+
   it('should return the file data if -n input is given with length and files', () => {
     let input = getFileData(['-c3','file1'],fs,'tail');
     let expectedOutput = ['ine']; 
