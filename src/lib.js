@@ -81,15 +81,22 @@ const isCountAboveZero = function(count) {
   return !(count < 1 || isNaN(count));
 };
 
+const countErrorForHead = { 
+  '-n' : "head: illegal line count -- ",
+  '-c' : "head: illegal byte count -- "
+};
+
+const countErrorForTail = { 
+  '-n' : "tail: illegal offset -- ",
+  '-c' : "tail: illegal offset -- "
+};
+
 const invalidCountError = function(option, count, command) {
-  let countErrorForHead = { 
-    '-n' : "head: illegal line count -- ",
-    '-c' : "head: illegal byte count -- "
+  const countError = {
+    head : countErrorForHead,
+    tail : countErrorForTail
   };
-  if(command == 'head') {
-    return countErrorForHead[option] + count;
-  };
-  return "tail: illegal offset -- " + count;
+  return countError[command][option] + count;
 };
 
 const fileNotFoundError = function(file, command) {
