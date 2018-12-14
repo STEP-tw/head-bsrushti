@@ -6,7 +6,6 @@ const {
   makeHeader,
   getFileData,
   isCountAboveZero,
-  invalidCountError,
   fileNotFoundError,
   isFileExists,
   extractContents,
@@ -179,29 +178,6 @@ describe('isCountAboveZero', () => {
   });
 });
 
-describe('invalidCountError', () => {
-  it('should return error message if invalid length provided with option -c and command head', () => {
-    equal(invalidCountError('-c','1q','head'),'head: illegal byte count -- 1q');
-    equal(invalidCountError('-c','aaa','head'),'head: illegal byte count -- aaa');
-  });
-  
-  it('should return error message if invalid length provided with option -n and command head', () => {
-    equal(invalidCountError('-n','1q','head'),'head: illegal line count -- 1q');
-    equal(invalidCountError('-n','aaa','head'),'head: illegal line count -- aaa');
-  });
-
-  it('should return error message if invalid length provided with option -c and command tail', () => {
-    equal(invalidCountError('-c','1q','tail'),'tail: illegal offset -- 1q');
-    equal(invalidCountError('-c','aaa','tail'),'tail: illegal offset -- aaa');
-  });
-
-  it('should return error message if invalid length provided with option -n and command tail', () => {
-    equal(invalidCountError('-n','1q','tail'),'tail: illegal offset -- 1q');
-    equal(invalidCountError('-n','aaa','tail'),'tail: illegal offset -- aaa');
-  });
-
-});
-
 describe('isFileExists', () => {
   it('should return true if it finds the file', () => {
     equal(isFileExists(fs.existsSync,file),true);
@@ -222,7 +198,7 @@ describe('extractContents returns contents as per the delimiter it has passed', 
   it('should return contents separated by character for head', () => {
     deepEqual(extractContents('first line\nsecond line',"", 0, 5),'first');
   });
-});makeHeader
+});
 
 describe('extractTailLines returns lines of given text as per the given input', () => { 
   it('should return whole content when 0 count is provided', () => {

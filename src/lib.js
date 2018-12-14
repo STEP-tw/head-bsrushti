@@ -3,6 +3,10 @@ const {
   parseInputs
  } = require('./parseInput.js');
 
+ const {
+   invalidCountError
+ } = require('./errorLib.js');
+
 const extractContents = function(contents, delimiter, initial, last) { 
   return contents.split(delimiter).splice(initial, last).join(delimiter);
 };
@@ -81,23 +85,6 @@ const isCountAboveZero = function(count) {
   return !(count < 1 || isNaN(count));
 };
 
-const countErrorForHead = { 
-  '-n' : "head: illegal line count -- ",
-  '-c' : "head: illegal byte count -- "
-};
-
-const countErrorForTail = { 
-  '-n' : "tail: illegal offset -- ",
-  '-c' : "tail: illegal offset -- "
-};
-
-const invalidCountError = function(option, count, command) {
-  const countError = {
-    head : countErrorForHead,
-    tail : countErrorForTail
-  };
-  return countError[command][option] + count;
-};
 
 const fileNotFoundError = function(file, command) {
   return command+": " + file + ": No such file or directory";
