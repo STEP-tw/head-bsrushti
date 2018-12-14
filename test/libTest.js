@@ -1,6 +1,5 @@
 const {equal, deepEqual} = require('assert');
 const { 
-  classifyDetails,
   extractHeadLines,
   extractHeadCharacters,
   getFilteredContent,
@@ -31,18 +30,6 @@ let fs = {
   existsSync : (file) => true ,
   readFileSync : (file) => 'first line\nsecond line' ,
 };
-
-describe('classifyDetails categorizes the input according to its characteristics', () => {
-  it('should return object of assigned details of one file', () => {
-    let expectedOutput = { option : '-n', count : 1, fileNames : ['file1'] }
-    deepEqual(classifyDetails(['head.js','-n','1','file1']),expectedOutput);
-  });
-
-  it('should return object of assigned details for more than one file', () => {
-    let expectedOutput = { option : '-n', count : 1, fileNames : ['file1','file2','file3'] }
-    deepEqual(classifyDetails(['head.js','-n','1','file1','file2','file3']),expectedOutput);
-  });
-});
 
 describe('extractHeadLines returns lines of given text as per the given input', () => {
   it('should return empty string for 0 length input', () => {

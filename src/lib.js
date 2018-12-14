@@ -3,15 +3,6 @@ const {
   parseInputs
  } = require('./parseInput.js');
 
-const classifyDetails = function(params) {
-  params = params.slice(0);
-  return {
-    option: extractOption(params[1]),
-    count: extractCount(params.slice(1, 3)),
-    fileNames: extractFiles(params.slice(1))
-  };
-};
-
 const extractContents = function(contents, delimiter, initial, last) { 
   return contents.split(delimiter).splice(initial, last).join(delimiter);
 };
@@ -164,7 +155,6 @@ const getFuncRef = function(param, option) {
 };
 
 module.exports = {
-  classifyDetails,
   extractHeadLines,
   extractHeadCharacters,
   getFilteredContent,
