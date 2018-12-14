@@ -51,20 +51,6 @@ const isIncludesZero = function(option) {
   return option.includes(0);
 };
 
-const extractCount = function(params) {
-  let fileNames = extractFiles(params);
-  let option = params.join("");
-  if (isNaN(option.slice(2)) || isIncludesZero(option.slice(2))) {
-    return option.slice(2);
-  };
-
-  if (!isValidCount(option)) {
-    return fileNames[0];
-  };
-
-  return getCountFromOption(option, params);
-};
-
 const getCountFromOption = function(option, params) { 
   let index = 0;
   while (!parseInt(option) && index < params.join("").length) {
@@ -152,7 +138,6 @@ module.exports = {
   extractHeadCharacters,
   getFilteredContent,
   makeHeader,
-  extractCount,
   extractFiles,
   getFileData,
   getOptionFuncRefForHead,

@@ -4,7 +4,6 @@ const {
   extractHeadCharacters,
   getFilteredContent,
   makeHeader,
-  extractCount,
   extractFiles,
   getFileData,
   getOptionFuncRef,
@@ -85,27 +84,6 @@ describe('makeHeading gives header along with title', () => {
   it('should return heading to given title', () => {
     equal(makeHeader('abc'),"==> abc <==");
     equal(makeHeader('file1'),"==> file1 <==");
-  });
-});
-
-describe('extractCount returns the first occurrence of number from string input', () => {
-  it('should return itself if no length is provided', () => {
-    equal(extractCount(['-n','file']),'file');
-  });
-
-  it('should return length if length is provided with option', () => {
-    equal(extractCount(['-n1','file']),1);
-    equal(extractCount(['-c1','file']),1);
-  });
-
-  it('should return length if length is provided with no option', () => {
-    equal(extractCount(['-1','file']),1);
-    equal(extractCount(['-5','file']),5);
-  });
-
-  it('should return invalid length if invalid length is provided with option', () => {
-    equal(extractCount(['-n3e','file']),'3e');
-    equal(extractCount(['-c3e','file']),'3e');
   });
 });
 
