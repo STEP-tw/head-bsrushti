@@ -43,10 +43,6 @@ const makeHeader = function(heading) {
   return "==> " + heading + " <==";
 };
 
-const isValidCount = function(option) {
-  return !(option.length == 2 && !Math.abs(option));
-};
-
 const getCountFromOption = function(option, params) { 
   let index = 0;
   while (!parseInt(option) && index < params.join("").length) {
@@ -128,7 +124,6 @@ module.exports = {
   invalidCountError,
   fileNotFoundError,
   isFileExists,
-  isValidCount,
   extractContents,
   getCountFromOption,
   isDetailsStartsWithHyphen,

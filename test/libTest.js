@@ -10,7 +10,6 @@ const {
   invalidCountError,
   fileNotFoundError,
   isFileExists,
-  isValidCount,
   extractContents,
   getCountFromOption,
   isDetailsStartsWithHyphen,
@@ -177,16 +176,6 @@ describe('isFileExists', () => {
 describe('fileNotFoundError', () => {
   it('should return error message if it not finds the file', () => {
     equal(fileNotFoundError('file','head'),'head: file: No such file or directory');
-  });
-});
-
-describe('isValidCount function return false if illegal line count is provided', () => {
-  it('should return false if invalid line count is provided', () => {
-    deepEqual(isValidCount('-n'),false);
-  });
-
-  it('should return true if valid line count is provided', () => {
-    deepEqual(isValidCount('-n2'),true);
   });
 });
 
