@@ -61,18 +61,6 @@ const getCountFromOption = function(option, params) {
   return Math.abs(parseInt(option)) || 10;
 };
 
-const extractFiles = function(params) {
-  if (!isDetailsStartsWithHyphen(params)) {
-    return params.splice(0);
-  };
-
-  if (isDetailsStartsWithHyphen(params) && !params[1].match(/^[0-9]/)) {
-    return params.splice(1);
-  };
-
-  return params.splice(2);
-};
-
 const getFileData = function(params, fs, command) {
   let { option, count, fileNames } = parseInputs(params); 
   let functionRef = getFuncRef(command, option);
@@ -138,7 +126,6 @@ module.exports = {
   extractHeadCharacters,
   getFilteredContent,
   makeHeader,
-  extractFiles,
   getFileData,
   getOptionFuncRefForHead,
   isCountAboveZero,

@@ -4,7 +4,6 @@ const {
   extractHeadCharacters,
   getFilteredContent,
   makeHeader,
-  extractFiles,
   getFileData,
   getOptionFuncRef,
   isCountAboveZero,
@@ -84,20 +83,6 @@ describe('makeHeading gives header along with title', () => {
   it('should return heading to given title', () => {
     equal(makeHeader('abc'),"==> abc <==");
     equal(makeHeader('file1'),"==> file1 <==");
-  });
-});
-
-describe('extractFiles function extract the files from given details', () => {
-  it('should return file names given in input details', () => {
-    deepEqual(extractFiles(['-n1','file1','file2']),['file1','file2']);
-  });
-
-  it('should return file names given in input details(options are not given in input)', () => {
-    deepEqual(extractFiles(['-n1','file1','file2']),['file1','file2']);
-  });
-
-  it('should return file name if only argument is passing as an input', () => {
-    deepEqual(extractFiles(['file']),['file']);
   });
 });
 
