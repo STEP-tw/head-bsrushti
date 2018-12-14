@@ -23,7 +23,8 @@ const {
   extractTailCharacters,
   getOptionFuncRefForTail,
   getOptionFuncRefForHead,
-  getFuncRef
+  getFuncRef,
+  format
 } = require('../src/lib.js'); 
 
 let fs = {
@@ -371,5 +372,18 @@ describe('getFuncRef', () => {
 
   it('should return function reference for tail command with option -c', () => {
     deepEqual(getFuncRef('tail.js','-c'),extractTailCharacters);
+  });
+});
+
+describe('format', function() {
+  let fs = { readline : function(){ return 'one\ntwo\nthree'; } };
+  it('should add header and return content of given file', function() {
+    let expectedOutput = '==> words <==\none';
+    let fileName = 'words';
+    deepEqual(format(fs.readline, extractHeadCharacters, fileName, 3),expectedOutput);
+    
+    expectedOutput = '==> numbers <==\ntwo\nthree';
+    fileName = 'numbers';
+    deepEqual(format(fs.readline, extractTailLines, fileName, 2),expectedOutput);
   });
 });

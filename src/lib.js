@@ -33,10 +33,14 @@ const getFilteredContent = function(fs, file, fileLength, functionRef, count, co
   };
 
   if (fs.existsSync(file) && fileLength > 1) {
-    return ( makeHeader(file) + "\n" + functionRef(count, fs.readFileSync(file, "utf8")));
+    return format(fs.readFileSync, functionRef, file, count);
   };
 
   return functionRef(count, fs.readFileSync(file, "utf8"));
+};
+
+const format = function(reader, functionRef, file, count) {
+  return makeHeader(file) + "\n" + functionRef(count, reader(file,"utf8")); 
 };
 
 const makeHeader = function(heading) {
@@ -182,5 +186,6 @@ module.exports = {
   extractTailLines,
   extractTailCharacters,
   getOptionFuncRefForTail,
-  getFuncRef
+  getFuncRef,
+  format
 };
