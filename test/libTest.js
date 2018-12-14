@@ -61,11 +61,11 @@ describe('extractHeadCharacters returns characters of given text as per the give
 
 describe('getFilteredContent returns the result as per the mapper function', () => {
   it("should return file content with header if more than one are given", () => {
-    deepEqual(getFilteredContent(fs, 'file', 2, extractHeadCharacters,3,'head'),'==> file <==\nfir');
+    deepEqual(getFilteredContent(fs, 2, extractHeadCharacters,3,'head','file'),'==> file <==\nfir');
   });
 
   it('should return file content as per the input', () => {
-    deepEqual(getFilteredContent(fs,'file1', 1, extractHeadLines,1,'tail'),'first line');
+    deepEqual(getFilteredContent(fs, 1, extractHeadLines,1,'tail','file1'),'first line');
   });
 
   it("should return error when file doesn't exist" , () => {
@@ -73,7 +73,7 @@ describe('getFilteredContent returns the result as per the mapper function', () 
       existsSync : function(file) { return false }
     };
     let expectedOutput = 'tail: file1: No such file or directory';
-    deepEqual(getFilteredContent(fs,'file1', 1, extractHeadLines,1,'tail'),expectedOutput);
+    deepEqual(getFilteredContent(fs, 1, extractHeadLines,1,'tail','file1'),expectedOutput);
   });
 });
 
@@ -200,7 +200,7 @@ describe('isCountAboveZero', () => {
 
 describe('isFileExists', () => {
   it('should return true if it finds the file', () => {
-    equal(isFileExists(fs.existsSync,file),true);
+    equal(isFileExists(fs.existsSync,'file'),true);
   });
 });
 

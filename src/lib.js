@@ -28,7 +28,7 @@ const extractTailCharacters = function(count, contents) {
   return extractContents(contents, "", -count, contents.split("").length);
 };
 
-const getFilteredContent = function(fs, file, fileLength, functionRef, count, command,) {
+const getFilteredContent = function(fs, fileLength, functionRef, count, command, file) {
   if (!fs.existsSync(file)) {
     return fileNotFoundError(file, command);
   };
@@ -51,18 +51,15 @@ const makeHeader = function(heading) {
 const getFileData = function(params, fs, command) {
   let { option, count, fileNames } = parseInputs(params);
   let functionRef = getFuncRef(command, option);
-  let fileData = [];
+  
   if (count == 0 && command == 'tail') {return [];}
+  
   if (!isCountAboveZero(count)) {
     return getInvalidCountError(option, count, command);
   };
 
-  for (file in fileNames) {
-    let getContent = getFilteredContent.bind(null, fs, fileNames[file]);
-    let content = getContent(fileNames.length, functionRef, count, command);
-    fileData.push(content);
-  };
-  return fileData;
+  let getContent = getFilteredContent.bind(null, fs, fileNames.length, functionRef, count, command);
+  return fileNames.map(getContent);
 };
 
 const getOptionFuncRefForHead = function(option) {
