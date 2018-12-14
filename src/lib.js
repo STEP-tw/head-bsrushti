@@ -97,10 +97,11 @@ const isFileExists = function(existsSync, file) {
 };
 
 const getFuncRef = function(command, option) {
-  if(command == 'head') {
-    return getOptionFuncRefForHead(option);
+  let functionRefs = {
+    head : getOptionFuncRefForHead(option), 
+    tail : getOptionFuncRefForTail(option)
   };
-  return getOptionFuncRefForTail(option);
+  return functionRefs[command];
 };
 
 module.exports = {
