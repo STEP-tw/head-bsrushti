@@ -68,9 +68,11 @@ const getOptionFuncRefForHead = function(option) {
 };
 
 const getOptionFuncRefForTail = function(option) {
-  let funcRef;
-  option == "-c" ? (funcRef = extractTailCharacters) : (funcRef = extractTailLines);
-  return funcRef;
+  let funcRef = { 
+    '-c' : extractTailCharacters,
+    '-n' : extractTailLines
+  };
+  return funcRef[option];
 };
 
 const isCountAboveZero = function(count) {
