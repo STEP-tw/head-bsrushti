@@ -2,7 +2,8 @@ const {deepEqual} = require('assert');
 const { 
     isDetailsStartsWithHyphen,
     isNumberOption,
-    isOptionWithCount
+    isOptionWithCount,
+    isOptionWithoutCount
 } = require('../src/parseInput.js');
 
 describe('isDetailsStartsWithHyphen', () => {
@@ -34,5 +35,15 @@ describe('isOptionWithCount', function() {
 
     it('should return false if given argument has not a number after hyphen with option', function() {
         deepEqual(isOptionWithCount('-n'),false);
+    });
+});
+
+describe('isOptionWithoutCount', function() {
+    it('should return true if given argument has only valid option without count', function() {
+        deepEqual(isOptionWithoutCount('-n'),true);
+    });
+
+    it('should return false if given argument has not a valid option', function() {
+        deepEqual(isOptionWithoutCount('-n5'),false);
     });
 });

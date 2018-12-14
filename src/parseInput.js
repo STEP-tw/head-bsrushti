@@ -10,8 +10,13 @@ const isOptionWithCount = function(option) {
     return isDetailsStartsWithHyphen(option) && option.length > 2;
 };
 
+const isOptionWithoutCount = function(option) {
+    return isDetailsStartsWithHyphen(option) && option.length == 2;
+};
+
 module.exports = { 
     isDetailsStartsWithHyphen,
     isNumberOption,
-    isOptionWithCount
+    isOptionWithCount,
+    isOptionWithoutCount
  };
