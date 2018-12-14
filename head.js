@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const main = function() { 
   let params = process.argv;
-  console.log(getFileData(params.slice(1),fs).join("\n")); 
+  console.log(getFileData(params.slice(1),fs,'head').join("\n")); 
 };
 
 main();

@@ -1,4 +1,8 @@
-const {isDetailsStartsWithHyphen } = require('./parseInput.js');
+const { 
+  isDetailsStartsWithHyphen,
+  parseInputs
+ } = require('./parseInput.js');
+
 const classifyDetails = function(params) {
   params = params.slice(0);
   return {
@@ -99,9 +103,8 @@ const extractFiles = function(params) {
   return params.splice(2);
 };
 
-const getFileData = function(params, fs) {
+const getFileData = function(params, fs, command) {
   let { option, count, fileNames } = classifyDetails(params);
-  let command = params[0].split('/').slice(-1).join("").substr(0,4); 
   let functionRef = getFuncRef(command, option);
   let fileData = [];
   if (count==0 && command == 'tail') {return [];}
