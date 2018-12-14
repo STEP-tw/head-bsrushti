@@ -1,7 +1,8 @@
 const {equal, deepEqual} = require('assert');
 const {
     invalidCountError,
-    fileNotFoundError
+    fileNotFoundError,
+    getInvalidCountError
 } = require('../src/errorLib.js');
 
 describe('invalidCountError', () => {
@@ -33,3 +34,9 @@ describe('invalidCountError', () => {
     });
   });
   
+  describe('getInvalidCountError', function() {
+      it('should return error message according to given params', function() {
+        equal(getInvalidCountError('-n','1q','tail'),'tail: illegal offset -- 1q');
+        equal(getInvalidCountError('-n','aaa','head'),'head: illegal line count -- aaa'); 
+      });
+  });

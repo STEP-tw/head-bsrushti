@@ -4,8 +4,8 @@ const {
  } = require('./parseInput.js');
 
  const {
-   invalidCountError,
-   fileNotFoundError
+   fileNotFoundError,
+   getInvalidCountError
  } = require('./errorLib.js');
 
 const extractContents = function(contents, delimiter, initial, last) { 
@@ -54,8 +54,7 @@ const getFileData = function(params, fs, command) {
   let fileData = [];
   if (count == 0 && command == 'tail') {return [];}
   if (!isCountAboveZero(count)) {
-    fileData.push(invalidCountError(option, count, command));
-    return fileData;
+    return getInvalidCountError(option, count, command);
   };
 
   for (file in fileNames) {
