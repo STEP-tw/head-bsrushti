@@ -4,7 +4,8 @@ const {
  } = require('./parseInput.js');
 
  const {
-   invalidCountError
+   invalidCountError,
+   fileNotFoundError
  } = require('./errorLib.js');
 
 const extractContents = function(contents, delimiter, initial, last) { 
@@ -27,7 +28,7 @@ const extractTailCharacters = function(count, contents) {
   return extractContents(contents, "", -count, contents.split("").length);
 };
 
-const getFilteredContent = function(fs, file, fileLength, functionRef, count, command) {
+const getFilteredContent = function(fs, file, fileLength, functionRef, count, command,) {
   if (!fs.existsSync(file)) {
     return fileNotFoundError(file, command);
   };
