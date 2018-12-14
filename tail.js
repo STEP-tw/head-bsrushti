@@ -1,7 +1,4 @@
-const {
-  getFileData
-} = require('./src/lib.js'); 
-
+const { getFileData } = require('./src/lib.js'); 
 const fs = require('fs'); 
 
 const main = function() { 

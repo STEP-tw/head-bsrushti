@@ -27,7 +27,7 @@ const extractTailCharacters = function(count, contents) {
   return extractContents(contents, "", -count, contents.split("").length);
 };
 
-const apply = function(fs, file, fileLength, functionRef, count, command) {
+const getFilteredContent = function(fs, file, fileLength, functionRef, count, command) {
   if (!fs.existsSync(file)) {
     return fileNotFoundError(file, command);
   };
@@ -110,7 +110,7 @@ const getFileData = function(params, fs) {
   };
 
   for (file in fileNames) {
-    let getContent = apply.bind(null, fs, fileNames[file]);
+    let getContent = getFilteredContent.bind(null, fs, fileNames[file]);
     let content = getContent(fileNames.length, functionRef, count, command);
     fileData.push(content);
   };
@@ -163,7 +163,7 @@ module.exports = {
   classifyDetails,
   extractHeadLines,
   extractHeadCharacters,
-  apply,
+  getFilteredContent,
   makeHeader,
   extractOption,
   extractCount,

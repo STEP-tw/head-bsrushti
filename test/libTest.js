@@ -3,7 +3,7 @@ const {
   classifyDetails,
   extractHeadLines,
   extractHeadCharacters,
-  apply,
+  getFilteredContent,
   makeHeader,
   extractOption,
   extractCount,
@@ -81,12 +81,12 @@ describe('extractHeadCharacters returns characters of given text as per the give
   });
 });
 
-describe('apply returns the result as per the mapper function', () => {
-  it("should return file content with header if more than one files are given", () => {
-    deepEqual(apply(fs, 'file', 2, extractHeadCharacters,3,'head'),'==> file <==\nfir');
+describe('getFilteredContent returns the result as per the mapper function', () => {
+  it("should return file content with header if more than one are given", () => {
+    deepEqual(getFilteredContent(fs, 'file', 2, extractHeadCharacters,3,'head'),'==> file <==\nfir');
   });
   it('should return file content as per the input', () => {
-    deepEqual(apply(fs,'file1', 1, extractHeadLines,1,'tail'),'first line');
+    deepEqual(getFilteredContent(fs,'file1', 1, extractHeadLines,1,'tail'),'first line');
   });
 });
 
