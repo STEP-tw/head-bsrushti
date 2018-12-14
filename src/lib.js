@@ -43,13 +43,6 @@ const makeHeader = function(heading) {
   return "==> " + heading + " <==";
 };
 
-const extractOption = function(param) {
-  if (param.match(/-c/)) {
-    return "-c";
-  };
-  return "-n";
-};
-
 const isValidCount = function(option) {
   return !(option.length == 2 && !Math.abs(option));
 };
@@ -159,7 +152,6 @@ module.exports = {
   extractHeadCharacters,
   getFilteredContent,
   makeHeader,
-  extractOption,
   extractCount,
   extractFiles,
   getFileData,

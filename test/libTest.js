@@ -4,7 +4,6 @@ const {
   extractHeadCharacters,
   getFilteredContent,
   makeHeader,
-  extractOption,
   extractCount,
   extractFiles,
   getFileData,
@@ -86,23 +85,6 @@ describe('makeHeading gives header along with title', () => {
   it('should return heading to given title', () => {
     equal(makeHeader('abc'),"==> abc <==");
     equal(makeHeader('file1'),"==> file1 <==");
-  });
-});
-
-describe('extractOption returns the matched option mentioned in input', () => {
-  it('should return -n as default if option is not mentioned in input', () => {
-    equal(extractOption('head'),'-n');
-    equal(extractOption('-'),'-n');
-  });
-
-  it('should return -n if -n option is  mentioned in input', () => {
-    equal(extractOption('-n'),'-n');
-    equal(extractOption('-n5'),'-n');
-  });
-
-  it('should return -c if -c option is  mentioned in input', () => {
-    equal(extractOption('-c'),'-c');
-    equal(extractOption('-c5'),'-c');
   });
 });
 
