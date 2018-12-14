@@ -104,7 +104,7 @@ const extractFiles = function(params) {
 };
 
 const getFileData = function(params, fs, command) {
-  let { option, count, fileNames } = classifyDetails(params);
+  let { option, count, fileNames } = parseInputs(params); 
   let functionRef = getFuncRef(command, option);
   let fileData = [];
   if (count==0 && command == 'tail') {return [];}
