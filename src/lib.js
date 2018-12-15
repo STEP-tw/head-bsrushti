@@ -1,14 +1,12 @@
-const { 
-  parseInputs
- } = require('./parseInput.js');
+const { parseInputs } = require("./parseInput.js");
 
- const {
-   fileNotFoundError,
-   getInvalidCountError
- } = require('./errorLib.js');
+const { fileNotFoundError, getInvalidCountError } = require("./errorLib.js");
 
-const extractContents = function(contents, delimiter, initial, last) { 
-  return contents.split(delimiter).splice(initial, last).join(delimiter);
+const extractContents = function(contents, delimiter, initial, last) {
+  return contents
+    .split(delimiter)
+    .splice(initial, last)
+    .join(delimiter);
 };
 
 const extractHeadLines = function(count, contents) {
@@ -27,20 +25,27 @@ const extractTailCharacters = function(count, contents) {
   return extractContents(contents, "", -count, contents.split("").length);
 };
 
-const getFilteredContent = function(fs, fileLength, functionRef, count, command, file) {
+const getFilteredContent = function(
+  fs,
+  fileLength,
+  functionRef,
+  count,
+  command,
+  file
+) {
   if (!fs.existsSync(file)) {
     return fileNotFoundError(file, command);
-  };
+  }
 
   if (fs.existsSync(file) && fileLength > 1) {
     return format(fs.readFileSync, functionRef, file, count);
-  };
+  }
 
   return functionRef(count, fs.readFileSync(file, "utf8"));
 };
 
 const format = function(reader, functionRef, file, count) {
-  return makeHeader(file) + "\n" + functionRef(count, reader(file,"utf8")); 
+  return makeHeader(file) + "\n" + functionRef(count, reader(file, "utf8"));
 };
 
 const makeHeader = function(heading) {
@@ -50,29 +55,38 @@ const makeHeader = function(heading) {
 const getFileData = function(params, fs, command) {
   let { option, count, fileNames } = parseInputs(params);
   let functionRef = getFuncRef(command, option);
-  
-  if (count == 0 && command == 'tail') {return [];}
-  
+
+  if (count == 0 && command == "tail") {
+    return [];
+  }
+
   if (!isCountAboveZero(count)) {
     return [getInvalidCountError(option, count, command)];
-  };
+  }
 
-  let getContent = getFilteredContent.bind(null, fs, fileNames.length, functionRef, count, command);
+  let getContent = getFilteredContent.bind(
+    null,
+    fs,
+    fileNames.length,
+    functionRef,
+    count,
+    command
+  );
   return fileNames.map(getContent);
 };
 
 const getOptionFuncRefForHead = function(option) {
   let funcRef = {
-    '-c' : extractHeadCharacters,
-    '-n' : extractHeadLines
+    "-c": extractHeadCharacters,
+    "-n": extractHeadLines
   };
   return funcRef[option];
 };
 
 const getOptionFuncRefForTail = function(option) {
-  let funcRef = { 
-    '-c' : extractTailCharacters,
-    '-n' : extractTailLines
+  let funcRef = {
+    "-c": extractTailCharacters,
+    "-n": extractTailLines
   };
   return funcRef[option];
 };
@@ -87,8 +101,8 @@ const isFileExists = function(existsSync, file) {
 
 const getFuncRef = function(command, option) {
   let functionRefs = {
-    head : getOptionFuncRefForHead(option), 
-    tail : getOptionFuncRefForTail(option)
+    head: getOptionFuncRefForHead(option),
+    tail: getOptionFuncRefForTail(option)
   };
   return functionRefs[command];
 };
