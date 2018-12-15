@@ -1,5 +1,5 @@
 const isDetailsStartsWithHyphen = function(params) {
-  return params[0].startsWith("-");
+    return params.startsWith("-");
 };
 
 const isNumberOption = function(option) {

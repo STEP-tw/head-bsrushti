@@ -1,5 +1,4 @@
 const { 
-  isDetailsStartsWithHyphen,
   parseInputs
  } = require('./parseInput.js');
 
@@ -104,7 +103,6 @@ module.exports = {
   isCountAboveZero,
   isFileExists,
   extractContents,
-  isDetailsStartsWithHyphen,
   extractTailLines,
   extractTailCharacters,
   getOptionFuncRefForTail,
