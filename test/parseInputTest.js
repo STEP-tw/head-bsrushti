@@ -59,13 +59,13 @@ describe("parseInputs", function() {
     deepEqual(parseInputs(["-3", "words"]), expectedOutput);
   });
 
-  it("should classify params when option is given without count", function() {
+  it("should classify params when space is given between option and count", function() {
     let expectedOutput = {
       option: "-n",
       count: 10,
       fileNames: ["words"]
     };
-    deepEqual(parseInputs(["words"]), expectedOutput);
+    deepEqual(parseInputs(["-n", "10", "words"]), expectedOutput);
   });
 
   it("should classify params when option is given with count", function() {
