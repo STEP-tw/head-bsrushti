@@ -21,7 +21,7 @@ const countErrorForHead = {
   };
 
   const getInvalidCountError = function(option, count, command) {
-    return [invalidCountError(option, count, command)];
+    return invalidCountError(option, count, command);
   };
   
   module.exports = {

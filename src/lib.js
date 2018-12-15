@@ -55,7 +55,7 @@ const getFileData = function(params, fs, command) {
   if (count == 0 && command == 'tail') {return [];}
   
   if (!isCountAboveZero(count)) {
-    return getInvalidCountError(option, count, command);
+    return [getInvalidCountError(option, count, command)];
   };
 
   let getContent = getFilteredContent.bind(null, fs, fileNames.length, functionRef, count, command);
