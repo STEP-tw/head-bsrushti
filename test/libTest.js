@@ -66,31 +66,39 @@ describe("extractHeadCharacters returns characters of given text as per the give
 });
 
 describe("getFilteredContent returns the result as per the mapper function", () => {
+  let files = {
+    file1 : "A\nB\nC\nD\nE\nF\nG\nH\nI\nJ\nK\nL\nM\nN\nO\nP",
+    file2 : "a\nb\nc\nd\ne\nf\ng\nh\ni\nj\nk\nl\nm\nn\no\np"
+  };
+
   it("should return file content with header if more than one are given", () => {
-    deepEqual(
-      getFilteredContent(fs, 2, extractHeadCharacters, 3, "head", "file"),
-      "==> file <==\nfir"
-    );
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+    let actual = getFilteredContent(fs, 2, extractHeadCharacters, 3, "head", "file1");
+    let expected = "==> file1 <==\nA\nB";
+    deepEqual( actual, expected);
   });
 
-  it("should return file content as per the input", () => {
-    deepEqual(
-      getFilteredContent(fs, 1, extractHeadLines, 1, "tail", "file1"),
-      "first line"
-    );
+  it("should return file content as per the input for tail", () => {
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+    let actual = getFilteredContent(fs, 1, extractTailLines, 3, "tail", "file2");
+    let expected = "n\no\np";
+    deepEqual(actual,expected);
   });
 
   it("should return error when file doesn't exist", () => {
-    const fs = {
-      existsSync: function(file) {
-        return false;
-      }
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return false;}
     };
-    let expectedOutput = "tail: file1: No such file or directory";
-    deepEqual(
-      getFilteredContent(fs, 1, extractHeadLines, 1, "tail", "file1"),
-      expectedOutput
-    );
+    let actual = getFilteredContent(fs, 1, extractHeadLines, 1, "tail", "file1");
+    let expected = "tail: file1: No such file or directory";
+    deepEqual(actual, expected);
   });
 });
 
