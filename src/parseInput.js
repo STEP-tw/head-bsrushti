@@ -1,5 +1,5 @@
-const isDetailsStartsWithHyphen = function(params) {
-  return params.startsWith("-");
+const isDetailsStartsWithHyphen = function(param) {
+  return param.startsWith("-");
 };
 
 const isNumberOption = function(option) {
