@@ -5,7 +5,7 @@ const { fileNotFoundError, getInvalidCountError } = require("./errorLib.js");
 const extractContents = function(contents, delimiter, initial, last) {
   return contents
     .split(delimiter)
-    .splice(initial, last)
+    .slice(initial, last)
     .join(delimiter);
 };
 
