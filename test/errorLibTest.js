@@ -2,7 +2,6 @@ const { equal } = require("assert");
 const {
   invalidCountError,
   fileNotFoundError,
-  getInvalidCountError
 } = require("../src/errorLib.js");
 
 describe("invalidCountError", () => {
@@ -51,18 +50,6 @@ describe("fileNotFoundError", () => {
   it("should return error message if it not finds the file", () => {
     let actual = fileNotFoundError("file", "head");
     let expected = "head: file: No such file or directory";
-    equal(actual, expected);
-  });
-});
-
-describe("getInvalidCountError", function() {
-  it("should return error message according to given params", function() {
-    let actual = getInvalidCountError("-n", "1q", "tail");
-    let expected = "tail: illegal offset -- 1q";
-    equal(actual, expected);
-
-    actual = getInvalidCountError("-n", "aaa", "head");
-    expected = "head: illegal line count -- aaa";
     equal(actual, expected);
   });
 });

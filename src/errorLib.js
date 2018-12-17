@@ -20,12 +20,7 @@ const fileNotFoundError = function(file, command) {
   return command + ": " + file + ": No such file or directory";
 };
 
-const getInvalidCountError = function(option, count, command) {
-  return invalidCountError(option, count, command);
-};
-
 module.exports = {
   invalidCountError,
   fileNotFoundError,
-  getInvalidCountError
 };

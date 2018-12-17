@@ -1,6 +1,6 @@
 const { parseInputs } = require("./parseInput.js");
 
-const { fileNotFoundError, getInvalidCountError } = require("./errorLib.js");
+const { fileNotFoundError, invalidCountError } = require("./errorLib.js");
 
 const { getFunctionRef, isCountAboveZero } = require("./util.js");
 
@@ -44,7 +44,7 @@ const getFileData = function(params, fs, command) {
   }
 
   if (!isCountAboveZero(range)) {
-    return [getInvalidCountError(option, range, command)];
+    return [invalidCountError(option, range, command)];
   }
 
   let getContent = getFilteredContent.bind(
