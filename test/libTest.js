@@ -79,7 +79,7 @@ describe("getFileData for head", () => {
     file3 : "first line\nsecond line"
   };
 
-  it("should return the file data if -n input is given with length and file", () => {
+  it("should return the file data if -c input is given with length and file", () => {
     
     let fs = {
       readFileSync : function(file) { return files[file]; },
@@ -165,7 +165,7 @@ describe("getFileData for head", () => {
 
     let actual = getFileData(["-c3", "file1","file2"], fs, "head");
     let expected = ["head: file1: No such file or directory",
-                          "head: file2: No such file or directory"];
+                    "head: file2: No such file or directory"];
     deepEqual(actual, expected);
   });
 });
@@ -202,7 +202,7 @@ describe("getFileData for tail", () => {
     deepEqual(actual, expected);
   });
 
-  it("should return the file data if -n input is given with length and files", () => {
+  it("should return the file data if -c input is given with length and files", () => {
     
     let fs = {
       readFileSync : function(file) { return files[file]; },
