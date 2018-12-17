@@ -523,19 +523,17 @@ describe("format", function() {
       return "one\ntwo\nthree";
     }
   };
-  it("should add header and return content of given file", function() {
-    let expectedOutput = "==> words <==\none";
-    let fileName = "words";
-    deepEqual(
-      format(fs.readline, extractHeadCharacters, fileName, 3),
-      expectedOutput
-    );
 
-    expectedOutput = "==> numbers <==\ntwo\nthree";
+  it("should add header and return content of given file", function() {
+    let fileName = "words";
+    let actual = format(fs.readline, extractHeadCharacters, fileName, 3);
+    let expectedOutput = "==> words <==\none";
+    
+    deepEqual(actual, expectedOutput);
+
     fileName = "numbers";
-    deepEqual(
-      format(fs.readline, extractTailLines, fileName, 2),
-      expectedOutput
-    );
+    expectedOutput = "==> numbers <==\ntwo\nthree";
+    actual = format(fs.readline, extractTailLines, fileName, 2);
+    deepEqual(actual, expectedOutput);
   });
 });
