@@ -48,20 +48,31 @@ describe("extractHeadLines returns lines of given text as per the given input", 
 
 describe("extractHeadCharacters returns characters of given text as per the given input length", () => {
   it("should return empty string for 0 length input", () => {
-    deepEqual(extractHeadCharacters(0, "first line\nsecond line"), "");
+    let actual = extractHeadCharacters(0, "first line\nsecond line");
+    let expected = "";
+    deepEqual(actual, expected);
   });
 
   it("should return one character for length as input 1", () => {
-    deepEqual(extractHeadCharacters(1, "first line\nsecond line"), "f");
+    let actual = extractHeadCharacters(1, "first line\nsecond line");
+    let expected = "f";
+    deepEqual(actual, expected);
   });
 
   it("should return empty character for invalid length(negative)", () => {
-    deepEqual(extractHeadCharacters(-1, "first line\nsecond line"), "");
+    let actual = extractHeadCharacters(-1, "first line\nsecond line");
+    let expected = "";
+    deepEqual(actual, expected);
   });
 
   it("should return number of characters as per the given length", () => {
-    deepEqual(extractHeadCharacters(2, "first line\nsecond line"), "fi");
-    deepEqual(extractHeadCharacters(5, "first\nline\nsecond\nline"), "first");
+    let actual = extractHeadCharacters(2, "first line\nsecond line");
+    let expected = "fi";
+    deepEqual(actual, expected);
+    
+    actual = extractHeadCharacters(5, "first\nline\nsecond\nline");
+    expected = "first";
+    deepEqual(actual, expected);
   });
 });
 
