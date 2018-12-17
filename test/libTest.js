@@ -66,6 +66,7 @@ describe("extractHeadCharacters returns characters of given text as per the give
 });
 
 describe("getFilteredContent returns the result as per the mapper function", () => {
+
   let files = {
     file1 : "A\nB\nC\nD\nE\nF\nG\nH\nI\nJ\nK\nL\nM\nN\nO\nP",
     file2 : "a\nb\nc\nd\ne\nf\ng\nh\ni\nj\nk\nl\nm\nn\no\np"
@@ -76,6 +77,7 @@ describe("getFilteredContent returns the result as per the mapper function", () 
       readFileSync : function(file) { return files[file]; },
       existsSync : function() { return true;}
     };
+
     let actual = getFilteredContent(fs, 2, extractHeadCharacters, 3, "head", "file1");
     let expected = "==> file1 <==\nA\nB";
     deepEqual( actual, expected);
@@ -86,6 +88,7 @@ describe("getFilteredContent returns the result as per the mapper function", () 
       readFileSync : function(file) { return files[file]; },
       existsSync : function() { return true;}
     };
+
     let actual = getFilteredContent(fs, 1, extractTailLines, 3, "tail", "file2");
     let expected = "n\no\np";
     deepEqual(actual,expected);
@@ -96,6 +99,7 @@ describe("getFilteredContent returns the result as per the mapper function", () 
       readFileSync : function(file) { return files[file]; },
       existsSync : function() { return false;}
     };
+
     let actual = getFilteredContent(fs, 1, extractHeadLines, 1, "tail", "file1");
     let expected = "tail: file1: No such file or directory";
     deepEqual(actual, expected);
@@ -114,39 +118,76 @@ describe("makeHeading gives header along with title", () => {
 });
 
 describe("getFileData for head", () => {
-  it("should return the file data if -n input is given with length and files", () => {
-    let input = getFileData(["-c3", "file1"], fs, "head");
+
+  let files = {
+    file1 : "A\nB\nC\nD\nE\nF\nG\nH\nI\nJ\nK\nL\nM\nN\nO\nP",
+    file2 : "a\nb\nc\nd\ne\nf\ng\nh\ni\nj\nk\nl\nm\nn\no\np",
+    file3 : "first line\nsecond line"
+  };
+
+  it("should return the file data if -n input is given with length and file", () => {
+    
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+
+    let actual = getFileData(["-c3", "file3"], fs, "head");
     let expectedOutput = ["fir"];
-    deepEqual(input, expectedOutput);
+    deepEqual(actual, expectedOutput);
   });
 
-  it("should return the file data if -n input is given with length and files", () => {
-    let input = getFileData(["-n2", "file1"], fs, "head");
-    let expectedOutput = ["first line\nsecond line"];
-    deepEqual(input, expectedOutput);
+  it("should return the file data if -n input is given with length and file", () => {
+    
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+
+    let actual = getFileData(["-n2", "file1"], fs, "head");
+    let expectedOutput = ['A\nB'];
+    deepEqual(actual, expectedOutput);
   });
 
   it("should return the file content in default case of length 10", () => {
-    let input = getFileData(["file1"], fs, "head");
-    let expectedOutput = ["first line\nsecond line"];
-    deepEqual(input, expectedOutput);
+    
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+
+    let actual = getFileData(["file1"], fs, "head");
+    let expectedOutput = ['A\nB\nC\nD\nE\nF\nG\nH\nI\nJ'];
+    deepEqual(actual, expectedOutput);
   });
 
   it("should return error message if type is -n and length is not provided", () => {
-    let input = getFileData(["-n", "file1"], fs, "head");
-    let expectedOutput = ["head: illegal line count -- file1"];
-    deepEqual(input, expectedOutput);
+    
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+
+    let actual = getFileData(["-n", "file2"], fs, "head");
+    let expectedOutput = ["head: illegal line count -- file2"];
+    deepEqual(actual, expectedOutput);
   });
 
   it("should return file content with header if more than two files are provided", () => {
-    let input = getFileData(["-c3", "file1", "file2"], fs, "head");
-    let expectedOutput = ["==> file1 <==\nfir", "==> file2 <==\nfir"];
-    deepEqual(input, expectedOutput);
+    
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+
+    let actual = getFileData(["-c3", "file1", "file2"], fs, "head");
+    let expectedOutput = ["==> file1 <==\nA\nB", "==> file2 <==\na\nb"];
+    deepEqual(actual, expectedOutput);
 
     input = getFileData(["-n3", "file1", "file2"], fs, "head");
     expectedOutput = [
-      "==> file1 <==\nfirst line\nsecond line",
-      "==> file2 <==\nfirst line\nsecond line"
+      "==> file1 <==\nA\nB\nC",
+      "==> file2 <==\na\nb\nc"
     ];
     deepEqual(input, expectedOutput);
   });
