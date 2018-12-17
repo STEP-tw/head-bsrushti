@@ -275,16 +275,16 @@ describe("getFileData for tail", () => {
       existsSync : function() { return true;}
     };
 
-    let input = getFileData(["-c3", "file2", "file3"], fs, "tail");
+    let actual = getFileData(["-c3", "file2", "file3"], fs, "tail");
     let expectedOutput = ["==> file2 <==\no\np", "==> file3 <==\nine"];
-    deepEqual(input, expectedOutput);
+    deepEqual(actual, expectedOutput);
 
-    input = getFileData(["-n3", "file1", "file2"], fs, "tail");
+    actual = getFileData(["-n3", "file1", "file2"], fs, "tail");
     expectedOutput = [
       "==> file1 <==\nN\nO\nP",
       "==> file2 <==\nn\no\np"
     ];
-    deepEqual(input, expectedOutput);
+    deepEqual(actual, expectedOutput);
   });
 });
 
