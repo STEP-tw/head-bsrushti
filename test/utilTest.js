@@ -3,7 +3,8 @@ const {
   extractContents,
   extractLines,
   extractCharacters,
-  getFunctionRef
+  getFunctionRef,
+  isCountAboveZero
 } = require("../src/util.js");
 
 describe("extractContents returns contents as per the delimiter it has passed", () => {
@@ -122,14 +123,36 @@ describe("extractCharacters", function() {
 
 describe("getFunctionRef", function() {
   it("should return function reference for -c ", function() {
-    let actual = getFunctionRef('-c');
-    let expected = extractCharacters;  
-    assert.deepEqual(actual,expected)
+    let actual = getFunctionRef("-c");
+    let expected = extractCharacters;
+    assert.deepEqual(actual, expected);
   });
 
   it("should return function reference for -n ", function() {
-    let actual = getFunctionRef('-n');
-    let expected = extractLines;  
-    assert.deepEqual(actual,expected)
+    let actual = getFunctionRef("-n");
+    let expected = extractLines;
+    assert.deepEqual(actual, expected);
+  });
+});
+
+describe("isCountAboveZero", () => {
+  it("should return true if given input is greater than zero", () => {
+    let actual = isCountAboveZero(3);
+    let expected = true;
+    assert.deepEqual(actual, expected);
+
+    actual = isCountAboveZero(1);
+    expected = true;
+    assert.deepEqual(actual, expected);
+  });
+
+  it("should return false if given input is lesser than zero", () => {
+    let actual = isCountAboveZero(-3);
+    let expected = false;
+    assert.deepEqual(actual, expected);
+
+    actual = isCountAboveZero(-1);
+    expected = false;
+    assert.deepEqual(actual, expected);
   });
 });

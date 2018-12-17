@@ -22,16 +22,21 @@ const extractCharacters = function(command, count, contents) {
 };
 
 const getFunctionRef = function(option) {
-    let funcRef = {
-      "-c" : extractCharacters,
-      "-n" : extractLines
-    };
-    return funcRef[option];
-  }
-  
+  let funcRef = {
+    "-c": extractCharacters,
+    "-n": extractLines
+  };
+  return funcRef[option];
+};
+
+const isCountAboveZero = function(range) {
+  return !(range < 1 || isNaN(range));
+};
+
 module.exports = {
   extractContents,
   extractLines,
   extractCharacters,
-  getFunctionRef
+  getFunctionRef,
+  isCountAboveZero
 };

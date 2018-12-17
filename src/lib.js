@@ -2,7 +2,7 @@ const { parseInputs } = require("./parseInput.js");
 
 const { fileNotFoundError, getInvalidCountError } = require("./errorLib.js");
 
-const { getFunctionRef } = require('./util.js');
+const { getFunctionRef, isCountAboveZero } = require("./util.js");
 
 const getFilteredContent = function(
   fs,
@@ -24,7 +24,11 @@ const getFilteredContent = function(
 };
 
 const format = function(reader, functionRef, command, fileName, range) {
-  return makeHeader(fileName) + "\n" + functionRef(command, range, reader(fileName, "utf8"));
+  return (
+    makeHeader(fileName) +
+    "\n" +
+    functionRef(command, range, reader(fileName, "utf8"))
+  );
 };
 
 const makeHeader = function(heading) {
@@ -52,10 +56,6 @@ const getFileData = function(params, fs, command) {
     command
   );
   return fileNames.map(getContent);
-};
-
-const isCountAboveZero = function(range) {
-  return !(range < 1 || isNaN(range));
 };
 
 const isFileExists = function(existsSync, fileName) {

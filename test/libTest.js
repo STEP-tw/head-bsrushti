@@ -3,7 +3,6 @@ const {
   getFilteredContent,
   makeHeader,
   getFileData,
-  isCountAboveZero,
   isFileExists,
   format
 } = require("../src/lib.js");
@@ -290,28 +289,6 @@ describe("getFileData for tail", () => {
     let actual = getFileData(["-c3", "file1","file2"], fs, "tail");
     let expected = ["tail: file1: No such file or directory",
                           "tail: file2: No such file or directory"];
-    deepEqual(actual, expected);
-  });
-});
-
-describe("isCountAboveZero", () => {
-  it("should return true if given input is greater than zero", () => {
-    let actual = isCountAboveZero(3);
-    let expected = true;
-    deepEqual(actual, expected);
-
-    actual  = isCountAboveZero(1);
-    expected = true;
-    deepEqual(actual, expected);
-  });
-
-  it("should return false if given input is lesser than zero", () => {
-    let actual = isCountAboveZero(-3);
-    let expected = false;
-    deepEqual(actual, expected);
-
-    actual  = isCountAboveZero(-1);
-    expected = false;
     deepEqual(actual, expected);
   });
 });
