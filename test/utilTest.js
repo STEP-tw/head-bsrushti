@@ -29,9 +29,15 @@ describe("extractLines", function() {
       assert.deepEqual(actual, expected);
     });
 
-    it("should return one character for length as input 1", () => {
+    it("should return one line for length as input 1", () => {
       let actual = extractLines("head", 1, "first line\nsecond line");
       let expected = "first line";
+      assert.deepEqual(actual, expected);
+    });
+
+    it("should return whole file when range is greater than the file contents", () => {
+      let actual = extractLines("head", 3, "first line\nsecond line");
+      let expected = "first line\nsecond line";
       assert.deepEqual(actual, expected);
     });
 
@@ -56,6 +62,12 @@ describe("extractLines", function() {
     it("should return one character for length as input 1", () => {
       let actual = extractLines("tail", 1, "first line\nsecond line");
       let expected = "second line";
+      assert.deepEqual(actual, expected);
+    });
+
+    it("should return whole file when range is greater than the file contents", () => {
+      let actual = extractLines("tail", 3, "first line\nsecond line");
+      let expected = "first line\nsecond line";
       assert.deepEqual(actual, expected);
     });
 
