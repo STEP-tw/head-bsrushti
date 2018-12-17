@@ -4,7 +4,7 @@ const { fileNotFoundError, getInvalidCountError } = require("./errorLib.js");
 
 const { extractContents } = require('./util.js');
 
-const extractHeadLines = function(count, contents) {
+const extractLinesByHead = function(count, contents) {
   return extractContents(contents, "\n", 0, count);
 };
 
@@ -73,7 +73,7 @@ const getFileData = function(params, fs, command) {
 const getOptionFuncRefForHead = function(option) {
   let funcRef = {
     "-c": extractHeadCharacters,
-    "-n": extractHeadLines
+    "-n": extractLinesByHead
   };
   return funcRef[option];
 };
@@ -103,7 +103,7 @@ const getFuncRef = function(command, option) {
 };
 
 module.exports = {
-  extractHeadLines,
+  extractLinesByHead,
   extractHeadCharacters,
   getFilteredContent,
   makeHeader,

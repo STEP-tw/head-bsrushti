@@ -1,6 +1,6 @@
 const { equal, deepEqual } = require("assert");
 const {
-  extractHeadLines,
+  extractLinesByHead,
   extractHeadCharacters,
   getFilteredContent,
   makeHeader,
@@ -15,25 +15,25 @@ const {
   format
 } = require("../src/lib.js");
 
-describe("extractHeadLines returns lines of given text as per the given input", () => {
+describe("extractLinesByHead returns lines of given text as per the given input", () => {
   it("should return empty string for 0 length input", () => {
-    let actual = extractHeadLines(0, "first line\nsecond line");
+    let actual = extractLinesByHead(0, "first line\nsecond line");
     let expected = ""; 
     deepEqual(actual, expected);
   });
 
   it("should return one line for length as input 1", () => {
-    let actual = extractHeadLines(1, "first line\nsecond line");
+    let actual = extractLinesByHead(1, "first line\nsecond line");
     let expected = "first line";
     deepEqual(actual, expected);
   });
 
   it("should return number of lines as per the given length", () => {
-    let actual = extractHeadLines(2, "first line\nsecond line");
+    let actual = extractLinesByHead(2, "first line\nsecond line");
     let expected = "first line\nsecond line";
     deepEqual(actual, expected);
 
-    actual = extractHeadLines(4, "first\nline\nsecond\nline");
+    actual = extractLinesByHead(4, "first\nline\nsecond\nline");
     expected = "first\nline\nsecond\nline";
     deepEqual(actual, expected);
   });
@@ -98,7 +98,7 @@ describe("getFilteredContent returns the result as per the mapper function", () 
       existsSync : function() { return false;}
     };
 
-    let actual = getFilteredContent(fs, 1, extractHeadLines, 1, "tail", "file1");
+    let actual = getFilteredContent(fs, 1, extractLinesByHead, 1, "tail", "file1");
     let expected = "tail: file1: No such file or directory";
     deepEqual(actual, expected);
   });
@@ -351,9 +351,9 @@ describe("getOptionFuncRefForHead", () => {
     deepEqual(actual, expected);
   });
 
-  it("should return function reference for extractHeadLines if -n option is provided", () => {
+  it("should return function reference for extractLinesByHead if -n option is provided", () => {
     let actual = getOptionFuncRefForHead("-n");
-    let expected = extractHeadLines;
+    let expected = extractLinesByHead;
     deepEqual(actual, expected);
   });
 });
@@ -457,7 +457,7 @@ describe("getOptionFuncRefForTail", () => {
     deepEqual(actual, expected);
   });
 
-  it("should return function reference for extractHeadLines if -n option is provided", () => {
+  it("should return function reference for extractLinesByHead if -n option is provided", () => {
     let actual = getOptionFuncRefForTail("-n");
     let expected = extractTailLines;
     deepEqual(actual, expected);
@@ -467,7 +467,7 @@ describe("getOptionFuncRefForTail", () => {
 describe("getFuncRef", () => {
   it("should return function reference for head command with option -n", () => {
     let actual = getFuncRef("head", "-n");
-    let expected = extractHeadLines;
+    let expected = extractLinesByHead;
     deepEqual(actual, expected);
   });
 
