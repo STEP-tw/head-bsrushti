@@ -373,13 +373,23 @@ describe("getOptionFuncRefForHead", () => {
 
 describe("isCountAboveZero", () => {
   it("should return true if given input is greater than zero", () => {
-    deepEqual(isCountAboveZero(3), true);
-    deepEqual(isCountAboveZero(1), true);
+    let actual = isCountAboveZero(3);
+    let expected = true;
+    deepEqual(actual, expected);
+
+    actual  = isCountAboveZero(1);
+    expected = true;
+    deepEqual(actual, expected);
   });
 
   it("should return false if given input is lesser than zero", () => {
-    deepEqual(isCountAboveZero(-3), false);
-    deepEqual(isCountAboveZero(-1), false);
+    let actual = isCountAboveZero(-3);
+    let expected = false;
+    deepEqual(actual, expected);
+
+    actual  = isCountAboveZero(-1);
+    expected = false;
+    deepEqual(actual, expected);
   });
 });
 
