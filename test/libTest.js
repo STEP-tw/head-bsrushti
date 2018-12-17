@@ -18,26 +18,31 @@ const {
 
 describe("extractHeadLines returns lines of given text as per the given input", () => {
   it("should return empty string for 0 length input", () => {
-    deepEqual(extractHeadLines(0, "first line\nsecond line"), "");
+    let actual = extractHeadLines(0, "first line\nsecond line");
+    let expected = ""; 
+    deepEqual(actual, expected);
   });
 
   it("should return one line for length as input 1", () => {
-    deepEqual(extractHeadLines(1, "first line\nsecond line"), "first line");
+    let actual = extractHeadLines(1, "first line\nsecond line");
+    let expected = "first line";
+    deepEqual(actual, expected);
   });
 
   it("should return empty line for invalid length(negative)", () => {
-    deepEqual(extractHeadLines(-1, "first line\nsecond line"), "");
+    let actual = extractHeadLines(-1, "first line\nsecond line"); 
+    let expected = "";
+    deepEqual(actual, expected);
   });
 
   it("should return number of lines as per the given length", () => {
-    deepEqual(
-      extractHeadLines(2, "first line\nsecond line"),
-      "first line\nsecond line"
-    );
-    deepEqual(
-      extractHeadLines(4, "first\nline\nsecond\nline"),
-      "first\nline\nsecond\nline"
-    );
+    let actual = extractHeadLines(2, "first line\nsecond line");
+    let expected = "first line\nsecond line";
+    deepEqual(actual, expected);
+
+    actual = extractHeadLines(4, "first\nline\nsecond\nline");
+    expected = "first\nline\nsecond\nline";
+    deepEqual(actual, expected);
   });
 });
 
