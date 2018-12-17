@@ -58,7 +58,7 @@ describe("isOptionWithCount", function() {
 });
 
 describe("isOptionWithoutCount", function() {
-  it("should return true if given argument has only valid option without count", function() {
+  it("should return true if given argument has only valid option without range", function() {
     let actual = isOptionWithoutCount("-n");
     let expected = true;
     deepEqual(actual, expected);
@@ -76,27 +76,27 @@ describe("parseInputs", function() {
     let actual = parseInputs(["-3", "words"]);
     let expected = {
       option: "-n",
-      count: 3,
+      range: 3,
       fileNames: ["words"]
     };
     deepEqual(actual, expected);
   });
 
-  it("should classify params when space is given between option and count", function() {
+  it("should classify params when space is given between option and range", function() {
     let actual = parseInputs(["-n", "10", "words"]);
     let expected = {
       option: "-n",
-      count: 10,
+      range: 10,
       fileNames: ["words"]
     };
     deepEqual(actual, expected);
   });
 
-  it("should classify params when option is given with count", function() {
+  it("should classify params when option is given with range", function() {
     let actual = parseInputs(["-n5", "words"]);
     let expected = {
       option: "-n",
-      count: 5,
+      range: 5,
       fileNames: ["words"]
     };
     deepEqual(actual, expected);
@@ -106,7 +106,7 @@ describe("parseInputs", function() {
     let actual = parseInputs(["words"]);
     let expected = {
       option: "-n",
-      count: 10,
+      range: 10,
       fileNames: ["words"]
     };
     deepEqual(actual, expected);
