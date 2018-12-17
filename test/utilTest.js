@@ -97,6 +97,12 @@ describe("extractCharacters", function() {
       assert.deepEqual(actual, expected);
     });
 
+    it("should return whole file content for length as input is greater than content", () => {
+      let actual = extractCharacters("head", 10, "first");
+      let expected = "first";
+      assert.deepEqual(actual, expected);
+    });
+
     it("should return number of characters as per the given length", () => {
       let actual = extractCharacters("head", 2, "first line\nsecond line");
       let expected = "fi";
@@ -118,6 +124,12 @@ describe("extractCharacters", function() {
     it("should return one character for length as input 1", () => {
       let actual = extractCharacters("tail", 1, "first line\nsecond line");
       let expected = "e";
+      assert.deepEqual(actual, expected);
+    });
+
+    it("should return whole file content for length as input is greater than content", () => {
+      let actual = extractCharacters("tail", 10, "first");
+      let expected = "first";
       assert.deepEqual(actual, expected);
     });
 
