@@ -202,12 +202,12 @@ describe("getFileData for head", () => {
     let expectedOutput = ["==> file1 <==\nA\nB", "==> file2 <==\na\nb"];
     deepEqual(actual, expectedOutput);
 
-    input = getFileData(["-n3", "file1", "file2"], fs, "head");
+    actual = getFileData(["-n3", "file1", "file2"], fs, "head");
     expectedOutput = [
       "==> file1 <==\nA\nB\nC",
       "==> file2 <==\na\nb\nc"
     ];
-    deepEqual(input, expectedOutput);
+    deepEqual(actual, expectedOutput);
   });
 
   it("should return error message if file doesn't exist for single file", () => {
