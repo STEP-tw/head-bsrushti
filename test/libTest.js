@@ -395,21 +395,23 @@ describe("isCountAboveZero", () => {
 
 describe("isFileExists", () => {
   it("should return true if it finds the file", () => {
-  
     let fs = {
       existsSync : function() { return true;}
     };
     
-    equal(isFileExists(fs.existsSync, "file"), true);
+    let actual = isFileExists(fs.existsSync, "file");
+    let expected = true;
+    equal(actual, expected);
   });
 
   it("should return false if it can't find the file", () => {
-  
     let fs = {
       existsSync : function() { return false;}
     };
     
-    equal(isFileExists(fs.existsSync, "file"), false);
+    let actual = isFileExists(fs.existsSync, "file");
+    let expected = false;
+    equal(actual, expected);
   });
 });
 
