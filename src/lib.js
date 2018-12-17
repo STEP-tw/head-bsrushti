@@ -10,21 +10,21 @@ const getFilteredContent = function(
   functionRef,
   range,
   command,
-  file
+  fileName
 ) {
-  if (!fs.existsSync(file)) {
-    return fileNotFoundError(file, command);
+  if (!fs.existsSync(fileName)) {
+    return fileNotFoundError(fileName, command);
   }
 
-  if (fs.existsSync(file) && numberOfFiles > 1) {
-    return format(fs.readFileSync, functionRef, command, file, range);
+  if (fs.existsSync(fileName) && numberOfFiles > 1) {
+    return format(fs.readFileSync, functionRef, command, fileName, range);
   }
 
-  return functionRef(command, range, fs.readFileSync(file, "utf8"));
+  return functionRef(command, range, fs.readFileSync(fileName, "utf8"));
 };
 
-const format = function(reader, functionRef, command, file, range) {
-  return makeHeader(file) + "\n" + functionRef(command, range, reader(file, "utf8"));
+const format = function(reader, functionRef, command, fileName, range) {
+  return makeHeader(fileName) + "\n" + functionRef(command, range, reader(fileName, "utf8"));
 };
 
 const makeHeader = function(heading) {
@@ -58,8 +58,8 @@ const isCountAboveZero = function(range) {
   return !(range < 1 || isNaN(range));
 };
 
-const isFileExists = function(existsSync, file) {
-  return existsSync(file);
+const isFileExists = function(existsSync, fileName) {
+  return existsSync(fileName);
 };
 
 module.exports = {
