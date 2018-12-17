@@ -455,19 +455,25 @@ describe("extractTailLines returns lines of given text as per the given input", 
 
 describe("extractTailCharacters returns characters of given text as per the given input length", () => {
   it("should return whole string for 0 length input", () => {
-    deepEqual(
-      extractTailCharacters(0, "first line\nsecond line"),
-      "first line\nsecond line"
-    );
+    let actual = extractTailCharacters(0, "first line\nsecond line");
+    let expected = "first line\nsecond line";
+    deepEqual(actual, expected);
   });
 
   it("should return one character for length as input 1", () => {
-    deepEqual(extractTailCharacters(1, "first line\nsecond line"), "e");
+    let actual = extractTailCharacters(1, "first line\nsecond line");
+    let expected = "e";
+    deepEqual(actual, expected);
   });
 
   it("should return number of characters as per the given length", () => {
-    deepEqual(extractTailCharacters(2, "first line\nsecond line"), "ne");
-    deepEqual(extractTailCharacters(5, "first\nline\nsecond\nline"), "\nline");
+    let actual = extractTailCharacters(2, "first line\nsecond line");
+    let expected = "ne";
+    deepEqual(actual, expected);
+
+    actual = extractTailCharacters(5, "first\nline\nsecond\nline");
+    expected = "\nline";
+    deepEqual(actual, expected);
   });
 });
 
