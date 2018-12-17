@@ -13,7 +13,16 @@ const extractLines = function(command, count, contents) {
   return linesAsCommand[command];
 };
 
+const extractCharacters = function(command, count, contents) {
+  let charactersAsCommand = {
+    head: extractContents(contents, "", 0, count),
+    tail: extractContents(contents, "", -count, contents.split("").length)
+  };
+  return charactersAsCommand[command];
+};
+
 module.exports = {
   extractContents,
-  extractLines
+  extractLines,
+  extractCharacters
 };
