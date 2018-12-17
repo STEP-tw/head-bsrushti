@@ -186,6 +186,29 @@ describe("getFileData for head", () => {
     ];
     deepEqual(input, expectedOutput);
   });
+
+  it("should return error message if file doesn't exist for single file", () => {
+    
+    let fs = {
+      existsSync : function() { return false;}
+    };
+
+    let actual = getFileData(["-c3", "file1"], fs, "head");
+    let expectedOutput = ["head: file1: No such file or directory"];
+    deepEqual(actual, expectedOutput);
+  });
+
+  it("should return error message if file doesn't exist if more than one file provided", () => {
+    
+    let fs = {
+      existsSync : function() { return false;}
+    };
+
+    let actual = getFileData(["-c3", "file1","file2"], fs, "head");
+    let expectedOutput = ["head: file1: No such file or directory",
+                          "head: file2: No such file or directory"];
+    deepEqual(actual, expectedOutput);
+  });
 });
 
 describe("getFileData for tail", () => {
