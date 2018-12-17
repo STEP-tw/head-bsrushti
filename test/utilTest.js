@@ -160,6 +160,12 @@ describe("getFunctionRef", function() {
 });
 
 describe("isCountAboveZero", () => {
+  it("should return true if given input is zero", () => {
+    let actual = isCountAboveZero(0);
+    let expected = false;
+    assert.deepEqual(actual, expected);
+  });
+
   it("should return true if given input is greater than zero", () => {
     let actual = isCountAboveZero(3);
     let expected = true;
