@@ -1,4 +1,4 @@
-Filename	LineNo	CodeSmells		
+```Filename	LineNo	CodeSmells		
 				
 head.js	       6	use join in library file		
 				
@@ -39,4 +39,4 @@ libTest.js	    522	    misleading function
 				
 parseInputTest.js	74	missing test case		
 				
-errorLibTest.js	    50	missing test case		
+errorLibTest.js	    50	missing test case```		
