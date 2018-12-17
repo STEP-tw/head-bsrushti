@@ -24,7 +24,7 @@ const parseInputs = function(params) {
       fileNames: params.slice(1)
     };
   }
-
+    
   if (isOptionWithoutCount(params[0])) {
     return {
       option: params[0].slice(0, 2),
