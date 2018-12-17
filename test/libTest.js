@@ -194,51 +194,100 @@ describe("getFileData for head", () => {
 });
 
 describe("getFileData for tail", () => {
+  
+  let files = {
+    file1 : "A\nB\nC\nD\nE\nF\nG\nH\nI\nJ\nK\nL\nM\nN\nO\nP",
+    file2 : "a\nb\nc\nd\ne\nf\ng\nh\ni\nj\nk\nl\nm\nn\no\np",
+    file3 : "first line\nsecond line"
+  };
+
   it("should return empty array if 0 as a count is provided with option -c", () => {
-    let input = getFileData(["-c0", "file1"], fs, "tail");
+    
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+    
+    let actual = getFileData(["-c0", "file1"], fs, "tail");
     let expectedOutput = [];
-    deepEqual(input, expectedOutput);
+    deepEqual(actual, expectedOutput);
   });
 
   it("should return empty array if 0 as a count is provided with option -n", () => {
-    let input = getFileData(["-n0", "file1"], fs, "tail");
+    
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+    
+    let actual = getFileData(["-n0", "file1"], fs, "tail");
     let expectedOutput = [];
-    deepEqual(input, expectedOutput);
+    deepEqual(actual, expectedOutput);
   });
 
   it("should return the file data if -n input is given with length and files", () => {
-    let input = getFileData(["-c3", "file1"], fs, "tail");
+    
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+
+    let actual = getFileData(["-c3", "file3"], fs, "tail");
     let expectedOutput = ["ine"];
-    deepEqual(input, expectedOutput);
+    deepEqual(actual, expectedOutput);
   });
 
   it("should return the file data if -n input is given with length and files", () => {
-    let input = getFileData(["-n2", "file1"], fs, "tail");
-    let expectedOutput = ["first line\nsecond line"];
-    deepEqual(input, expectedOutput);
+    
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+
+    let actual = getFileData(["-n2", "file1"], fs, "tail");
+    let expectedOutput = ["O\nP"];
+    deepEqual(actual, expectedOutput);
   });
 
   it("should return the file content in default case of length 10", () => {
-    let input = getFileData(["file1"], fs, "tail");
-    let expectedOutput = ["first line\nsecond line"];
-    deepEqual(input, expectedOutput);
+    
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+    
+    let actual = getFileData(["file1"], fs, "tail");
+    let expectedOutput = ["G\nH\nI\nJ\nK\nL\nM\nN\nO\nP"];
+    deepEqual(actual, expectedOutput);
   });
 
   it("should return error message if type is -n and length is not provided", () => {
-    let input = getFileData(["-n", "file1"], fs, "tail");
+    
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+    
+    let actual = getFileData(["-n", "file1"], fs, "tail");
     let expectedOutput = ["tail: illegal offset -- file1"];
-    deepEqual(input, expectedOutput);
+    deepEqual(actual, expectedOutput);
   });
 
   it("should return file content with header if more than two files are provided", () => {
-    let input = getFileData(["-c3", "file1", "file2"], fs, "tail");
-    let expectedOutput = ["==> file1 <==\nine", "==> file2 <==\nine"];
+    
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+
+    let input = getFileData(["-c3", "file2", "file3"], fs, "tail");
+    let expectedOutput = ["==> file2 <==\no\np", "==> file3 <==\nine"];
     deepEqual(input, expectedOutput);
 
     input = getFileData(["-n3", "file1", "file2"], fs, "tail");
     expectedOutput = [
-      "==> file1 <==\nfirst line\nsecond line",
-      "==> file2 <==\nfirst line\nsecond line"
+      "==> file1 <==\nN\nO\nP",
+      "==> file2 <==\nn\no\np"
     ];
     deepEqual(input, expectedOutput);
   });
@@ -268,7 +317,21 @@ describe("isCountAboveZero", () => {
 
 describe("isFileExists", () => {
   it("should return true if it finds the file", () => {
+  
+    let fs = {
+      existsSync : function() { return true;}
+    };
+    
     equal(isFileExists(fs.existsSync, "file"), true);
+  });
+
+  it("should return false if it can't find the file", () => {
+  
+    let fs = {
+      existsSync : function() { return false;}
+    };
+    
+    equal(isFileExists(fs.existsSync, "file"), false);
   });
 });
 
