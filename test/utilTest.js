@@ -2,7 +2,8 @@ const assert = require("assert");
 const {
   extractContents,
   extractLines,
-  extractCharacters
+  extractCharacters,
+  getOptionFuncRef
 } = require("../src/util.js");
 
 describe("extractContents returns contents as per the delimiter it has passed", () => {
@@ -96,25 +97,39 @@ describe("extractCharacters", function() {
 
   describe("For tail", function() {
     it("should return whole string for 0 length input", () => {
-      let actual = extractCharacters('tail', 0, "first line\nsecond line");
+      let actual = extractCharacters("tail", 0, "first line\nsecond line");
       let expected = "first line\nsecond line";
       assert.deepEqual(actual, expected);
     });
 
     it("should return one character for length as input 1", () => {
-      let actual = extractCharacters('tail', 1, "first line\nsecond line");
+      let actual = extractCharacters("tail", 1, "first line\nsecond line");
       let expected = "e";
       assert.deepEqual(actual, expected);
     });
 
     it("should return number of characters as per the given length", () => {
-      let actual = extractCharacters('tail', 2, "first line\nsecond line");
+      let actual = extractCharacters("tail", 2, "first line\nsecond line");
       let expected = "ne";
       assert.deepEqual(actual, expected);
 
-      actual = extractCharacters('tail', 5, "first\nline\nsecond\nline");
+      actual = extractCharacters("tail", 5, "first\nline\nsecond\nline");
       expected = "\nline";
       assert.deepEqual(actual, expected);
     });
+  });
+});
+
+describe("getOptionFuncRef", function() {
+  it("should return function reference for -c ", function() {
+    let actual = getOptionFuncRef('-c');
+    let expected = extractCharacters;  
+    assert.deepEqual(actual,expected)
+  });
+
+  it("should return function reference for -n ", function() {
+    let actual = getOptionFuncRef('-n');
+    let expected = extractLines;  
+    assert.deepEqual(actual,expected)
   });
 });

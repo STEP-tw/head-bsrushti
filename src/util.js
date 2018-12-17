@@ -21,8 +21,17 @@ const extractCharacters = function(command, count, contents) {
   return charactersAsCommand[command];
 };
 
+const getOptionFuncRef = function(option) {
+    let funcRef = {
+      "-c" : extractCharacters,
+      "-n" : extractLines
+    };
+    return funcRef[option];
+  }
+  
 module.exports = {
   extractContents,
   extractLines,
-  extractCharacters
+  extractCharacters,
+  getOptionFuncRef
 };
