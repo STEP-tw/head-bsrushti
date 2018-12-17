@@ -479,11 +479,15 @@ describe("extractTailCharacters returns characters of given text as per the give
 
 describe("getOptionFuncRefForTail", () => {
   it("should return function reference for extractHeadCharacters if -c option is provided", () => {
-    deepEqual(getOptionFuncRefForTail("-c"), extractTailCharacters);
+    let actual = getOptionFuncRefForTail("-c");
+    let expected = extractTailCharacters; 
+    deepEqual(actual, expected);
   });
 
   it("should return function reference for extractHeadLines if -n option is provided", () => {
-    deepEqual(getOptionFuncRefForTail("-n"), extractTailLines);
+    let actual = getOptionFuncRefForTail("-n");
+    let expected = extractTailLines;
+    deepEqual(actual, expected);
   });
 });
 
