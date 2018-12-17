@@ -8,7 +8,7 @@ const countErrorForTail = {
   "-c": "tail: illegal offset -- "
 };
 
-const invalidCountError = function(option, count, command) {
+const getInvalidCountError = function(option, count, command) {
   const countError = {
     head: countErrorForHead,
     tail: countErrorForTail
@@ -21,6 +21,6 @@ const fileNotFoundError = function(file, command) {
 };
 
 module.exports = {
-  invalidCountError,
+  getInvalidCountError,
   fileNotFoundError,
 };

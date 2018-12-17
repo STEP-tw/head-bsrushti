@@ -1,46 +1,46 @@
 const { equal } = require("assert");
 const {
-  invalidCountError,
+  getInvalidCountError,
   fileNotFoundError,
 } = require("../src/errorLib.js");
 
-describe("invalidCountError", () => {
+describe("getInvalidCountError", () => {
   it("should return error message if invalid length provided with option -c and command head", () => {
-    let actual = invalidCountError("-c", "1q", "head");
+    let actual = getInvalidCountError("-c", "1q", "head");
     let expected = "head: illegal byte count -- 1q";
     equal(actual, expected);
 
-    actual = invalidCountError("-c", "aaa", "head");
+    actual = getInvalidCountError("-c", "aaa", "head");
     expected = "head: illegal byte count -- aaa";
     equal(actual, expected);
   });
 
   it("should return error message if invalid length provided with option -n and command head", () => {
-    let actual = invalidCountError("-n", "1q", "head");
+    let actual = getInvalidCountError("-n", "1q", "head");
     let expected = "head: illegal line count -- 1q";
     equal(actual, expected);
 
-    actual = invalidCountError("-n", "aaa", "head");
+    actual = getInvalidCountError("-n", "aaa", "head");
     expected = "head: illegal line count -- aaa";
     equal(actual, expected);
   });
 
   it("should return error message if invalid length provided with option -c and command tail", () => {
-    let actual = invalidCountError("-c", "1q", "tail");
+    let actual = getInvalidCountError("-c", "1q", "tail");
     let expected = "tail: illegal offset -- 1q";
     equal(actual, expected);
 
-    actual = invalidCountError("-c", "aaa", "tail");
+    actual = getInvalidCountError("-c", "aaa", "tail");
     expected = "tail: illegal offset -- aaa";
     equal(actual, expected);
   });
 
   it("should return error message if invalid length provided with option -n and command tail", () => {
-    let actual = invalidCountError("-n", "1q", "tail");
+    let actual = getInvalidCountError("-n", "1q", "tail");
     let expected = "tail: illegal offset -- 1q";
     equal(actual, expected);
 
-    actual = invalidCountError("-n", "aaa", "tail");
+    actual = getInvalidCountError("-n", "aaa", "tail");
     expected = "tail: illegal offset -- aaa";
     equal(actual, expected);
   });
