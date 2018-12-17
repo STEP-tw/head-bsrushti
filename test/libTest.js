@@ -359,11 +359,15 @@ describe("getFileData for tail", () => {
 
 describe("getOptionFuncRefForHead", () => {
   it("should return function reference for extractHeadCharacters if -c option is provided", () => {
-    deepEqual(getOptionFuncRefForHead("-c"), extractHeadCharacters);
+    let actual = getOptionFuncRefForHead("-c");
+    let expected = extractHeadCharacters;
+    deepEqual(actual, expected);
   });
 
   it("should return function reference for extractHeadLines if -n option is provided", () => {
-    deepEqual(getOptionFuncRefForHead("-n"), extractHeadLines);
+    let actual = getOptionFuncRefForHead("-n");
+    let expected = extractHeadLines;
+    deepEqual(actual, expected);
   });
 });
 
