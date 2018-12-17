@@ -69,6 +69,12 @@ describe("makeHeading", () => {
     expected = "==> file1 <==";
     equal(actual, expected);
   });
+
+  it("should return heading when input is not a string", () => {
+    let actual = makeHeader(123);
+    let expected = "==> 123 <==";
+    equal(actual, expected);
+  });
 });
 
 describe("getFileData for head", () => {
