@@ -7,7 +7,6 @@ const {
   getFileData,
   isCountAboveZero,
   isFileExists,
-  extractContents,
   extractTailLines,
   extractTailCharacters,
   getOptionFuncRefForTail,
@@ -400,20 +399,6 @@ describe("isFileExists", () => {
     let actual = isFileExists(fs.existsSync, "file");
     let expected = false;
     equal(actual, expected);
-  });
-});
-
-describe("extractContents returns contents as per the delimiter it has passed", () => {
-  it("should return contents separated by \n for head", () => {
-   let actual = extractContents("first line\nsecond line", "\n", 0, 2);
-   let expected = "first line\nsecond line";
-    deepEqual(actual, expected);
-  });
-
-  it("should return contents separated by character for head", () => {
-    let actual = extractContents("first line\nsecond line", "", 0, 5);
-    let expected = "first";
-    deepEqual(actual, expected);
   });
 });
 

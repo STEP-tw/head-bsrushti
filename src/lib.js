@@ -2,12 +2,7 @@ const { parseInputs } = require("./parseInput.js");
 
 const { fileNotFoundError, getInvalidCountError } = require("./errorLib.js");
 
-const extractContents = function(contents, delimiter, initial, last) {
-  return contents
-    .split(delimiter)
-    .slice(initial, last)
-    .join(delimiter);
-};
+const { extractContents } = require('./util.js');
 
 const extractHeadLines = function(count, contents) {
   return extractContents(contents, "\n", 0, count);
@@ -116,7 +111,6 @@ module.exports = {
   getOptionFuncRefForHead,
   isCountAboveZero,
   isFileExists,
-  extractContents,
   extractTailLines,
   extractTailCharacters,
   getOptionFuncRefForTail,
