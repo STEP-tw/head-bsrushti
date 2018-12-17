@@ -91,7 +91,7 @@ describe("getFilteredContent returns the result as per the mapper function", () 
 
     let actual = getFilteredContent(fs, 2, extractHeadCharacters, 3, "head", "file1");
     let expected = "==> file1 <==\nA\nB";
-    deepEqual( actual, expected);
+    deepEqual(actual, expected);
   });
 
   it("should return file content as per the input for tail", () => {
@@ -119,12 +119,19 @@ describe("getFilteredContent returns the result as per the mapper function", () 
 
 describe("makeHeading gives header along with title", () => {
   it("should return heading with two spaces if empty title(empty string) is given", () => {
-    equal(makeHeader(""), "==>  <==");
+    let actual = makeHeader("");
+    let expected = "==>  <==";
+    equal(actual, expected);
   });
 
   it("should return heading to given title", () => {
-    equal(makeHeader("abc"), "==> abc <==");
-    equal(makeHeader("file1"), "==> file1 <==");
+    let actual = makeHeader("abc");
+    let expected = "==> abc <==";
+    equal(actual, expected);
+
+    actual = makeHeader("file1");
+    expected = "==> file1 <==";
+    equal(actual, expected);
   });
 });
 
