@@ -152,6 +152,18 @@ describe("getFileData for head", () => {
     deepEqual(actual, expected);
   });
 
+  it("should return file contents when only range is provided and no option is given", () => {
+    
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+
+    let actual = getFileData(["-3", "file1"], fs, "head");
+    let expected = ["A\nB\nC"];
+    deepEqual(actual, expected);
+  });
+
   it("should return error message if file doesn't exist for single file", () => {
     
     let fs = {
@@ -272,6 +284,18 @@ describe("getFileData for tail", () => {
       "==> file1 <==\nN\nO\nP",
       "==> file2 <==\nn\no\np"
     ];
+    deepEqual(actual, expected);
+  });
+
+  it("should return file contents when only range is provided and no option is given", () => {
+    
+    let fs = {
+      readFileSync : function(file) { return files[file]; },
+      existsSync : function() { return true;}
+    };
+
+    let actual = getFileData(["-3", "file1"], fs, "tail");
+    let expected = ["N\nO\nP"];
     deepEqual(actual, expected);
   });
 
