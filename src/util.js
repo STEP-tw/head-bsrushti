@@ -21,7 +21,7 @@ const extractCharacters = function(command, count, contents) {
   return charactersAsCommand[command];
 };
 
-const getOptionFuncRef = function(option) {
+const getFunctionRef = function(option) {
     let funcRef = {
       "-c" : extractCharacters,
       "-n" : extractLines
@@ -33,5 +33,5 @@ module.exports = {
   extractContents,
   extractLines,
   extractCharacters,
-  getOptionFuncRef
+  getFunctionRef
 };

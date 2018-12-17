@@ -3,7 +3,7 @@ const {
   extractContents,
   extractLines,
   extractCharacters,
-  getOptionFuncRef
+  getFunctionRef
 } = require("../src/util.js");
 
 describe("extractContents returns contents as per the delimiter it has passed", () => {
@@ -120,15 +120,15 @@ describe("extractCharacters", function() {
   });
 });
 
-describe("getOptionFuncRef", function() {
+describe("getFunctionRef", function() {
   it("should return function reference for -c ", function() {
-    let actual = getOptionFuncRef('-c');
+    let actual = getFunctionRef('-c');
     let expected = extractCharacters;  
     assert.deepEqual(actual,expected)
   });
 
   it("should return function reference for -n ", function() {
-    let actual = getOptionFuncRef('-n');
+    let actual = getFunctionRef('-n');
     let expected = extractLines;  
     assert.deepEqual(actual,expected)
   });

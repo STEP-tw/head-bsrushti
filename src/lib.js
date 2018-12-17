@@ -2,7 +2,7 @@ const { parseInputs } = require("./parseInput.js");
 
 const { fileNotFoundError, getInvalidCountError } = require("./errorLib.js");
 
-const { getOptionFuncRef } = require('./util.js');
+const { getFunctionRef } = require('./util.js');
 
 const getFilteredContent = function(
   fs,
@@ -33,7 +33,7 @@ const makeHeader = function(heading) {
 
 const getFileData = function(params, fs, command) {
   let { option, range, fileNames } = parseInputs(params);
-  let functionRef = getOptionFuncRef(option);
+  let functionRef = getFunctionRef(option);
 
   if (range == 0 && command == "tail") {
     return [];
