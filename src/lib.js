@@ -6,7 +6,7 @@ const { getOptionFuncRef } = require('./util.js');
 
 const getFilteredContent = function(
   fs,
-  fileLength,
+  numberOfFiles,
   functionRef,
   count,
   command,
@@ -16,7 +16,7 @@ const getFilteredContent = function(
     return fileNotFoundError(file, command);
   }
 
-  if (fs.existsSync(file) && fileLength > 1) {
+  if (fs.existsSync(file) && numberOfFiles > 1) {
     return format(fs.readFileSync, functionRef, command, file, count);
   }
 
