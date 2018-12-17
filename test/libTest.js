@@ -16,11 +16,6 @@ const {
   format
 } = require("../src/lib.js");
 
-let fs = {
-  existsSync: file => true,
-  readFileSync: file => "first line\nsecond line"
-};
-
 describe("extractHeadLines returns lines of given text as per the given input", () => {
   it("should return empty string for 0 length input", () => {
     deepEqual(extractHeadLines(0, "first line\nsecond line"), "");
