@@ -431,25 +431,25 @@ describe("extractContents returns contents as per the delimiter it has passed", 
 
 describe("extractTailLines returns lines of given text as per the given input", () => {
   it("should return whole content when 0 count is provided", () => {
-    deepEqual(
-      extractTailLines(0, "first line\nsecond line"),
-      "first line\nsecond line"
-    );
+    let actual = extractTailLines(0, "first line\nsecond line");
+    let expected = "first line\nsecond line";
+    deepEqual(actual, expected);
   });
 
   it("should return one line for count 1", () => {
-    deepEqual(extractTailLines(1, "first line\nsecond line"), "second line");
+    let actual = extractTailLines(1, "first line\nsecond line");
+    let expected = "second line";
+    deepEqual(actual, expected);
   });
 
   it("should return number of lines as per the given count", () => {
-    deepEqual(
-      extractTailLines(2, "first line\nsecond line"),
-      "first line\nsecond line"
-    );
-    deepEqual(
-      extractTailLines(4, "first\nline\nsecond\nline"),
-      "first\nline\nsecond\nline"
-    );
+    let actual = extractTailLines(2, "first line\nsecond line");
+    let expected = "first line\nsecond line";
+    deepEqual(actual, expected);
+
+    actual = extractTailLines(4, "first\nline\nsecond\nline");
+    expected = "first\nline\nsecond\nline";
+    deepEqual(actual, expected);
   });
 });
 
