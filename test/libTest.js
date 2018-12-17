@@ -12,7 +12,7 @@ const {
   extractLines
 } = require('../src/util.js');
 
-describe("getFilteredContent returns the result as per the mapper function", () => {
+describe("getFilteredContent", () => {
 
   let files = {
     file1 : "A\nB\nC\nD\nE\nF\nG\nH\nI\nJ\nK\nL\nM\nN\nO\nP",
@@ -53,7 +53,7 @@ describe("getFilteredContent returns the result as per the mapper function", () 
   });
 });
 
-describe("makeHeading gives header along with title", () => {
+describe("makeHeading", () => {
   it("should return heading with two spaces if empty title(empty string) is given", () => {
     let actual = makeHeader("");
     let expected = "==>  <==";
