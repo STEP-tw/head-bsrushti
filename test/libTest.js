@@ -1,67 +1,17 @@
 const { equal, deepEqual } = require("assert");
 const {
-  extractLinesByHead,
-  extractHeadCharacters,
   getFilteredContent,
   makeHeader,
   getFileData,
   isCountAboveZero,
   isFileExists,
-  extractTailLines,
-  extractTailCharacters,
-  getOptionFuncRefForTail,
-  getOptionFuncRefForHead,
-  getFuncRef,
   format
 } = require("../src/lib.js");
 
-describe("extractLinesByHead returns lines of given text as per the given input", () => {
-  it("should return empty string for 0 length input", () => {
-    let actual = extractLinesByHead(0, "first line\nsecond line");
-    let expected = ""; 
-    deepEqual(actual, expected);
-  });
-
-  it("should return one line for length as input 1", () => {
-    let actual = extractLinesByHead(1, "first line\nsecond line");
-    let expected = "first line";
-    deepEqual(actual, expected);
-  });
-
-  it("should return number of lines as per the given length", () => {
-    let actual = extractLinesByHead(2, "first line\nsecond line");
-    let expected = "first line\nsecond line";
-    deepEqual(actual, expected);
-
-    actual = extractLinesByHead(4, "first\nline\nsecond\nline");
-    expected = "first\nline\nsecond\nline";
-    deepEqual(actual, expected);
-  });
-});
-
-describe("extractHeadCharacters returns characters of given text as per the given input length", () => {
-  it("should return empty string for 0 length input", () => {
-    let actual = extractHeadCharacters(0, "first line\nsecond line");
-    let expected = "";
-    deepEqual(actual, expected);
-  });
-
-  it("should return one character for length as input 1", () => {
-    let actual = extractHeadCharacters(1, "first line\nsecond line");
-    let expected = "f";
-    deepEqual(actual, expected);
-  });
-
-  it("should return number of characters as per the given length", () => {
-    let actual = extractHeadCharacters(2, "first line\nsecond line");
-    let expected = "fi";
-    deepEqual(actual, expected);
-    
-    actual = extractHeadCharacters(5, "first\nline\nsecond\nline");
-    expected = "first";
-    deepEqual(actual, expected);
-  });
-});
+const {
+  extractCharacters,
+  extractLines
+} = require('../src/util.js');
 
 describe("getFilteredContent returns the result as per the mapper function", () => {
 
@@ -76,7 +26,7 @@ describe("getFilteredContent returns the result as per the mapper function", () 
       existsSync : function() { return true;}
     };
 
-    let actual = getFilteredContent(fs, 2, extractHeadCharacters, 3, "head", "file1");
+    let actual = getFilteredContent(fs, 2, extractCharacters, 3, "head", "file1");
     let expected = "==> file1 <==\nA\nB";
     deepEqual(actual, expected);
   });
@@ -87,7 +37,7 @@ describe("getFilteredContent returns the result as per the mapper function", () 
       existsSync : function() { return true;}
     };
 
-    let actual = getFilteredContent(fs, 1, extractTailLines, 3, "tail", "file2");
+    let actual = getFilteredContent(fs, 1, extractLines, 3, "tail", "file2");
     let expected = "n\no\np";
     deepEqual(actual,expected);
   });
@@ -98,7 +48,7 @@ describe("getFilteredContent returns the result as per the mapper function", () 
       existsSync : function() { return false;}
     };
 
-    let actual = getFilteredContent(fs, 1, extractLinesByHead, 1, "tail", "file1");
+    let actual = getFilteredContent(fs, 1, extractLines, 1, "tail", "file1");
     let expected = "tail: file1: No such file or directory";
     deepEqual(actual, expected);
   });
@@ -344,20 +294,6 @@ describe("getFileData for tail", () => {
   });
 });
 
-describe("getOptionFuncRefForHead", () => {
-  it("should return function reference for extractHeadCharacters if -c option is provided", () => {
-    let actual = getOptionFuncRefForHead("-c");
-    let expected = extractHeadCharacters;
-    deepEqual(actual, expected);
-  });
-
-  it("should return function reference for extractLinesByHead if -n option is provided", () => {
-    let actual = getOptionFuncRefForHead("-n");
-    let expected = extractLinesByHead;
-    deepEqual(actual, expected);
-  });
-});
-
 describe("isCountAboveZero", () => {
   it("should return true if given input is greater than zero", () => {
     let actual = isCountAboveZero(3);
@@ -402,94 +338,6 @@ describe("isFileExists", () => {
   });
 });
 
-describe("extractTailLines returns lines of given text as per the given input", () => {
-  it("should return whole content when 0 count is provided", () => {
-    let actual = extractTailLines(0, "first line\nsecond line");
-    let expected = "first line\nsecond line";
-    deepEqual(actual, expected);
-  });
-
-  it("should return one line for count 1", () => {
-    let actual = extractTailLines(1, "first line\nsecond line");
-    let expected = "second line";
-    deepEqual(actual, expected);
-  });
-
-  it("should return number of lines as per the given count", () => {
-    let actual = extractTailLines(2, "first line\nsecond line");
-    let expected = "first line\nsecond line";
-    deepEqual(actual, expected);
-
-    actual = extractTailLines(4, "first\nline\nsecond\nline");
-    expected = "first\nline\nsecond\nline";
-    deepEqual(actual, expected);
-  });
-});
-
-describe("extractTailCharacters returns characters of given text as per the given input length", () => {
-  it("should return whole string for 0 length input", () => {
-    let actual = extractTailCharacters(0, "first line\nsecond line");
-    let expected = "first line\nsecond line";
-    deepEqual(actual, expected);
-  });
-
-  it("should return one character for length as input 1", () => {
-    let actual = extractTailCharacters(1, "first line\nsecond line");
-    let expected = "e";
-    deepEqual(actual, expected);
-  });
-
-  it("should return number of characters as per the given length", () => {
-    let actual = extractTailCharacters(2, "first line\nsecond line");
-    let expected = "ne";
-    deepEqual(actual, expected);
-
-    actual = extractTailCharacters(5, "first\nline\nsecond\nline");
-    expected = "\nline";
-    deepEqual(actual, expected);
-  });
-});
-
-describe("getOptionFuncRefForTail", () => {
-  it("should return function reference for extractHeadCharacters if -c option is provided", () => {
-    let actual = getOptionFuncRefForTail("-c");
-    let expected = extractTailCharacters; 
-    deepEqual(actual, expected);
-  });
-
-  it("should return function reference for extractLinesByHead if -n option is provided", () => {
-    let actual = getOptionFuncRefForTail("-n");
-    let expected = extractTailLines;
-    deepEqual(actual, expected);
-  });
-});
-
-describe("getFuncRef", () => {
-  it("should return function reference for head command with option -n", () => {
-    let actual = getFuncRef("head", "-n");
-    let expected = extractLinesByHead;
-    deepEqual(actual, expected);
-  });
-
-  it("should return function reference for head command with option -c", () => {
-    let actual = getFuncRef("head", "-c");
-    let expected = extractHeadCharacters;
-    deepEqual(actual, expected);
-  });
-
-  it("should return function reference for tail command with option -n", () => {
-    let actual = getFuncRef("tail", "-n");
-    let expected = extractTailLines;
-    deepEqual(actual, expected);
-  });
-
-  it("should return function reference for tail command with option -c", () => {
-    let actual = getFuncRef("tail", "-c");
-    let expected = extractTailCharacters;
-    deepEqual(actual, expected);
-  });
-});
-
 describe("format", function() {
   let fs = {
     readline: function() {
@@ -499,14 +347,14 @@ describe("format", function() {
 
   it("should add header and return content of given file", function() {
     let fileName = "words";
-    let actual = format(fs.readline, extractHeadCharacters, fileName, 3);
+    let actual = format(fs.readline, extractCharacters, 'head', fileName, 3);
     let expected = "==> words <==\none";
     
     deepEqual(actual, expected);
 
     fileName = "numbers";
     expected = "==> numbers <==\ntwo\nthree";
-    actual = format(fs.readline, extractTailLines, fileName, 2);
+    actual = format(fs.readline, extractLines, 'tail', fileName, 2);
     deepEqual(actual, expected);
   });
 });
