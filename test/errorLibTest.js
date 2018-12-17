@@ -1,4 +1,4 @@
-const { equal, deepEqual } = require("assert");
+const { equal } = require("assert");
 const {
   invalidCountError,
   fileNotFoundError,
