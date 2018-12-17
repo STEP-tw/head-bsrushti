@@ -493,19 +493,27 @@ describe("getOptionFuncRefForTail", () => {
 
 describe("getFuncRef", () => {
   it("should return function reference for head command with option -n", () => {
-    deepEqual(getFuncRef("head", "-n"), extractHeadLines);
+    let actual = getFuncRef("head", "-n");
+    let expected = extractHeadLines;
+    deepEqual(actual, expected);
   });
 
   it("should return function reference for head command with option -c", () => {
-    deepEqual(getFuncRef("head", "-c"), extractHeadCharacters);
+    let actual = getFuncRef("head", "-c");
+    let expected = extractHeadCharacters;
+    deepEqual(actual, expected);
   });
 
   it("should return function reference for tail command with option -n", () => {
-    deepEqual(getFuncRef("tail", "-n"), extractTailLines);
+    let actual = getFuncRef("tail", "-n");
+    let expected = extractTailLines;
+    deepEqual(actual, expected);
   });
 
   it("should return function reference for tail command with option -c", () => {
-    deepEqual(getFuncRef("tail", "-c"), extractTailCharacters);
+    let actual = getFuncRef("tail", "-c");
+    let expected = extractTailCharacters;
+    deepEqual(actual, expected);
   });
 });
 
