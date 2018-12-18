@@ -2,7 +2,11 @@ const { parseInputs } = require("./parseInput.js");
 
 const { fileNotFoundError, getInvalidCountError } = require("./errorLib.js");
 
-const { getFunctionRef, isCountAboveZero } = require("./util.js");
+const {
+  isCountAboveZero,
+  extractCharacters,
+  extractLines
+} = require("./util.js");
 
 const getFilteredContent = function(
   fs,
@@ -33,6 +37,14 @@ const format = function(reader, functionRef, command, fileName, range) {
 
 const makeHeader = function(heading) {
   return "==> " + heading + " <==";
+};
+
+const getFunctionRef = function(option) {
+  let funcRef = {
+    "-c": extractCharacters,
+    "-n": extractLines
+  };
+  return funcRef[option];
 };
 
 const getFileData = function(params, fs, command) {
@@ -76,5 +88,6 @@ module.exports = {
   isFileExists,
   format,
   head,
-  tail
+  tail,
+  getFunctionRef
 };

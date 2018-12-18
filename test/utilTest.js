@@ -3,7 +3,6 @@ const {
   extractContents,
   extractLines,
   extractCharacters,
-  getFunctionRef,
   isCountAboveZero
 } = require("../src/util.js");
 
@@ -142,20 +141,6 @@ describe("extractCharacters", function() {
       expected = "\nline";
       assert.deepEqual(actual, expected);
     });
-  });
-});
-
-describe("getFunctionRef", function() {
-  it("should return function reference for -c ", function() {
-    let actual = getFunctionRef("-c");
-    let expected = extractCharacters;
-    assert.deepEqual(actual, expected);
-  });
-
-  it("should return function reference for -n ", function() {
-    let actual = getFunctionRef("-n");
-    let expected = extractLines;
-    assert.deepEqual(actual, expected);
   });
 });
 

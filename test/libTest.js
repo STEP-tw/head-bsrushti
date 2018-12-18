@@ -5,7 +5,8 @@ const {
   isFileExists,
   format,
   head,
-  tail
+  tail,
+  getFunctionRef
 } = require("../src/lib.js");
 
 const { extractCharacters, extractLines } = require("../src/util.js");
@@ -432,6 +433,20 @@ describe("format", function() {
     fileName = "numbers";
     expected = "==> numbers <==\n4\n5";
     actual = format(fs.readFileSync, extractLines, "tail", fileName, 2);
+    assert.deepEqual(actual, expected);
+  });
+});
+
+describe.only("getFunctionRef", function() {
+  it("should return function reference for -c ", function() {
+    let actual = getFunctionRef("-c");
+    let expected = extractCharacters;
+    assert.deepEqual(actual, expected);
+  });
+
+  it("should return function reference for -n ", function() {
+    let actual = getFunctionRef("-n");
+    let expected = extractLines;
     assert.deepEqual(actual, expected);
   });
 });
