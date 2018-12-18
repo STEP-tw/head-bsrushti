@@ -2,6 +2,8 @@ const { parseInputs } = require("./parseInput.js");
 
 const { fileNotFoundError, getInvalidCountError } = require("./errorLib.js");
 
+const { addHeading } = require('./format');
+
 const {
   isCountAboveZero,
   extractCharacters,
@@ -25,18 +27,6 @@ const getFilteredContent = function(
   }
 
   return functionRef(command, range, fs.readFileSync(fileName, "utf8"));
-};
-
-const addHeading = function(reader, functionRef, command, fileName, range) {
-  return (
-    makeHeader(fileName) +
-    "\n" +
-    functionRef(command, range, reader(fileName, "utf8"))
-  );
-};
-
-const makeHeader = function(heading) {
-  return "==> " + heading + " <==";
 };
 
 const getFunctionRef = function(option) {
@@ -83,7 +73,7 @@ const isFileExists = function(existsSync, fileName) {
 
 module.exports = {
   getFilteredContent,
-  makeHeader,
+  addHeading,
   isCountAboveZero,
   isFileExists,
   addHeading,
