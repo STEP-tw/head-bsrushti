@@ -51,6 +51,21 @@ describe("getFilteredContent", () => {
     assert.deepEqual(actual, expected);
   });
 
+  it("should return file content as per the input for head", () => {
+    let fs = {
+      readFileSync: function(file) {
+        return files[file];
+      },
+      existsSync: function() {
+        return true;
+      }
+    };
+
+    let actual = getFilteredContent(fs, 1, extractLines, 3, "head", "file2");
+    let expected = "a\nb\nc";
+    assert.deepEqual(actual, expected);
+  });
+
   it("should return error when file doesn't exist", () => {
     let fs = {
       readFileSync: function(file) {
