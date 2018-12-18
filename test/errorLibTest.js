@@ -47,9 +47,15 @@ describe("getInvalidCountError", () => {
 });
 
 describe("fileNotFoundError", () => {
-  it("should return error message if it not finds the file", () => {
+  it("should return error message if it not finds the file for head", () => {
     let actual = fileNotFoundError("file", "head");
     let expected = "head: file: No such file or directory";
+    assert.equal(actual, expected);
+  });
+
+  it("should return error message if it not finds the file for tail", () => {
+    let actual = fileNotFoundError("file", "tail");
+    let expected = "tail: file: No such file or directory";
     assert.equal(actual, expected);
   });
 });
