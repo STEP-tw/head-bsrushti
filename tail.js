@@ -1,9 +1,9 @@
-const { getFileData } = require("./src/lib.js");
+const { tail } = require("./src/lib.js");
 const fs = require("fs");
 
 const main = function() {
   let params = process.argv;
-  console.log(getFileData(params.slice(2), fs, "tail").join("\n"));
+  console.log(tail(params.slice(2), fs));
 };
 
 main();
