@@ -2,7 +2,7 @@ const { parseInputs } = require("./parseInput.js");
 
 const { fileNotFoundError, getInvalidCountError } = require("./errorLib.js");
 
-const { addHeading } = require('./format');
+const { addHeading } = require("./format");
 
 const {
   isCountAboveZero,
@@ -67,15 +67,11 @@ const head = function(params, fs) {
 const tail = function(params, fs) {
   return getFileData(params, fs, "tail").join("\n");
 };
-const isFileExists = function(existsSync, fileName) {
-  return existsSync(fileName);
-};
 
 module.exports = {
   getFilteredContent,
   addHeading,
   isCountAboveZero,
-  isFileExists,
   addHeading,
   head,
   tail,

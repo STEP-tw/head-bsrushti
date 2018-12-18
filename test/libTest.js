@@ -1,7 +1,6 @@
 const assert = require("assert");
 const {
   getFilteredContent,
-  isFileExists,
   head,
   tail,
   getFunctionRef
@@ -351,32 +350,6 @@ describe("tail", () => {
       "tail: file1: No such file or directory\n" +
       "tail: file2: No such file or directory";
     assert.deepEqual(actual, expected);
-  });
-});
-
-describe("isFileExists", () => {
-  it("should return true if it finds the file", () => {
-    let fs = {
-      existsSync: function() {
-        return true;
-      }
-    };
-
-    let actual = isFileExists(fs.existsSync, "file");
-    let expected = true;
-    assert.equal(actual, expected);
-  });
-
-  it("should return false if it can't find the file", () => {
-    let fs = {
-      existsSync: function() {
-        return false;
-      }
-    };
-
-    let actual = isFileExists(fs.existsSync, "file");
-    let expected = false;
-    assert.equal(actual, expected);
   });
 });
 
