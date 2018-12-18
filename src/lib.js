@@ -21,13 +21,13 @@ const getFilteredContent = function(
   }
 
   if (fs.existsSync(fileName) && numberOfFiles > 1) {
-    return format(fs.readFileSync, functionRef, command, fileName, range);
+    return addHeading(fs.readFileSync, functionRef, command, fileName, range);
   }
 
   return functionRef(command, range, fs.readFileSync(fileName, "utf8"));
 };
 
-const format = function(reader, functionRef, command, fileName, range) {
+const addHeading = function(reader, functionRef, command, fileName, range) {
   return (
     makeHeader(fileName) +
     "\n" +
@@ -86,7 +86,7 @@ module.exports = {
   makeHeader,
   isCountAboveZero,
   isFileExists,
-  format,
+  addHeading,
   head,
   tail,
   getFunctionRef

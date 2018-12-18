@@ -3,7 +3,7 @@ const {
   getFilteredContent,
   makeHeader,
   isFileExists,
-  format,
+  addHeading,
   head,
   tail,
   getFunctionRef
@@ -406,7 +406,7 @@ describe("isFileExists", () => {
   });
 });
 
-describe("format", function() {
+describe("addHeading", function() {
   let files = {
     words: "one\ntwo\nthree",
     numbers: "1\n2\n3\n4\n5"
@@ -420,7 +420,7 @@ describe("format", function() {
 
   it("should add header and return content of given file", function() {
     let fileName = "words";
-    let actual = format(
+    let actual = addHeading(
       fs.readFileSync,
       extractCharacters,
       "head",
@@ -432,12 +432,12 @@ describe("format", function() {
 
     fileName = "numbers";
     expected = "==> numbers <==\n4\n5";
-    actual = format(fs.readFileSync, extractLines, "tail", fileName, 2);
+    actual = addHeading(fs.readFileSync, extractLines, "tail", fileName, 2);
     assert.deepEqual(actual, expected);
   });
 });
 
-describe.only("getFunctionRef", function() {
+describe("getFunctionRef", function() {
   it("should return function reference for -c ", function() {
     let actual = getFunctionRef("-c");
     let expected = extractCharacters;
