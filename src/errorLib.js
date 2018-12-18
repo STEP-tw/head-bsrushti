@@ -22,5 +22,5 @@ const fileNotFoundError = function(file, command) {
 
 module.exports = {
   getInvalidCountError,
-  fileNotFoundError,
+  fileNotFoundError
 };

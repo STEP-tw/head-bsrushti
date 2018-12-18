@@ -2,9 +2,10 @@ const assert = require("assert");
 const {
   getFilteredContent,
   makeHeader,
-  getFileData,
   isFileExists,
-  format
+  format,
+  head,
+  tail
 } = require("../src/lib.js");
 
 const { extractCharacters, extractLines } = require("../src/util.js");
@@ -92,7 +93,7 @@ describe("makeHeading", () => {
   });
 });
 
-describe("getFileData for head", () => {
+describe("head", () => {
   let files = {
     file1: "A\nB\nC\nD\nE\nF\nG\nH\nI\nJ\nK\nL\nM\nN\nO\nP",
     file2: "a\nb\nc\nd\ne\nf\ng\nh\ni\nj\nk\nl\nm\nn\no\np",
@@ -109,8 +110,8 @@ describe("getFileData for head", () => {
       }
     };
 
-    let actual = getFileData(["-c3", "file3"], fs, "head");
-    let expected = ["fir"];
+    let actual = head(["-c3", "file3"], fs);
+    let expected = "fir";
     assert.deepEqual(actual, expected);
   });
 
@@ -124,8 +125,8 @@ describe("getFileData for head", () => {
       }
     };
 
-    let actual = getFileData(["-n2", "file1"], fs, "head");
-    let expected = ["A\nB"];
+    let actual = head(["-n2", "file1"], fs);
+    let expected = "A\nB";
     assert.deepEqual(actual, expected);
   });
 
@@ -139,8 +140,8 @@ describe("getFileData for head", () => {
       }
     };
 
-    let actual = getFileData(["file1"], fs, "head");
-    let expected = ["A\nB\nC\nD\nE\nF\nG\nH\nI\nJ"];
+    let actual = head(["file1"], fs);
+    let expected = "A\nB\nC\nD\nE\nF\nG\nH\nI\nJ";
     assert.deepEqual(actual, expected);
   });
 
@@ -154,8 +155,8 @@ describe("getFileData for head", () => {
       }
     };
 
-    let actual = getFileData(["-n", "file2"], fs, "head");
-    let expected = ["head: illegal line count -- file2"];
+    let actual = head(["-n", "file2"], fs);
+    let expected = "head: illegal line count -- file2";
     assert.deepEqual(actual, expected);
   });
 
@@ -169,12 +170,12 @@ describe("getFileData for head", () => {
       }
     };
 
-    let actual = getFileData(["-c3", "file1", "file2"], fs, "head");
-    let expected = ["==> file1 <==\nA\nB", "==> file2 <==\na\nb"];
+    let actual = head(["-c3", "file1", "file2"], fs);
+    let expected = "==> file1 <==\nA\nB\n==> file2 <==\na\nb";
     assert.deepEqual(actual, expected);
 
-    actual = getFileData(["-n3", "file1", "file2"], fs, "head");
-    expected = ["==> file1 <==\nA\nB\nC", "==> file2 <==\na\nb\nc"];
+    actual = head(["-n3", "file1", "file2"], fs);
+    expected = "==> file1 <==\nA\nB\nC\n==> file2 <==\na\nb\nc";
     assert.deepEqual(actual, expected);
   });
 
@@ -188,8 +189,8 @@ describe("getFileData for head", () => {
       }
     };
 
-    let actual = getFileData(["-3", "file1"], fs, "head");
-    let expected = ["A\nB\nC"];
+    let actual = head(["-3", "file1"], fs);
+    let expected = "A\nB\nC";
     assert.deepEqual(actual, expected);
   });
 
@@ -200,8 +201,8 @@ describe("getFileData for head", () => {
       }
     };
 
-    let actual = getFileData(["-c3", "file1"], fs, "head");
-    let expected = ["head: file1: No such file or directory"];
+    let actual = head(["-c3", "file1"], fs);
+    let expected = "head: file1: No such file or directory";
     assert.deepEqual(actual, expected);
   });
 
@@ -212,16 +213,15 @@ describe("getFileData for head", () => {
       }
     };
 
-    let actual = getFileData(["-c3", "file1", "file2"], fs, "head");
-    let expected = [
-      "head: file1: No such file or directory",
-      "head: file2: No such file or directory"
-    ];
+    let actual = head(["-c3", "file1", "file2"], fs);
+    let expected =
+      "head: file1: No such file or directory\n" +
+      "head: file2: No such file or directory";
     assert.deepEqual(actual, expected);
   });
 });
 
-describe("getFileData for tail", () => {
+describe("tail", () => {
   let files = {
     file1: "A\nB\nC\nD\nE\nF\nG\nH\nI\nJ\nK\nL\nM\nN\nO\nP",
     file2: "a\nb\nc\nd\ne\nf\ng\nh\ni\nj\nk\nl\nm\nn\no\np",
@@ -238,8 +238,8 @@ describe("getFileData for tail", () => {
       }
     };
 
-    let actual = getFileData(["-c0", "file1"], fs, "tail");
-    let expected = [];
+    let actual = tail(["-c0", "file1"], fs);
+    let expected = "";
     assert.deepEqual(actual, expected);
   });
 
@@ -253,8 +253,8 @@ describe("getFileData for tail", () => {
       }
     };
 
-    let actual = getFileData(["-n0", "file1"], fs, "tail");
-    let expected = [];
+    let actual = tail(["-n0", "file1"], fs);
+    let expected = "";
     assert.deepEqual(actual, expected);
   });
 
@@ -268,8 +268,8 @@ describe("getFileData for tail", () => {
       }
     };
 
-    let actual = getFileData(["-c3", "file3"], fs, "tail");
-    let expected = ["ine"];
+    let actual = tail(["-c3", "file3"], fs);
+    let expected = "ine";
     assert.deepEqual(actual, expected);
   });
 
@@ -283,8 +283,8 @@ describe("getFileData for tail", () => {
       }
     };
 
-    let actual = getFileData(["-n2", "file1"], fs, "tail");
-    let expected = ["O\nP"];
+    let actual = tail(["-n2", "file1"], fs);
+    let expected = "O\nP";
     assert.deepEqual(actual, expected);
   });
 
@@ -298,8 +298,8 @@ describe("getFileData for tail", () => {
       }
     };
 
-    let actual = getFileData(["file1"], fs, "tail");
-    let expected = ["G\nH\nI\nJ\nK\nL\nM\nN\nO\nP"];
+    let actual = tail(["file1"], fs);
+    let expected = "G\nH\nI\nJ\nK\nL\nM\nN\nO\nP";
     assert.deepEqual(actual, expected);
   });
 
@@ -313,8 +313,8 @@ describe("getFileData for tail", () => {
       }
     };
 
-    let actual = getFileData(["-n", "file1"], fs, "tail");
-    let expected = ["tail: illegal offset -- file1"];
+    let actual = tail(["-n", "file1"], fs);
+    let expected = "tail: illegal offset -- file1";
     assert.deepEqual(actual, expected);
   });
 
@@ -328,12 +328,12 @@ describe("getFileData for tail", () => {
       }
     };
 
-    let actual = getFileData(["-c3", "file2", "file3"], fs, "tail");
-    let expected = ["==> file2 <==\no\np", "==> file3 <==\nine"];
+    let actual = tail(["-c3", "file2", "file3"], fs);
+    let expected = "==> file2 <==\no\np\n==> file3 <==\nine";
     assert.deepEqual(actual, expected);
 
-    actual = getFileData(["-n3", "file1", "file2"], fs, "tail");
-    expected = ["==> file1 <==\nN\nO\nP", "==> file2 <==\nn\no\np"];
+    actual = tail(["-n3", "file1", "file2"], fs, "tail");
+    expected = "==> file1 <==\nN\nO\nP\n==> file2 <==\nn\no\np";
     assert.deepEqual(actual, expected);
   });
 
@@ -347,8 +347,8 @@ describe("getFileData for tail", () => {
       }
     };
 
-    let actual = getFileData(["-3", "file1"], fs, "tail");
-    let expected = ["N\nO\nP"];
+    let actual = tail(["-3", "file1"], fs);
+    let expected = "N\nO\nP";
     assert.deepEqual(actual, expected);
   });
 
@@ -359,8 +359,8 @@ describe("getFileData for tail", () => {
       }
     };
 
-    let actual = getFileData(["-c3", "file1"], fs, "tail");
-    let expected = ["tail: file1: No such file or directory"];
+    let actual = tail(["-c3", "file1"], fs);
+    let expected = "tail: file1: No such file or directory";
     assert.deepEqual(actual, expected);
   });
 
@@ -371,11 +371,10 @@ describe("getFileData for tail", () => {
       }
     };
 
-    let actual = getFileData(["-c3", "file1", "file2"], fs, "tail");
-    let expected = [
-      "tail: file1: No such file or directory",
-      "tail: file2: No such file or directory"
-    ];
+    let actual = tail(["-c3", "file1", "file2"], fs);
+    let expected = 
+      "tail: file1: No such file or directory\n" +
+      "tail: file2: No such file or directory";
     assert.deepEqual(actual, expected);
   });
 });
@@ -407,21 +406,26 @@ describe("isFileExists", () => {
 });
 
 describe("format", function() {
-
   let files = {
     words: "one\ntwo\nthree",
     numbers: "1\n2\n3\n4\n5"
   };
- 
+
   let fs = {
     readFileSync: function(file) {
       return files[file];
-    },
+    }
   };
 
   it("should add header and return content of given file", function() {
     let fileName = "words";
-    let actual = format(fs.readFileSync, extractCharacters, "head", fileName, 3);
+    let actual = format(
+      fs.readFileSync,
+      extractCharacters,
+      "head",
+      fileName,
+      3
+    );
     let expected = "==> words <==\none";
     assert.deepEqual(actual, expected);
 

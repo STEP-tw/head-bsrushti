@@ -58,6 +58,13 @@ const getFileData = function(params, fs, command) {
   return fileNames.map(getContent);
 };
 
+const head = function(params, fs) {
+  return getFileData(params, fs, "head").join("\n");
+};
+
+const tail = function(params, fs) {
+  return getFileData(params, fs, "tail").join("\n");
+};
 const isFileExists = function(existsSync, fileName) {
   return existsSync(fileName);
 };
@@ -65,8 +72,9 @@ const isFileExists = function(existsSync, fileName) {
 module.exports = {
   getFilteredContent,
   makeHeader,
-  getFileData,
   isCountAboveZero,
   isFileExists,
-  format
+  format,
+  head,
+  tail
 };
