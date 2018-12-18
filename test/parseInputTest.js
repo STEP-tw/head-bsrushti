@@ -51,7 +51,7 @@ describe("isOptionWithCount", function() {
   });
 
   it("should return false if given argument has not a number after hyphen with option", function() {
-    let actual = isOptionWithCount("-n")
+    let actual = isOptionWithCount("-n");
     let expected = false;
     assert.deepEqual(actual, expected);
   });
@@ -92,10 +92,20 @@ describe("parseInputs", function() {
     assert.deepEqual(actual, expected);
   });
 
-  it("should classify params when option is given with range", function() {
+  it("should classify params when option is '-n' given with range", function() {
     let actual = parseInputs(["-n5", "words"]);
     let expected = {
       option: "-n",
+      range: 5,
+      fileNames: ["words"]
+    };
+    assert.deepEqual(actual, expected);
+  });
+
+  it("should classify params when option is '-c' given with range", function() {
+    let actual = parseInputs(["-c5", "words"]);
+    let expected = {
+      option: "-c",
       range: 5,
       fileNames: ["words"]
     };
@@ -108,6 +118,16 @@ describe("parseInputs", function() {
       option: "-n",
       range: 10,
       fileNames: ["words"]
+    };
+    assert.deepEqual(actual, expected);
+  });
+
+  it("should classify params when number option is given and more than one fileName are given", function() {
+    let actual = parseInputs(["-3", "words", "numbers"]);
+    let expected = {
+      option: "-n",
+      range: 3,
+      fileNames: ["words", "numbers"]
     };
     assert.deepEqual(actual, expected);
   });
