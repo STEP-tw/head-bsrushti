@@ -14,16 +14,17 @@ describe("getFilteredContent", () => {
     file2: "a\nb\nc\nd\ne\nf\ng\nh\ni\nj\nk\nl\nm\nn\no\np"
   };
 
-  it("should return file content with header if more than one are given", () => {
-    let fs = {
-      readFileSync: function(file) {
-        return files[file];
-      },
-      existsSync: function() {
-        return true;
-      }
-    };
+  let fs = {
+    readFileSync: function(file) {
+      return files[file];
+    },
+    
+    existsSync: function(file) {
+      return Object.keys(files).includes(file);
+    }
+  };
 
+  it("should return file content with header if more than one are given", () => {
     let actual = getFilteredContent(
       fs,
       2,
@@ -37,47 +38,20 @@ describe("getFilteredContent", () => {
   });
 
   it("should return file content as per the input for tail", () => {
-    let fs = {
-      readFileSync: function(file) {
-        return files[file];
-      },
-      existsSync: function() {
-        return true;
-      }
-    };
-
     let actual = getFilteredContent(fs, 1, extractLines, 3, "tail", "file2");
     let expected = "n\no\np";
     assert.deepEqual(actual, expected);
   });
 
   it("should return file content as per the input for head", () => {
-    let fs = {
-      readFileSync: function(file) {
-        return files[file];
-      },
-      existsSync: function() {
-        return true;
-      }
-    };
-
     let actual = getFilteredContent(fs, 1, extractLines, 3, "head", "file2");
     let expected = "a\nb\nc";
     assert.deepEqual(actual, expected);
   });
 
   it("should return error when file doesn't exist", () => {
-    let fs = {
-      readFileSync: function(file) {
-        return files[file];
-      },
-      existsSync: function() {
-        return false;
-      }
-    };
-
-    let actual = getFilteredContent(fs, 1, extractLines, 1, "tail", "file1");
-    let expected = "tail: file1: No such file or directory";
+    let actual = getFilteredContent(fs, 1, extractLines, 1, "tail", "file3");
+    let expected = "tail: file3: No such file or directory";
     assert.deepEqual(actual, expected);
   });
 });
@@ -361,7 +335,7 @@ describe("tail", () => {
     };
 
     let actual = tail(["-c3", "file1", "file2"], fs);
-    let expected = 
+    let expected =
       "tail: file1: No such file or directory\n" +
       "tail: file2: No such file or directory";
     assert.deepEqual(actual, expected);
