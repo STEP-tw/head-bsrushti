@@ -1,9 +1,5 @@
-const addHeading = function(reader, functionRef, command, fileName, range) {
-  return (
-    makeHeader(fileName) +
-    "\n" +
-    functionRef(command, range, reader(fileName, "utf8"))
-  );
+const addHeading = function(fileName, content) {
+  return makeHeader(fileName) + "\n" + content;
 };
 
 const makeHeader = function(heading) {

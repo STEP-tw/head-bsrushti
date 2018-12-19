@@ -23,9 +23,10 @@ const getFilteredContent = function(
   }
 
   if (fs.existsSync(fileName) && numberOfFiles > 1) {
-    return addHeading(fs.readFileSync, functionRef, command, fileName, range);
+    let content = functionRef(command, range, fs.readFileSync(fileName,"utf8"));
+    return addHeading(fileName, content);
   }
-
+                
   return functionRef(command, range, fs.readFileSync(fileName, "utf8"));
 };
 

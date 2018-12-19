@@ -8,27 +8,15 @@ describe("addHeading", function() {
     numbers: "1\n2\n3\n4\n5"
   };
 
-  let fs = {
-    readFileSync: function(file) {
-      return files[file];
-    }
-  };
-
   it("should add header and return content of given file", function() {
     let fileName = "words";
-    let actual = addHeading(
-      fs.readFileSync,
-      extractCharacters,
-      "head",
-      fileName,
-      3
-    );
-    let expected = "==> words <==\none";
+    let actual = addHeading(fileName, files[fileName]);
+    let expected = "==> words <==\none\ntwo\nthree";
     assert.deepEqual(actual, expected);
 
     fileName = "numbers";
-    expected = "==> numbers <==\n4\n5";
-    actual = addHeading(fs.readFileSync, extractLines, "tail", fileName, 2);
+    expected = "==> numbers <==\n1\n2\n3\n4\n5";
+    actual = addHeading(fileName, files[fileName]);
     assert.deepEqual(actual, expected);
   });
 });
