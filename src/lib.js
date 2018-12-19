@@ -23,25 +23,27 @@ const getFilteredContent = function(
   }
 
   if (fs.existsSync(fileName) && numberOfFiles > 1) {
-    let content = functionRef(command, range, fs.readFileSync(fileName,"utf8"));
+    let content = functionRef(
+      command,
+      range,
+      fs.readFileSync(fileName, "utf8")
+    );
     return addHeading(fileName, content);
   }
-                
+
   return functionRef(command, range, fs.readFileSync(fileName, "utf8"));
 };
 
 const getFunctionRef = function(option) {
-  let funcRef = {
+  return {
     "-c": extractCharacters,
     "-n": extractLines
-  };
-  return funcRef[option];
+  }[option];
 };
 
 const getFileData = function(params, fs, command) {
   let { option, range, fileNames } = parseInputs(params);
   let functionRef = getFunctionRef(option);
-
   if (range == 0 && command == "tail") {
     return [];
   }
@@ -50,15 +52,15 @@ const getFileData = function(params, fs, command) {
     return [getInvalidCountError(option, range, command)];
   }
 
-  let getContent = getFilteredContent.bind(
+  return fileNames.map(
+    getFilteredContent.bind(
     null,
     fs,
     fileNames.length,
     functionRef,
     range,
     command
-  );
-  return fileNames.map(getContent);
+  ));
 };
 
 const head = function(params, fs) {

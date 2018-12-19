@@ -1,5 +1,4 @@
 const assert = require("assert");
-const { extractCharacters, extractLines } = require("../src/util.js");
 const { makeHeader, addHeading } = require("../src/format.js");
 
 describe("addHeading", function() {
