@@ -7,7 +7,7 @@ const {
 } = require("../src/util.js");
 
 describe("extractContents returns contents as per the delimiter it has passed", () => {
-  it("should return contents separated by \n for head", () => {
+  it("should return contents separated by \\n for head", () => {
     let actual = extractContents("first line\nsecond line", "\n", 0, 2);
     let expected = "first line\nsecond line";
     assert.deepEqual(actual, expected);
