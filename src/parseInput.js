@@ -16,12 +16,12 @@ const isOptionWithoutCount = function(option) {
 
 const parseInputs = function(params) {
   const firstArg = params[0];
-  const defaultOptions = { option: "-n", range: 10, fileNames: params };
+  const defaultOptions = { option: "-n", count: 10, fileNames: params };
   
   if (isNumberOption(firstArg)) {
     return {
       option: "-n",
-      range: firstArg.slice(1),
+      count: firstArg.slice(1),
       fileNames: params.slice(1)
     };
   }
@@ -29,7 +29,7 @@ const parseInputs = function(params) {
   if (isOptionWithoutCount(params[0])) {
     return {
       option: firstArg.slice(0, 2),
-      range: params[1],
+      count: params[1],
       fileNames: params.slice(2)
     };
   }
@@ -37,7 +37,7 @@ const parseInputs = function(params) {
   if (isOptionWithCount(firstArg)) {
     return {
       option: firstArg.slice(0, 2),
-      range: firstArg.substr(2),
+      count: firstArg.substr(2),
       fileNames: params.slice(1)
     };
   }

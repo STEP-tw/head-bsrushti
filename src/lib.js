@@ -18,7 +18,7 @@ const getFilteredContent = function(
   fs,
   numberOfFiles,
   functionRef,
-  range,
+  count,
   command,
   fileName
 ) {
@@ -29,11 +29,11 @@ const getFilteredContent = function(
   if (numberOfFiles > 1) {
     return addHeading(
       fileName,
-      functionRef(command, range, readFile(fs.readFileSync, fileName))
+      functionRef(command, count, readFile(fs.readFileSync, fileName))
     );
   }
 
-  return functionRef(command, range, readFile(fs.readFileSync, fileName));
+  return functionRef(command, count, readFile(fs.readFileSync, fileName));
 };
 
 const getFunctionRef = function(option) {
@@ -44,14 +44,14 @@ const getFunctionRef = function(option) {
 };
 
 const getFileData = function(params, fs, command) {
-  let { option, range, fileNames } = parseInputs(params);
+  let { option, count, fileNames } = parseInputs(params);
   let functionRef = getFunctionRef(option);
-  if (range == 0 && command == "tail") {
+  if (count == 0 && command == "tail") {
     return [];
   }
 
-  if (!isCountAboveZero(range)) {
-    return [getInvalidCountError(option, range, command)];
+  if (!isCountAboveZero(count)) {
+    return [getInvalidCountError(option, count, command)];
   }
 
   return fileNames.map(
@@ -60,7 +60,7 @@ const getFileData = function(params, fs, command) {
       fs,
       fileNames.length,
       functionRef,
-      range,
+      count,
       command
     )
   );

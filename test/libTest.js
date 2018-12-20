@@ -107,7 +107,7 @@ describe("head", () => {
     assert.deepEqual(actual, expected);
   });
 
-  it("should return file contents when only range is provided and no option is given", () => {
+  it("should return file contents when only count is provided and no option is given", () => {
     let actual = head(["-3", "file1"], fs);
     let expected = "A\nB\nC";
     assert.deepEqual(actual, expected);
@@ -191,7 +191,7 @@ describe("tail", () => {
     assert.deepEqual(actual, expected);
   });
 
-  it("should return file contents when only range is provided and no option is given", () => {
+  it("should return file contents when only count is provided and no option is given", () => {
     let actual = tail(["-3", "file1"], fs);
     let expected = "N\nO\nP";
     assert.deepEqual(actual, expected);

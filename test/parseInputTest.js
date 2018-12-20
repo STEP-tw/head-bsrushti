@@ -58,7 +58,7 @@ describe("isOptionWithCount", function() {
 });
 
 describe("isOptionWithoutCount", function() {
-  it("should return true if given argument has only valid option without range", function() {
+  it("should return true if given argument has only valid option without count", function() {
     let actual = isOptionWithoutCount("-n");
     let expected = true;
     assert.deepEqual(actual, expected);
@@ -76,37 +76,37 @@ describe("parseInputs", function() {
     let actual = parseInputs(["-3", "words"]);
     let expected = {
       option: "-n",
-      range: 3,
+      count: 3,
       fileNames: ["words"]
     };
     assert.deepEqual(actual, expected);
   });
 
-  it("should classify params when space is given between option and range", function() {
+  it("should classify params when space is given between option and count", function() {
     let actual = parseInputs(["-n", "10", "words"]);
     let expected = {
       option: "-n",
-      range: 10,
+      count: 10,
       fileNames: ["words"]
     };
     assert.deepEqual(actual, expected);
   });
 
-  it("should classify params when option is '-n' given with range", function() {
+  it("should classify params when option is '-n' given with count", function() {
     let actual = parseInputs(["-n5", "words"]);
     let expected = {
       option: "-n",
-      range: 5,
+      count: 5,
       fileNames: ["words"]
     };
     assert.deepEqual(actual, expected);
   });
 
-  it("should classify params when option is '-c' given with range", function() {
+  it("should classify params when option is '-c' given with count", function() {
     let actual = parseInputs(["-c5", "words"]);
     let expected = {
       option: "-c",
-      range: 5,
+      count: 5,
       fileNames: ["words"]
     };
     assert.deepEqual(actual, expected);
@@ -116,7 +116,7 @@ describe("parseInputs", function() {
     let actual = parseInputs(["words"]);
     let expected = {
       option: "-n",
-      range: 10,
+      count: 10,
       fileNames: ["words"]
     };
     assert.deepEqual(actual, expected);
@@ -126,7 +126,7 @@ describe("parseInputs", function() {
     let actual = parseInputs(["-3", "words", "numbers"]);
     let expected = {
       option: "-n",
-      range: 3,
+      count: 3,
       fileNames: ["words", "numbers"]
     };
     assert.deepEqual(actual, expected);
