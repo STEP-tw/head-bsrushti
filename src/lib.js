@@ -10,6 +10,10 @@ const {
   extractLines
 } = require("./util.js");
 
+const readFile = function(reader, fileName) {
+  return reader(fileName, "utf8");
+};
+
 const getFilteredContent = function(
   fs,
   numberOfFiles,
@@ -22,16 +26,14 @@ const getFilteredContent = function(
     return fileNotFoundError(fileName, command);
   }
 
-  if (fs.existsSync(fileName) && numberOfFiles > 1) {
-    let content = functionRef(
-      command,
-      range,
-      fs.readFileSync(fileName, "utf8")
+  if (numberOfFiles > 1) {
+    return addHeading(
+      fileName,
+      functionRef(command, range, readFile(fs.readFileSync, fileName))
     );
-    return addHeading(fileName, content);
   }
 
-  return functionRef(command, range, fs.readFileSync(fileName, "utf8"));
+  return functionRef(command, range, readFile(fs.readFileSync, fileName));
 };
 
 const getFunctionRef = function(option) {
@@ -54,13 +56,14 @@ const getFileData = function(params, fs, command) {
 
   return fileNames.map(
     getFilteredContent.bind(
-    null,
-    fs,
-    fileNames.length,
-    functionRef,
-    range,
-    command
-  ));
+      null,
+      fs,
+      fileNames.length,
+      functionRef,
+      range,
+      command
+    )
+  );
 };
 
 const head = function(params, fs) {

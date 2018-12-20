@@ -15,28 +15,29 @@ const isOptionWithoutCount = function(option) {
 };
 
 const parseInputs = function(params) {
+  const firstArg = params[0];
   const defaultOptions = { option: "-n", range: 10, fileNames: params };
-
-  if (isNumberOption(params[0])) {
+  
+  if (isNumberOption(firstArg)) {
     return {
       option: "-n",
-      range: params[0].slice(1),
+      range: firstArg.slice(1),
       fileNames: params.slice(1)
     };
   }
     
   if (isOptionWithoutCount(params[0])) {
     return {
-      option: params[0].slice(0, 2),
+      option: firstArg.slice(0, 2),
       range: params[1],
       fileNames: params.slice(2)
     };
   }
 
-  if (isOptionWithCount(params[0])) {
+  if (isOptionWithCount(firstArg)) {
     return {
-      option: params[0].slice(0, 2),
-      range: params[0].substr(2),
+      option: firstArg.slice(0, 2),
+      range: firstArg.substr(2),
       fileNames: params.slice(1)
     };
   }
