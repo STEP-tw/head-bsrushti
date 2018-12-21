@@ -1,29 +1,29 @@
 const assert = require("assert");
 const {
-  isDetailsStartsWithHyphen,
+  isParamStartsWithHyphen,
   isNumberOption,
   isOptionWithCount,
   isOptionWithoutCount,
   parseInputs
 } = require("../src/parseInput.js");
 
-describe("isDetailsStartsWithHyphen", () => {
+describe("isParamStartsWithHyphen", () => {
   it("should returns true if given input starts with hyphen", () => {
-    let actual = isDetailsStartsWithHyphen("-abc");
+    let actual = isParamStartsWithHyphen("-abc");
     let expected = true;
     assert.deepEqual(actual, expected);
 
-    actual = isDetailsStartsWithHyphen("-a-b-c");
+    actual = isParamStartsWithHyphen("-a-b-c");
     expected = true;
     assert.deepEqual(actual, expected);
   });
 
   it("should returns false if given input not starts with hyphen", () => {
-    let actual = isDetailsStartsWithHyphen("abc-");
+    let actual = isParamStartsWithHyphen("abc-");
     let expected = false;
     assert.deepEqual(actual, expected);
 
-    actual = isDetailsStartsWithHyphen("a-b-c");
+    actual = isParamStartsWithHyphen("a-b-c");
     expected = false;
     assert.deepEqual(actual, expected);
   });

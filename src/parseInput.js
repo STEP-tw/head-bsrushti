@@ -1,17 +1,17 @@
- const isDetailsStartsWithHyphen = function(param) {  
+ const isParamStartsWithHyphen = function(param) {  
   return param.startsWith("-");
 };
 
 const isNumberOption = function(option) {
-  return isDetailsStartsWithHyphen(option) && !isNaN(option[1]);
+  return isParamStartsWithHyphen(option) && !isNaN(option[1]);
 };
 
 const isOptionWithCount = function(option) {
-  return isDetailsStartsWithHyphen(option) && option.length > 2;
+  return isParamStartsWithHyphen(option) && option.length > 2;
 };
 
 const isOptionWithoutCount = function(option) {
-  return isDetailsStartsWithHyphen(option) && option.length == 2;
+  return isParamStartsWithHyphen(option) && option.length == 2;
 };
 
 const classifyParams = function(option, count, fileNames) {
@@ -44,7 +44,7 @@ const parseInputs = function(params) {
 };
 
 module.exports = {
-  isDetailsStartsWithHyphen,
+  isParamStartsWithHyphen,
   isNumberOption,
   isOptionWithCount,
   isOptionWithoutCount,
