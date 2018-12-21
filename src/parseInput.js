@@ -1,4 +1,4 @@
-const isDetailsStartsWithHyphen = function(param) {
+ const isDetailsStartsWithHyphen = function(param) {  
   return param.startsWith("-");
 };
 
@@ -14,35 +14,33 @@ const isOptionWithoutCount = function(option) {
   return isDetailsStartsWithHyphen(option) && option.length == 2;
 };
 
+const classifyParams = function(option, count, fileNames) {
+  return { option, count, fileNames };
+};
+
 const parseInputs = function(params) {
-  const firstArg = params[0];
-  const defaultOptions = { option: "-n", count: 10, fileNames: params };
-  
+  let firstArg = params[0];
+  let option = firstArg.slice(0, 2);
+  let fileNames = params.slice(1);
+
   if (isNumberOption(firstArg)) {
-    return {
-      option: "-n",
-      count: firstArg.slice(1),
-      fileNames: params.slice(1)
-    };
-  }
-    
-  if (isOptionWithoutCount(params[0])) {
-    return {
-      option: firstArg.slice(0, 2),
-      count: params[1],
-      fileNames: params.slice(2)
-    };
-  }
+    option = "-n";
+    let count = firstArg.slice(1);
+    return classifyParams(option, count, fileNames);
+  };
+
+  if (isOptionWithoutCount(firstArg)) {
+    let count = params[1];
+    fileNames = params.slice(2);
+    return classifyParams(option, count, fileNames);
+  };
 
   if (isOptionWithCount(firstArg)) {
-    return {
-      option: firstArg.slice(0, 2),
-      count: firstArg.substr(2),
-      fileNames: params.slice(1)
-    };
-  }
+    let count = firstArg.slice(2);
+    return classifyParams(option, count, fileNames);
+  };
 
-  return defaultOptions;
+  return classifyParams("-n", 10, params);
 };
 
 module.exports = {
