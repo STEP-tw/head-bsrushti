@@ -1,8 +1,8 @@
 const { parseInputs } = require("./parseInput.js");
 
-const { fileNotFoundError, getInvalidCountError } = require("./errorLib.js");
+const { getInvalidCountError } = require("./errorLib.js");
 
-const { addHeading } = require("./format");
+const { format } = require("./format");
 
 const {
   isCountAboveZero,
@@ -23,17 +23,21 @@ const getFilteredContent = function(
   fileName
 ) {
   if (!fs.existsSync(fileName)) {
-    return fileNotFoundError(fileName, command);
+    return {fileName : fileName, content: "", existStatus: false};
   }
 
   if (numberOfFiles > 1) {
-    return addHeading(
-      fileName,
-      functionRef(command, count, readFile(fs.readFileSync, fileName))
-    );
+    return {
+      fileName : fileName,
+      content : functionRef(command, count, readFile(fs.readFileSync, fileName)),
+      existStatus : true
+    }
   }
-
-  return functionRef(command, count, readFile(fs.readFileSync, fileName));
+  return {
+    fileName : fileName,
+    content : functionRef(command, count, readFile(fs.readFileSync, fileName)),
+    existStatus : true
+  }
 };
 
 const getFunctionRef = function(option) {
@@ -54,7 +58,7 @@ const getFileData = function(params, fs, command) {
     return [getInvalidCountError(option, count, command)];
   }
 
-  return fileNames.map(
+  let fileList = (fileNames.map(
     getFilteredContent.bind(
       null,
       fs,
@@ -62,8 +66,9 @@ const getFileData = function(params, fs, command) {
       functionRef,
       count,
       command
-    )
+    ))
   );
+  return (fileList.map(format.bind(null, fileList.length, command)));
 };
 
 const head = function(params, fs) {
@@ -76,9 +81,7 @@ const tail = function(params, fs) {
 
 module.exports = {
   getFilteredContent,
-  addHeading,
   isCountAboveZero,
-  addHeading,
   head,
   tail,
   getFunctionRef

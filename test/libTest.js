@@ -33,25 +33,25 @@ describe("getFilteredContent", () => {
       "head",
       "file1"
     );
-    let expected = "==> file1 <==\nA\nB";
+    let expected = { fileName: 'file1', content: 'A\nB', existStatus: true };
     assert.deepEqual(actual, expected);
   });
 
   it("should return file content as per the input for tail", () => {
     let actual = getFilteredContent(fs, 1, extractLines, 3, "tail", "file2");
-    let expected = "n\no\np";
+    let expected = { fileName: 'file2', content: 'n\no\np', existStatus: true };
     assert.deepEqual(actual, expected);
   });
 
   it("should return file content as per the input for head", () => {
     let actual = getFilteredContent(fs, 1, extractLines, 3, "head", "file2");
-    let expected = "a\nb\nc";
+    let expected = { fileName: 'file2', content: 'a\nb\nc', existStatus: true };
     assert.deepEqual(actual, expected);
   });
 
   it("should return error when file doesn't exist", () => {
     let actual = getFilteredContent(fs, 1, extractLines, 1, "tail", "file3");
-    let expected = "tail: file3: No such file or directory";
+    let expected ={ fileName: 'file3', content: '', existStatus: false };
     assert.deepEqual(actual, expected);
   });
 });

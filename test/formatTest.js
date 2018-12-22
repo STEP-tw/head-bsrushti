@@ -1,21 +1,21 @@
 const assert = require("assert");
-const { makeHeader, addHeading } = require("../src/format.js");
+const { makeHeader, contentWithHeading } = require("../src/format.js");
 
-describe("addHeading", function() {
-  let files = {
-    words: "one\ntwo\nthree",
-    numbers: "1\n2\n3\n4\n5"
-  };
-
+describe("contentWithHeading", function() {
+  
   it("should add header and return content of given file", function() {
     let fileName = "words";
-    let actual = addHeading(fileName, files[fileName]);
+    let content = "one\ntwo\nthree";
+    let existStatus = true;
+    let actual = contentWithHeading({fileName, content, existStatus});
     let expected = "==> words <==\none\ntwo\nthree";
     assert.deepEqual(actual, expected);
 
     fileName = "numbers";
+    content = "1\n2\n3\n4\n5";
+    existStatus = true;
     expected = "==> numbers <==\n1\n2\n3\n4\n5";
-    actual = addHeading(fileName, files[fileName]);
+    actual = contentWithHeading({fileName, content, existStatus});
     assert.deepEqual(actual, expected);
   });
 });

@@ -1,4 +1,4 @@
- const isParamStartsWithHyphen = function(param) {  
+const isParamStartsWithHyphen = function(param) {
   return param.startsWith("-");
 };
 
@@ -27,18 +27,18 @@ const parseInputs = function(params) {
     option = "-n";
     let count = firstArg.slice(1);
     return classifyParams(option, count, fileNames);
-  };
+  }
 
   if (isOptionWithoutCount(firstArg)) {
     let count = params[1];
     fileNames = params.slice(2);
     return classifyParams(option, count, fileNames);
-  };
+  }
 
   if (isOptionWithCount(firstArg)) {
     let count = firstArg.slice(2);
     return classifyParams(option, count, fileNames);
-  };
+  }
 
   return classifyParams("-n", 10, params);
 };
